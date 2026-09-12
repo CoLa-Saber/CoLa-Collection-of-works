@@ -3,12 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>陈雨可 | 设计师作品集</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>陈雨可 | 产品 · 策划运营 · 个人作品集</title>
+<meta name="description" content="陈雨可的个人作品集——求职方向：产品经理 / 产品运营 / 策划运营。涵盖产品分析、数据看板、活动策划、内容运营与视觉设计全链路实践。深圳大学城乡规划学硕士，2026 秋招。">
+<meta name="theme-color" content="#111111">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111111'/%3E%3Ctext x='32' y='43' font-size='32' text-anchor='middle' fill='%23d1e1e8' font-family='sans-serif' font-weight='700'%3EC%3C/text%3E%3C/svg%3E">
+<!-- 字体异步加载：避免 Google Fonts 在部分网络环境下阻塞渲染造成长时间白屏；
+     加载不出来时直接使用下方回退字体栈（苹方 / 微软雅黑），页面立即呈现 -->
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"></noscript>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#111111;--bg-secondary:#0a0a0a;--card:#1a1a1a;--border:#222222;--border-hover:#333333;--fg:#ffffff;--fg-muted:#888888;--accent:#d1e1e8;--accent-dim:rgba(209,225,232,.1);--glass:rgba(255,255,255,.05);--font-display:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif;--radius:12px;--radius-lg:16px;--radius-full:9999px}
+:root{--bg:#111111;--bg-secondary:#0a0a0a;--card:#1a1a1a;--border:#222222;--border-hover:#333333;--fg:#ffffff;--fg-muted:#888888;--accent:#d1e1e8;--accent-dim:rgba(209,225,232,.1);--glass:rgba(255,255,255,.05);--font-display:'Space Grotesk','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;--font-body:'Inter','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;--radius:12px;--radius-lg:16px;--radius-full:9999px}
 html{scroll-behavior:smooth}
 body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-height:1.6;overflow-x:hidden}
 
@@ -53,7 +59,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .container{max-width:1200px;margin:0 auto;padding:0 24px}
 
 /* ========== NAVIGATION ========== */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;background:rgba(17,17,17,.85);backdrop-filter:blur(20px);border-bottom:1px solid transparent;transition:.3s}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;background:rgba(17,17,17,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid transparent;transition:.3s;transform:translateZ(0);backface-visibility:hidden}
 .nav.scrolled{border-bottom-color:var(--border)}
 .nav .container{display:flex;justify-content:space-between;align-items:center}
 .logo{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--accent);text-decoration:none}
@@ -76,19 +82,22 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   --teal-soft:rgba(50,185,216,.45);
   --teal-faint:rgba(50,185,216,.14);
 }
-.hero{min-height:100vh;position:relative;overflow:hidden;display:block;background:var(--hero-bg)}
-.hero-bg{position:absolute;inset:0;z:0;overflow:hidden}
+.hero{min-height:100vh;position:relative;overflow:hidden;display:block;background:var(--hero-bg);contain:layout style}
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
 
 /* 人物主体：置于画面右侧约 2/3 处，左侧留白给文字，视觉重心左右平衡 */
 .hero-bg video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;
   object-position:50% 40%;
   transform:translateX(14%) scale(1.05);
-  transition:transform .5s ease-out;
+  /* 闪烁修复：删除 transition:transform .5s —— 它与 JS 视差每帧写 transform 相互打架，
+     会让视频不断重启动画造成抖动；平滑改由 JS 插值完成 */
+  will-change:transform;
   filter:saturate(.96) contrast(1.05) brightness(.9);
 }
 
 /* ===== 1. 人物光晕：青蓝色径向柔光，把人物从暗背景中托出 ===== */
-.hero-glow{position:absolute;inset:0;z:1;pointer-events:none;mix-blend-mode:screen;
+.hero-glow{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen;
+  transform:translateZ(0);backface-visibility:hidden;-webkit-backface-visibility:hidden;
   background:
     radial-gradient(ellipse 26% 40% at 63% 44%,rgba(50,185,216,.30) 0%,rgba(50,185,216,.13) 34%,transparent 70%),
     radial-gradient(ellipse 42% 54% at 62% 46%,rgba(50,185,216,.10) 0%,transparent 66%);
@@ -98,7 +107,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 @keyframes glowBreathe{0%,100%{opacity:.9}50%{opacity:1}}
 
 /* ===== 2. 背景网格：规划图纸质感，64px 细线 3% 透明度 ===== */
-.hero-grid{position:absolute;inset:0;z:1;pointer-events:none;
+.hero-grid{position:absolute;inset:0;z-index:1;pointer-events:none;
   background-image:
     linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
     linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
@@ -108,7 +117,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 }
 
 /* ===== 3. 轨道虚线圆：两道同心椭圆 + 轨道光点 ===== */
-.hero-orbit{position:absolute;inset:0;z:2;pointer-events:none;display:flex;align-items:center;justify-content:center}
+.hero-orbit{position:absolute;inset:0;z-index:2;pointer-events:none;display:flex;align-items:center;justify-content:center}
 .hero-orbit svg{width:min(1180px,104vw);height:auto;opacity:.85}
 .hero-orbit .ring{fill:none;stroke:var(--teal);stroke-width:1}
 .hero-orbit .ring-outer{stroke-dasharray:7 11;opacity:.34;animation:orbitSpin 140s linear infinite;transform-origin:center}
@@ -118,13 +127,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 @keyframes orbitSpin{to{transform:rotate(360deg)}}
 
 /* ===== 4. 散布光点：环境尘埃粒子（数量由脚本生成） ===== */
-.hero-particles{position:absolute;inset:0;z:2;pointer-events:none}
+.hero-particles{position:absolute;inset:0;z-index:2;pointer-events:none}
 .hero-particles i{position:absolute;border-radius:50%;background:var(--teal);
   box-shadow:0 0 6px rgba(50,185,216,.85);animation:twinkle 5s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.12}50%{opacity:.7}}
 
 /* ===== 5. 准星 + 坐标：测绘 / 规划气质 ===== */
-.hero-crosshair{position:absolute;inset:0;z:3;pointer-events:none}
+.hero-crosshair{position:absolute;inset:0;z-index:3;pointer-events:none}
 .hero-crosshair .ch{position:absolute;width:22px;height:22px;opacity:.34}
 .hero-crosshair .ch::before,.hero-crosshair .ch::after{content:'';position:absolute;background:rgba(255,255,255,.75)}
 .hero-crosshair .ch::before{left:50%;top:0;width:1px;height:100%;transform:translateX(-50%)}
@@ -141,7 +150,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 /* ===== 6.5 巨型描边水印「2026」 =====
    构成：描边空心数字 → 青蓝重影层
    位于左文右图之间，作为视觉过渡层，不遮挡人物与按钮 */
-.hero-emblem{position:absolute;top:12%;left:22%;z:3;width:min(46vw,560px);
+.hero-emblem{position:absolute;top:12%;left:22%;z-index:3;width:min(46vw,560px);
   pointer-events:none;user-select:none;animation:fadeInUp 1s ease both;animation-delay:.5s}
 
 /* 巨型描边水印数字 */
@@ -159,13 +168,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   pointer-events:none}
 
 /* ===== 6. 暗角：边缘压暗，聚焦中心 ===== */
-.hero-vignette{position:absolute;inset:0;z:4;pointer-events:none;
+.hero-vignette{position:absolute;inset:0;z-index:4;pointer-events:none;
   background:
     radial-gradient(ellipse 82% 82% at 54% 50%,transparent 40%,rgba(6,8,10,.62) 100%),
     linear-gradient(to bottom,rgba(10,12,14,.72) 0%,rgba(10,12,14,.12) 24%,rgba(10,12,14,.12) 70%,rgba(10,12,14,.86) 100%)}
 
 /* ===== 7. 右侧书脊描边字：PORTFOLIO ===== */
-.hero-spine{position:absolute;top:50%;right:26px;transform:translateY(-50%);z:6;
+.hero-spine{position:absolute;top:50%;right:26px;transform:translateY(-50%);z-index:6;
   writing-mode:vertical-rl;text-orientation:upright;
   font-family:var(--font-display);font-weight:700;
   font-size:clamp(40px,5.4vw,74px);letter-spacing:.16em;line-height:1;
@@ -178,7 +187,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .hero-spine::after{right:-16px}
 
 /* ===== 8. 悬浮玻璃数据卡（毛玻璃拟态） ===== */
-.hero-stats{position:absolute;inset:0;z:7;pointer-events:none}
+.hero-stats{position:absolute;inset:0;z-index:7;pointer-events:none}
 .glass-card{
   position:absolute;pointer-events:auto;
   padding:16px 20px;border-radius:8px;
@@ -189,7 +198,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   box-shadow:0 12px 34px rgba(0,0,0,.32);
   animation:cardFloat 7s ease-in-out infinite;
   transition:background .35s ease,border-color .35s ease,box-shadow .35s ease;
-  will-change:transform}
+  will-change:transform;
+  /* 独立合成层：避免 backdrop-filter 与动画叠加时在部分 GPU 上闪烁 */
+  transform:translateZ(0);
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden}
 .glass-card:hover{
   background:rgba(255,255,255,.22);
   border-color:rgba(50,185,216,.5);
@@ -206,20 +219,20 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 @keyframes cardFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
 
 /* ===== 9. 底部标识文字 ===== */
-.hero-footer{position:absolute;left:48px;bottom:20px;z:8;
+.hero-footer{position:absolute;left:48px;bottom:20px;z-index:8;
   font-family:var(--font-display);font-size:12px;font-weight:500;
   letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.7);
   pointer-events:none}
 
 /* 四角容器 */
-.hero-corners{position:absolute;inset:0;z:9;pointer-events:none}
+.hero-corners{position:absolute;inset:0;z-index:9;pointer-events:none}
 .hero-corner{position:absolute;pointer-events:auto;max-width:min(38vw,420px)}
 .hero-corner.tl{top:104px;left:48px;text-align:left;animation:fadeInUp .9s ease both;animation-delay:.3s}
 .hero-corner.bl{bottom:206px;left:48px;text-align:left;animation:fadeInUp .9s ease both;animation-delay:.6s}
 /* 中下方：按钮区，水平居中 */
 .hero-corner.bc{bottom:44px;left:50%;transform:translateX(-50%);text-align:center;display:flex;flex-direction:column;align-items:center;width:auto;max-width:90vw;animation:fadeInUp .9s ease both;animation-delay:.9s}
 /* 左侧文字区加一层极淡的暗色衬底，避免与人物主体粘连、提升可读性 */
-.hero-corner.tl::before,.hero-corner.bl::before{content:'';position:absolute;left:-40px;right:-90px;top:-40px;bottom:-40px;z:-1;
+.hero-corner.tl::before,.hero-corner.bl::before{content:'';position:absolute;left:-40px;right:-90px;top:-40px;bottom:-40px;z-index:-1;
   background:radial-gradient(ellipse 100% 100% at 0% 50%,rgba(10,12,16,.62) 0%,rgba(10,12,16,.28) 48%,transparent 78%);pointer-events:none}
 
 /* 左上：姓名 + 作品集 */
@@ -311,7 +324,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .detail-meta .v{color:var(--accent);text-align:right}
 
 /* ========== SECTION COMMON ========== */
-.section{padding:120px 0;position:relative}
+.section{padding:120px 0;position:relative;scroll-margin-top:70px}
 .section-label{font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:3px;font-weight:600;margin-bottom:16px}
 .section-title{font-family:var(--font-display);font-size:clamp(32px,5vw,56px);font-weight:700;line-height:1.1;margin-bottom:20px}
 .section-desc{font-size:16px;color:var(--fg-muted);max-width:560px;line-height:1.7}
@@ -320,7 +333,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .filter-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px;justify-content:center}
 /* ========== 作品集滚动卡片模块 ========== */
 /* 外层：裁掉溢出的卡片，并在左右留出渐隐空间 */
-.marquee-wrap{position:relative;padding:8px 0 28px;overflow:hidden;
+.marquee-wrap{position:relative;padding:8px 0 28px;overflow:hidden;contain:layout style;
   /* 拖拽时禁止选中文字 / 拖出图片幽灵图 */
   user-select:none;-webkit-user-select:none}
 .marquee-track{
@@ -356,8 +369,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
              border-color .45s ease,
              filter .45s ease;
 }
-/* 一屏约 3 张：中间略大，左右略小（--card-size 由 JS 按视口宽度写入） */
-.p-card.is-side{width:calc(var(--card-size) * .84);height:calc(var(--card-size) * .84);opacity:.42;filter:saturate(.72)}
+/* 一屏约 3 张：中间略大，左右略小。
+   【闪烁核心修复】两侧卡片不再修改 width/height —— 布局属性一变，
+   整条 flex 轨道立刻重排、所有卡片位移跳变，就是肉眼看到的"大大小小"闪烁；
+   且原代码的 width/height 也不在 transition 列表里，变化是瞬间而非平滑的。
+   现改为纯 transform:scale（合成器属性，不参与布局），轨道宽度全程恒定，零重排。 */
+.p-card.is-side{transform:scale(.88);opacity:.42;filter:saturate(.72)}
 .p-card.is-center{opacity:1;transform:scale(1.07);z-index:2;box-shadow:0 24px 60px rgba(0,0,0,.45)}
 
 /* 悬停微交互：卡片轻微放大 + 滚动暂停（轨道暂停见上方规则） */
@@ -390,6 +407,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   text-shadow:0 2px 12px rgba(0,0,0,.85);
   transition:color .35s,transform .35s}
 .p-card:hover .p-card-name{color:var(--accent);transform:translateY(-3px)}
+/* 左上角分类角标：让 HR 扫一眼就知道项目类型 */
+.p-card-cat{position:absolute;top:14px;left:14px;z-index:3;padding:5px 12px;border-radius:var(--radius-full);
+  font-size:11px;font-weight:600;letter-spacing:.06em;
+  background:rgba(10,12,14,.55);border:1px solid rgba(255,255,255,.22);color:#fff;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  transition:border-color .35s,color .35s}
+.p-card:hover .p-card-cat{border-color:var(--accent);color:var(--accent)}
 
 /* 左右渐隐遮罩：卡片滚到边界自然淡出 */
 .marquee-fade{position:absolute;top:0;bottom:0;width:16%;z-index:5;pointer-events:none}
@@ -520,7 +544,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:700px;margin:48px auto 0}
 .contact-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:44px 32px;text-align:center;transition:.3s}
 .contact-card:hover{border-color:var(--border-hover);transform:translateY(-4px)}
-.contact-icon{font-size:36px;margin-bottom:16px}
+.contact-icon{font-size:36px;margin-bottom:16px;color:var(--accent)}
+.contact-icon svg{width:38px;height:38px;display:block;margin:0 auto}
+.contact-line{font-size:15.5px;font-weight:600;color:var(--fg);margin-bottom:8px !important;letter-spacing:.02em}
 .contact-card h3{font-size:18px;margin-bottom:10px}
 .contact-card p{font-size:14px;color:var(--fg-muted);margin-bottom:24px}
 
@@ -551,11 +577,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .contact-grid{grid-template-columns:1fr}
 /* Hero 在移动端改为纵向堆叠，中间仍留出视频空间 */
 .hero{min-height:100vh;padding:100px 0 56px;display:flex;flex-direction:column}
+/* 移动端排版修复：hero 内容改为文档流后，桌面端的 left:48px 定位失效，
+   必须给容器补左右安全边距，否则标题/标签/按钮全部贴屏幕左缘、被裁切 */
 .hero-corners{position:relative;inset:auto;height:auto;display:flex;flex-direction:column;
-  justify-content:flex-start;min-height:0;gap:22px;flex:1;order:1}
+  justify-content:flex-start;min-height:0;gap:22px;flex:1;order:1;padding:0 20px 8px}
 .hero-corner{position:static;max-width:100%;text-align:left !important;align-items:flex-start !important;transform:none !important}
 .hero-corner.bc{display:flex;flex-direction:column;align-items:flex-start;left:auto}
-.hero h1{font-size:40px}
+.hero h1{font-size:clamp(32px,10.5vw,40px)}
 .hero-ctas{justify-content:flex-start}
 /* Hero 新增装饰层在移动端收敛：书脊字隐藏、轨道收缩、玻璃卡转为两列网格 */
 .hero-spine{display:none}
@@ -570,7 +598,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .hero-orbit svg{width:180vw}
 .hero-grid{background-size:44px 44px}
 /* 玻璃卡：脱离绝对定位，改为两列网格排在文字之后 */
-.hero-stats{position:relative;inset:auto;z:9;display:grid;
+.hero-stats{position:relative;inset:auto;z-index:9;display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
   padding:0 20px 16px;order:3}.glass-card{position:static !important;top:auto !important;right:auto !important;
   bottom:auto !important;left:auto !important;padding:12px 14px;animation:none}
@@ -624,64 +652,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .mobile-menu.open{display:flex}
 .mobile-menu a{color:var(--fg);font-size:24px;text-decoration:none;font-family:var(--font-display)}
 .mobile-close{position:absolute;top:20px;right:24px;background:none;border:none;color:var(--fg);font-size:32px;cursor:pointer}
-
-/* ===== DESKTOP PROPORTIONAL SCALE — based on the original 1440px layout =====
-/* Keep the original composition; scale the fixed-size foreground elements with viewport width. */
-@media (min-width:769px){
-  .hero-corner{max-width:29.1667vw}
-  .hero-corner.tl{top:7.2222vw;left:3.3333vw}
-  .hero-corner.bl{bottom:14.3056vw;left:3.3333vw}
-  .hero-corner.bc{bottom:3.0556vw}
-
-  .hero h1{font-size:4.3056vw}
-  .hero-role{margin-top:1.25vw;font-size:.9028vw}
-  .hero-tags{gap:.6944vw}
-  .hero-tag{font-size:.9028vw;padding:.4861vw 1.25vw}
-  .hero-desc{margin-top:1.3889vw;font-size:.9722vw}
-  .hero-ctas{gap:.9722vw}
-  .hero-ctas .btn{padding:.8333vw 1.8056vw;font-size:.9722vw}
-  .btn svg{width:1.1111vw;height:1.1111vw}
-
-  .glass-card{padding:1.1111vw 1.3889vw;border-radius:.5556vw}
-  .gc-num{font-size:1.9444vw}
-  .gc-label{font-size:.9375vw;margin-top:.2083vw}
-  .gc-sub{font-size:.7986vw;margin-top:.2083vw}
-  .glass-card.c4{bottom:3.8889vw;left:3.3333vw}
-
-  .hero-footer{left:3.3333vw;bottom:1.3889vw;font-size:.8333vw}
-  .hero-spine{right:1.8056vw;font-size:5.1389vw}
-  .hero-crosshair .coords{top:6.1111vw;right:6.6667vw;font-size:.8681vw}
-  .hero-crosshair .coordring{top:11.8056vw;width:5.1389vw;height:5.1389vw}
-
-  .hero-emblem{width:38.8889vw}
-  .emblem-year{font-size:10.6vw}
-}
-
-/* At very large desktop sizes, cap the scale so the cover stays readable rather than oversized. */
-@media (min-width:1920px){
-  .hero-corner.tl{top:138.67px;left:64px}
-  .hero-corner.bl{bottom:274.67px;left:64px}
-  .hero-corner.bc{bottom:58.67px}
-  .hero h1{font-size:82.67px}
-  .hero-role{margin-top:24px;font-size:17.33px}
-  .hero-tags{gap:13.33px}
-  .hero-tag{font-size:17.33px;padding:9.33px 24px}
-  .hero-desc{margin-top:26.67px;font-size:18.67px}
-  .hero-ctas{gap:18.67px}
-  .hero-ctas .btn{padding:16px 34.67px;font-size:18.67px}
-  .glass-card{padding:21.33px 26.67px;border-radius:10.67px}
-  .gc-num{font-size:37.33px}
-  .gc-label{font-size:18px}
-  .gc-sub{font-size:15.33px}
-  .glass-card.c4{bottom:74.67px;left:64px}
-  .hero-footer{left:64px;bottom:26.67px;font-size:16px}
-  .hero-spine{right:34.67px;font-size:98.67px}
-  .hero-crosshair .coords{top:117.33px;right:128px;font-size:16.67px}
-  .hero-crosshair .coordring{top:226.67px;width:98.67px;height:98.67px}
-  .hero-emblem{width:560px}
-  .emblem-year{font-size:168px}
-}
-
 
 /* ===== DESKTOP PROPORTIONAL SCALE — based on the original 1440px layout =====
 /* Keep the original composition; scale the fixed-size foreground elements with viewport width. */
@@ -847,11 +817,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <!-- 左下：标签 + 简介 -->
 <div class="hero-corner bl">
 <div class="hero-tags">
-<span class="hero-tag">复合型运营策划</span>
+<span class="hero-tag">产品分析</span>
 <span class="hero-tag">内容运营</span>
 <span class="hero-tag">数据复盘</span>
 </div>
-<p class="hero-desc">具备"用户洞察+内容爆款+数据逻辑"的跨界统筹力<br>深圳大学城乡规划硕士 | 策划·设计·数据 全链路能力</p>
+<p class="hero-desc">具备"用户洞察+方案落地+数据逻辑"的跨界统筹力<br>深圳大学城乡规划硕士 | 产品·策划·设计 全链路能力</p>
 </div>
 
 <!-- 中下方：按钮 -->
@@ -872,7 +842,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <div class="container">
 <div class="section-label">精选项目</div>
 <h2 class="section-title">我的作品</h2>
-<p class="section-desc">从策略规划到视觉设计，从数据分析到内容运营，每个项目都是一次全新的探索与突破。</p>
+<p class="section-desc">从产品分析、数据运营到视觉设计，每个项目都是一次完整的"洞察—方案—落地"实践。</p>
 </div>
 
 <!-- 作品集滚动卡片模块：自动向左滚动，中间卡片略大，两侧渐隐 -->
@@ -898,13 +868,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <div class="resume-head">
 <span class="resume-name">陈雨可</span>
 <span class="resume-titles">
-<span class="resume-title">策划</span>
 <span class="resume-title">产品</span>
+<span class="resume-title">策划</span>
 <span class="resume-title">运营</span>
 <span class="resume-title">设计</span>
 </span>
 </div>
-<p class="resume-tagline">规划设计出身，跨界品牌营销与产品运营。擅长把用户洞察转译为可落地的创意方案，从千人级活动策划、AIGC 创意物料生产，到数据看板搭建与内容传播，形成策划—执行—复盘的完整闭环。</p>
+<p class="resume-tagline">以产品思维为核心：从真实用户访谈出发做需求分析与方案设计，具备产品运营实习与数据看板搭建经验，叠加千人级活动策划与 AIGC 创意落地的执行力，形成"洞察—方案—落地—复盘"的完整闭环。</p>
 
 <div class="resume-contacts">
 <a class="resume-contact" href="tel:13603094492"><b>电话</b> 136-0309-4492</a>
@@ -1063,9 +1033,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <div class="stat-desc">通过流程优化与工具赋能</div>
 </div>
 <div class="stat-item fade-in">
-<div class="stat-number" data-target="10">0</div>
-<div class="stat-label">万级内容触达</div>
-<div class="stat-desc">多平台累计曝光量</div>
+<div class="stat-number" data-target="10" data-suffix="万+">0</div>
+<div class="stat-label">内容触达</div>
+<div class="stat-desc">小红书 / 抖音多平台累计曝光量</div>
 </div>
 <div class="stat-item fade-in">
 <div class="stat-number" data-target="20">0</div>
@@ -1079,32 +1049,34 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 </div>
 </div>
 <div class="stats-cta">
-<p>有项目想法？让我们一起把它变成现实。</p>
-<a href="#contact" class="btn btn-primary">一起合作吧？</a>
+<p>我正在寻找 2026 秋招产品 / 策划运营方向的全职机会，欢迎交流。</p>
+<a href="#contact" class="btn btn-primary">联系我</a>
 </div>
 </div>
 </div>
 </section>
 
 <!-- CONTACT SECTION -->
-<section class="section" id="contact" style="background:transparent">
+<section class="section" id="contact">
 <div class="container" style="text-align:center">
 <div class="section-label">联系方式</div>
-<h2 class="section-title">一起创造精彩作品</h2>
-<p class="section-desc" style="margin:0 auto">无论是项目合作、全职机会还是单纯交流，都欢迎与我联系。</p>
+<h2 class="section-title">期待与你联系</h2>
+<p class="section-desc" style="margin:0 auto">我正在寻找产品 / 策划运营方向的全职机会。无论是面试邀约还是交流探讨，都欢迎随时联系。</p>
 
 <div class="contact-grid">
 <div class="contact-card fade-in">
-<div class="contact-icon">&#x2709;&#xFE0F;</div>
+<div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7.5 12 13.5l8.5-6"/></svg></div>
 <h3>邮件联系</h3>
-<p>发送邮件讨论项目详情与合作可能</p>
-<a href="mailto:chenyuke@example.com" class="btn btn-primary">发送邮件</a>
+<p class="contact-line">1174956003@qq.com</p>
+<p>投递邀约、项目交流或进一步了解作品详情</p>
+<a href="mailto:1174956003@qq.com" class="btn btn-primary">发送邮件</a>
 </div>
 <div class="contact-card fade-in">
-<div class="contact-icon">&#x260E;&#xFE0F;</div>
+<div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
 <h3>微信 / 电话</h3>
+<p class="contact-line">136-0309-4492（微信同号）</p>
 <p>工作时间 9:00 - 21:00 快速响应</p>
-<a href="tel:+8613800138000" class="btn btn-outline">联系我</a>
+<a href="tel:+8613603094492" class="btn btn-outline">联系我</a>
 </div>
 </div>
 </div>
@@ -1123,7 +1095,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 
 <!-- 弹窗左侧：作品图片浏览 -->
 <div class="detail-media">
-<img class="lb-img" id="detailImg" src="" alt="" onclick="changeSlide(1)">
+<img class="lb-img" id="detailImg" alt="" onclick="changeSlide(1)">
 <button class="lb-nav lb-prev" id="detailPrev" onclick="changeSlide(-1)" aria-label="上一张">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
 </button>
@@ -1176,49 +1148,28 @@ window.addEventListener('scroll',function(){document.getElementById('nav').class
 })();
 
 // ===== Hero 模块：视频鼠标视差（保留人物 2/3 右移基准） =====
+/* 闪烁修复：原实现每次 mousemove 直接写 transform 且无节流，与页面其它动画叠加易抖动。
+   现改为 rAF 节流 + 指数插值平滑（lerp）；仅在支持鼠标的设备启用，触屏设备跳过。 */
 const heroVideo=document.getElementById('heroVideo');
-document.addEventListener('mousemove',function(e){
-  const x=(e.clientX/window.innerWidth-.5)*15;
-  const y=(e.clientY/window.innerHeight-.5)*15;
-  if(heroVideo)heroVideo.style.transform='translateX(calc(13% + '+x+'px)) translateY('+y+'px) scale(1.04)';
-});
+if(heroVideo&&window.matchMedia('(pointer:fine)').matches){
+  var pvTargetX=0,pvTargetY=0,pvX=0,pvY=0,pvRaf=false;
+  document.addEventListener('mousemove',function(e){
+    pvTargetX=(e.clientX/window.innerWidth-.5)*15;
+    pvTargetY=(e.clientY/window.innerHeight-.5)*15;
+    if(pvRaf)return;
+    pvRaf=true;
+    requestAnimationFrame(function(){
+      pvRaf=false;
+      pvX+=(pvTargetX-pvX)*.08;
+      pvY+=(pvTargetY-pvY)*.08;
+      heroVideo.style.transform='translateX(calc(13% + '+pvX.toFixed(2)+'px)) translateY('+pvY.toFixed(2)+'px) scale(1.04)';
+    });
+  });
+}
 
 // ===== 作品集滚动卡片模块（自动左滚 + 中间放大 + 悬停暂停） =====
 // 作品数据（名称 / 分类 / 详细介绍 / 图片）
-var PROJECTS=[
- {name:'濒危海洋生物盲盒',cat:'产品设计',tags:['产品设计','包装','IP设计'],
-  desc:'以濒危海洋生物为原型的盲盒产品设计。\n从IP形象设定、包装结构到周边物料完整落地，把可持续发展理念转译成年轻化、可收藏的视觉语言，让公益议题通过消费场景自然触达大众。产品线包含角色设定、盒型结构、系列包装与配套周边。',
-  images:['images/portfolio/work-18.png'],role:'IP形象 / 包装设计',year:'2024'},
-
- {name:'锦江酒店2026年会',cat:'活动视觉',tags:['活动视觉','品牌','主KV'],
-  desc:'千人级企业年会全流程视觉统筹。\n独立完成主视觉KV设计、全套物料延展（邀请函、签到墙、舞台背景、伴手礼、桌卡等），并跟进现场执行与布置落地。在统一的视觉体系下平衡商务质感与节日氛围，保证大屏、印刷、物料多场景的一致性呈现。',
-  images:['images/portfolio/work-23.jpg','images/portfolio/work-24.jpg','images/portfolio/work-25.jpg','images/portfolio/work-19.jpg','images/portfolio/work-20.jpg','images/portfolio/work-21.png','images/portfolio/work-22.jpg'],role:'主视觉 / 物料延展 / 现场执行',year:'2026'},
-
- {name:'培训数据看板搭建',cat:'数据运营',tags:['数据运营','BI','可视化'],
-  desc:'独立搭建培训业务数据看板，把分散在多张表格中的培训数据整合为可视化仪表盘。\n覆盖参训率、完成率、考核成绩、满意度等多维指标，支持按部门、时间、课程类型交叉查看，帮助业务方快速定位问题并优化培训安排，显著减少人工统计时间。',
-  images:['images/portfolio/work-26.png','images/portfolio/work-27.png'],role:'数据可视化 / 业务优化',year:'2025'},
-
- {name:'乡村规划 / 汽车公园竞赛',cat:'城乡规划',tags:['城乡规划','竞赛','概念规划'],
-  desc:'城乡规划专业竞赛作品。\n围绕乡村产业转型与汽车文化主题，完成从场地调研、概念生成、功能分区到空间形态推敲的完整设计推演，输出总平面、分析图与场景效果图，兼顾规划逻辑的严谨性与方案表达的视觉冲击力。',
-  images:['images/portfolio/work-28.jpg'],role:'规划设计 / 竞赛方案',year:'2023'},
-
- {name:'自媒体内容运营',cat:'内容运营',tags:['内容运营','新媒体','小红书'],
-  desc:'小红书、抖音平台自媒体内容运营实践。\n负责选题策划、图文与短视频视觉产出、发布节奏管理与数据复盘，通过封面点击率、互动率等指标持续迭代内容方向，多篇内容实现万级曝光，沉淀出可复用的内容方法论。',
-  images:['images/portfolio/work-09.png','images/portfolio/work-10.png','images/portfolio/work-11.jpg','images/portfolio/work-12.jpg','images/portfolio/work-13.jpg','images/portfolio/work-14.jpg','images/portfolio/work-15.jpg'],role:'内容策划 / 视觉产出 / 数据复盘',year:'2025'},
-
- {name:'校园活动视觉设计',cat:'平面设计',tags:['平面设计','海报','活动'],
-  desc:'校园活动系列视觉设计。\n围绕活动主题建立视觉基调，输出主视觉海报、系列延展海报与线上宣传图，通过统一的色彩与版式语言强化活动辨识度，覆盖宣传预热到现场呈现的完整链路。',
-  images:['images/portfolio/work-33.jpg','images/portfolio/work-34.jpg','images/portfolio/work-35.jpg'],role:'海报设计 / 活动视觉',year:'2024'},
-
- {name:'平面设计合集',cat:'平面设计',tags:['平面设计','VI','品牌'],
-  desc:'品牌视觉与平面设计作品合集。\n涵盖品牌VI系统、标识设计、版式探索与多风格视觉实验，在不同行业属性与调性要求下输出匹配的设计方案，展示对色彩、字体、构图与信息层级的综合把控能力。',
-  images:['images/portfolio/work-07.jpg','images/portfolio/work-08.jpg','images/portfolio/work-05.png','images/portfolio/work-06.jpg'],role:'品牌视觉 / 平面设计',year:'2024'},
-
- {name:'专业能力展示',cat:'专业技能',tags:['专业技能','AIGC','方法'],
-  desc:'复合型能力图谱与工作方法展示。\n梳理视觉设计、AIGC创意落地、项目全链路执行、数字化运营与内容营销五大能力模块，并展示AI辅助创意、生图改图、样机合成的实际工作流，体现从创意构思到实物落地的完整闭环能力。',
-  images:['images/portfolio/work-29.png','images/portfolio/work-30.png','images/portfolio/work-31.png','images/portfolio/work-32.png'],role:'能力梳理 / 工作流展示',year:'2025'},
-
-// ===== 产品岗面试必备分析：卫生巾产品痛点挖掘与下一代产品设计 =====
+var PROJECTS=[// ===== 产品岗面试必备分析：卫生巾产品痛点挖掘与下一代产品设计 =====
  {name:'舒适安全型卫生巾产品设计',cat:'产品分析',tags:['产品分析','用户研究','需求分析','方案选型','商业化预估'],
   role:'产品定位 / 用户研究 / 方案设计',year:'2026',
   desc:'基于真实用户访谈的卫生巾产品痛点挖掘与下一代舒适安全型产品设计。',
@@ -1290,7 +1241,41 @@ var PROJECTS=[
        '<b>成本与风险</b>：医用级材质与立体结构会推高单件成本，需通过规模采购与规格组合平衡毛利；主要风险在于用户教育成本与教育周期。'
      ]}
   ],
-  images:['images/portfolio/work-01.jpg','images/portfolio/work-02.jpg','images/portfolio/work-03.jpg','images/portfolio/work-04.jpg']}
+  images:['images/portfolio/work-01.jpg','images/portfolio/work-02.jpg','images/portfolio/work-03.jpg','images/portfolio/work-04.jpg']},
+
+ {name:'培训数据看板搭建',cat:'数据运营',tags:['数据运营','BI','可视化'],
+  desc:'独立搭建培训业务数据看板，把分散在多张表格中的培训数据整合为可视化仪表盘。\n覆盖参训率、完成率、考核成绩、满意度等多维指标，支持按部门、时间、课程类型交叉查看，帮助业务方快速定位问题并优化培训安排，显著减少人工统计时间。',
+  images:['images/portfolio/work-26.png','images/portfolio/work-27.png'],role:'数据可视化 / 业务优化',year:'2025'},
+
+ {name:'濒危海洋生物盲盒',cat:'产品设计',tags:['产品设计','包装','IP设计'],
+  desc:'以濒危海洋生物为原型的盲盒产品设计。\n从IP形象设定、包装结构到周边物料完整落地，把可持续发展理念转译成年轻化、可收藏的视觉语言，让公益议题通过消费场景自然触达大众。产品线包含角色设定、盒型结构、系列包装与配套周边。',
+  images:['images/portfolio/work-18.png'],role:'IP形象 / 包装设计',year:'2024'},
+
+ {name:'锦江酒店2026年会',cat:'活动视觉',tags:['活动视觉','品牌','主KV'],
+  desc:'千人级企业年会全流程视觉统筹。\n独立完成主视觉KV设计、全套物料延展（邀请函、签到墙、舞台背景、伴手礼、桌卡等），并跟进现场执行与布置落地。在统一的视觉体系下平衡商务质感与节日氛围，保证大屏、印刷、物料多场景的一致性呈现。',
+  images:['images/portfolio/work-23.jpg','images/portfolio/work-24.jpg','images/portfolio/work-25.jpg','images/portfolio/work-19.jpg','images/portfolio/work-20.jpg','images/portfolio/work-21.png','images/portfolio/work-22.jpg'],role:'主视觉 / 物料延展 / 现场执行',year:'2026'},
+
+ {name:'乡村规划 / 汽车公园竞赛',cat:'城乡规划',tags:['城乡规划','竞赛','概念规划'],
+  desc:'城乡规划专业竞赛作品。\n围绕乡村产业转型与汽车文化主题，完成从场地调研、概念生成、功能分区到空间形态推敲的完整设计推演，输出总平面、分析图与场景效果图，兼顾规划逻辑的严谨性与方案表达的视觉冲击力。',
+  images:['images/portfolio/work-28.jpg'],role:'规划设计 / 竞赛方案',year:'2023'},
+
+ {name:'自媒体内容运营',cat:'内容运营',tags:['内容运营','新媒体','小红书'],
+  desc:'小红书、抖音平台自媒体内容运营实践。\n负责选题策划、图文与短视频视觉产出、发布节奏管理与数据复盘，通过封面点击率、互动率等指标持续迭代内容方向，多篇内容实现万级曝光，沉淀出可复用的内容方法论。',
+  images:['images/portfolio/work-09.png','images/portfolio/work-10.png','images/portfolio/work-11.jpg','images/portfolio/work-12.jpg','images/portfolio/work-13.jpg','images/portfolio/work-14.jpg','images/portfolio/work-15.jpg'],role:'内容策划 / 视觉产出 / 数据复盘',year:'2025'},
+
+ {name:'校园活动视觉设计',cat:'平面设计',tags:['平面设计','海报','活动'],
+  desc:'校园活动系列视觉设计。\n围绕活动主题建立视觉基调，输出主视觉海报、系列延展海报与线上宣传图，通过统一的色彩与版式语言强化活动辨识度，覆盖宣传预热到现场呈现的完整链路。',
+  images:['images/portfolio/work-33.jpg','images/portfolio/work-34.jpg','images/portfolio/work-35.jpg'],role:'海报设计 / 活动视觉',year:'2024'},
+
+ {name:'平面设计合集',cat:'平面设计',tags:['平面设计','VI','品牌'],
+  desc:'品牌视觉与平面设计作品合集。\n涵盖品牌VI系统、标识设计、版式探索与多风格视觉实验，在不同行业属性与调性要求下输出匹配的设计方案，展示对色彩、字体、构图与信息层级的综合把控能力。',
+  images:['images/portfolio/work-07.jpg','images/portfolio/work-08.jpg','images/portfolio/work-05.png','images/portfolio/work-06.jpg'],role:'品牌视觉 / 平面设计',year:'2024'},
+
+ {name:'专业能力展示',cat:'专业技能',tags:['专业技能','AIGC','方法'],
+  desc:'复合型能力图谱与工作方法展示。\n梳理视觉设计、AIGC创意落地、项目全链路执行、数字化运营与内容营销五大能力模块，并展示AI辅助创意、生图改图、样机合成的实际工作流，体现从创意构思到实物落地的完整闭环能力。',
+  images:['images/portfolio/work-29.png','images/portfolio/work-30.png','images/portfolio/work-31.png','images/portfolio/work-32.png'],role:'能力梳理 / 工作流展示',year:'2025'},
+
+
 ];
 
 var marqueeTrack=document.getElementById('marqueeTrack');
@@ -1300,6 +1285,7 @@ var marqueeWrap=document.getElementById('marqueeWrap');
 function buildCard(p,idx){
   return '<div class="p-card" data-idx="'+idx+'" onclick="openDetail('+idx+')">'+
     '<img src="'+p.images[0]+'" alt="'+p.name+'" loading="lazy">'+
+    '<div class="p-card-cat">'+p.cat+'</div>'+
     '<div class="p-card-hint"><span>查看详情</span></div>'+
     '<div class="p-card-name">'+p.name+'</div>'+
   '</div>';
@@ -1314,6 +1300,7 @@ function renderMarquee(){
   updateCardScale();
 }
 
+var cardSize=0, gapSize=38;   // 中心卡推算用：卡片边长与间距（与 --card-size 同步）
 // 按视口宽度计算卡片尺寸（一屏约 3 张）
 function sizeMarqueeCards(){
   var w=window.innerWidth;
@@ -1321,21 +1308,31 @@ function sizeMarqueeCards(){
           : w<900 ? Math.min(w*0.34,270)
           : w<1400 ? Math.min(w*0.245,340)
           : Math.min(w*0.235,350);
+  cardSize=size;
+  gapSize=w<768?20:38;
   marqueeWrap.style.setProperty('--card-size',size+'px');
 }
 
-// 根据卡片在视口中的位置，标出「中间」与「左右侧」
+/* 标出「中间」与「左右侧」卡片 —— 闪烁核心修复：
+   1. 不再用 getBoundingClientRect 逐卡读取（每帧 × 20 张卡强制布局，开销大），
+      改为由 offset + 卡片宽度/间距直接推算中心索引，零 DOM 读取、零强制布局；
+   2. 始终保留一张中心卡（取最接近视口中心者），不再出现"空档期全部变小再弹回"；
+   3. 只有中心卡实际变化时才写 class，避免无意义的状态切换。 */
+var _centerIdx=-1;
 function updateCardScale(){
-  var cards=marqueeTrack.querySelectorAll('.p-card');
+  if(!halfWidth||cardSize<=0)return;
+  var step=cardSize+gapSize;
   var mid=window.innerWidth/2;
-  var centerZone=window.innerWidth*(window.innerWidth<900?0.19:0.13);
-  cards.forEach(function(c){
-    var r=c.getBoundingClientRect();
-    var cCenter=r.left+r.width/2;
-    var isCenter=Math.abs(cCenter-mid)<centerZone;
-    c.classList.toggle('is-center',isCenter);
-    c.classList.toggle('is-side',!isCenter);
-  });
+  var i=Math.round((mid-offset-cardSize/2)/step);
+  i=((i%PROJECTS.length)+PROJECTS.length)%PROJECTS.length;
+  if(i===_centerIdx)return;
+  _centerIdx=i;
+  var cards=marqueeTrack.querySelectorAll('.p-card');
+  for(var k=0;k<cards.length;k++){
+    var isCenter=(k%PROJECTS.length)===i;
+    cards[k].classList.toggle('is-center',isCenter);
+    cards[k].classList.toggle('is-side',!isCenter);
+  }
 }
 
 /* ===== 滚动驱动：自动滚动 + 鼠标拖拽共用同一个 offset =====
@@ -1386,6 +1383,7 @@ function wrapOffset(){
 function startMarquee(){
   renderMarquee();
   measureHalfWidth();
+  updateCardScale();   // 首屏渲染前立即确定中心卡，避免加载后状态跳变
 }
 
 window.addEventListener('resize',function(){sizeMarqueeCards();updateCardScale();measureHalfWidth()});
