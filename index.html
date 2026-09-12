@@ -624,6 +624,122 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .mobile-menu.open{display:flex}
 .mobile-menu a{color:var(--fg);font-size:24px;text-decoration:none;font-family:var(--font-display)}
 .mobile-close{position:absolute;top:20px;right:24px;background:none;border:none;color:var(--fg);font-size:32px;cursor:pointer}
+
+/* ===== DESKTOP PROPORTIONAL SCALE — based on the original 1440px layout =====
+/* Keep the original composition; scale the fixed-size foreground elements with viewport width. */
+@media (min-width:769px){
+  .hero-corner{max-width:29.1667vw}
+  .hero-corner.tl{top:7.2222vw;left:3.3333vw}
+  .hero-corner.bl{bottom:14.3056vw;left:3.3333vw}
+  .hero-corner.bc{bottom:3.0556vw}
+
+  .hero h1{font-size:4.3056vw}
+  .hero-role{margin-top:1.25vw;font-size:.9028vw}
+  .hero-tags{gap:.6944vw}
+  .hero-tag{font-size:.9028vw;padding:.4861vw 1.25vw}
+  .hero-desc{margin-top:1.3889vw;font-size:.9722vw}
+  .hero-ctas{gap:.9722vw}
+  .hero-ctas .btn{padding:.8333vw 1.8056vw;font-size:.9722vw}
+  .btn svg{width:1.1111vw;height:1.1111vw}
+
+  .glass-card{padding:1.1111vw 1.3889vw;border-radius:.5556vw}
+  .gc-num{font-size:1.9444vw}
+  .gc-label{font-size:.9375vw;margin-top:.2083vw}
+  .gc-sub{font-size:.7986vw;margin-top:.2083vw}
+  .glass-card.c4{bottom:3.8889vw;left:3.3333vw}
+
+  .hero-footer{left:3.3333vw;bottom:1.3889vw;font-size:.8333vw}
+  .hero-spine{right:1.8056vw;font-size:5.1389vw}
+  .hero-crosshair .coords{top:6.1111vw;right:6.6667vw;font-size:.8681vw}
+  .hero-crosshair .coordring{top:11.8056vw;width:5.1389vw;height:5.1389vw}
+
+  .hero-emblem{width:38.8889vw}
+  .emblem-year{font-size:10.6vw}
+}
+
+/* At very large desktop sizes, cap the scale so the cover stays readable rather than oversized. */
+@media (min-width:1920px){
+  .hero-corner.tl{top:138.67px;left:64px}
+  .hero-corner.bl{bottom:274.67px;left:64px}
+  .hero-corner.bc{bottom:58.67px}
+  .hero h1{font-size:82.67px}
+  .hero-role{margin-top:24px;font-size:17.33px}
+  .hero-tags{gap:13.33px}
+  .hero-tag{font-size:17.33px;padding:9.33px 24px}
+  .hero-desc{margin-top:26.67px;font-size:18.67px}
+  .hero-ctas{gap:18.67px}
+  .hero-ctas .btn{padding:16px 34.67px;font-size:18.67px}
+  .glass-card{padding:21.33px 26.67px;border-radius:10.67px}
+  .gc-num{font-size:37.33px}
+  .gc-label{font-size:18px}
+  .gc-sub{font-size:15.33px}
+  .glass-card.c4{bottom:74.67px;left:64px}
+  .hero-footer{left:64px;bottom:26.67px;font-size:16px}
+  .hero-spine{right:34.67px;font-size:98.67px}
+  .hero-crosshair .coords{top:117.33px;right:128px;font-size:16.67px}
+  .hero-crosshair .coordring{top:226.67px;width:98.67px;height:98.67px}
+  .hero-emblem{width:560px}
+  .emblem-year{font-size:168px}
+}
+
+
+/* ===== DESKTOP PROPORTIONAL SCALE — based on the original 1440px layout =====
+/* Keep the original composition; scale the fixed-size foreground elements with viewport width. */
+@media (min-width:769px){
+  .hero-corner{max-width:29.1667vw}
+  .hero-corner.tl{top:7.2222vw;left:3.3333vw}
+  .hero-corner.bl{bottom:14.3056vw;left:3.3333vw}
+  .hero-corner.bc{bottom:3.0556vw}
+
+  .hero h1{font-size:4.3056vw}
+  .hero-role{margin-top:1.25vw;font-size:.9028vw}
+  .hero-tags{gap:.6944vw}
+  .hero-tag{font-size:.9028vw;padding:.4861vw 1.25vw}
+  .hero-desc{margin-top:1.3889vw;font-size:.9722vw}
+  .hero-ctas{gap:.9722vw}
+  .hero-ctas .btn{padding:.8333vw 1.8056vw;font-size:.9722vw}
+  .btn svg{width:1.1111vw;height:1.1111vw}
+
+  .glass-card{padding:1.1111vw 1.3889vw;border-radius:.5556vw}
+  .gc-num{font-size:1.9444vw}
+  .gc-label{font-size:.9375vw;margin-top:.2083vw}
+  .gc-sub{font-size:.7986vw;margin-top:.2083vw}
+  .glass-card.c4{bottom:3.8889vw;left:3.3333vw}
+
+  .hero-footer{left:3.3333vw;bottom:1.3889vw;font-size:.8333vw}
+  .hero-spine{right:1.8056vw;font-size:5.1389vw}
+  .hero-crosshair .coords{top:6.1111vw;right:6.6667vw;font-size:.8681vw}
+  .hero-crosshair .coordring{top:11.8056vw;width:5.1389vw;height:5.1389vw}
+
+  .hero-emblem{width:38.8889vw}
+  .emblem-year{font-size:10.6vw}
+}
+
+/* At very large desktop sizes, cap the scale so the cover stays readable rather than oversized. */
+@media (min-width:1920px){
+  .hero-corner.tl{top:138.67px;left:64px}
+  .hero-corner.bl{bottom:274.67px;left:64px}
+  .hero-corner.bc{bottom:58.67px}
+  .hero h1{font-size:82.67px}
+  .hero-role{margin-top:24px;font-size:17.33px}
+  .hero-tags{gap:13.33px}
+  .hero-tag{font-size:17.33px;padding:9.33px 24px}
+  .hero-desc{margin-top:26.67px;font-size:18.67px}
+  .hero-ctas{gap:18.67px}
+  .hero-ctas .btn{padding:16px 34.67px;font-size:18.67px}
+  .glass-card{padding:21.33px 26.67px;border-radius:10.67px}
+  .gc-num{font-size:37.33px}
+  .gc-label{font-size:18px}
+  .gc-sub{font-size:15.33px}
+  .glass-card.c4{bottom:74.67px;left:64px}
+  .hero-footer{left:64px;bottom:26.67px;font-size:16px}
+  .hero-spine{right:34.67px;font-size:98.67px}
+  .hero-crosshair .coords{top:117.33px;right:128px;font-size:16.67px}
+  .hero-crosshair .coordring{top:226.67px;width:98.67px;height:98.67px}
+  .hero-emblem{width:560px}
+  .emblem-year{font-size:168px}
+}
+
 </style>
 </head>
 <body>
@@ -1072,35 +1188,35 @@ document.addEventListener('mousemove',function(e){
 var PROJECTS=[
  {name:'濒危海洋生物盲盒',cat:'产品设计',tags:['产品设计','包装','IP设计'],
   desc:'以濒危海洋生物为原型的盲盒产品设计。\n从IP形象设定、包装结构到周边物料完整落地，把可持续发展理念转译成年轻化、可收藏的视觉语言，让公益议题通过消费场景自然触达大众。产品线包含角色设定、盒型结构、系列包装与配套周边。',
-  images:['images/portfolio/slide3_图片 2.png'],role:'IP形象 / 包装设计',year:'2024'},
+  images:['images/portfolio/work-18.png'],role:'IP形象 / 包装设计',year:'2024'},
 
  {name:'锦江酒店2026年会',cat:'活动视觉',tags:['活动视觉','品牌','主KV'],
   desc:'千人级企业年会全流程视觉统筹。\n独立完成主视觉KV设计、全套物料延展（邀请函、签到墙、舞台背景、伴手礼、桌卡等），并跟进现场执行与布置落地。在统一的视觉体系下平衡商务质感与节日氛围，保证大屏、印刷、物料多场景的一致性呈现。',
-  images:['images/portfolio/slide4_图片 3.jpg','images/portfolio/slide4_图片 7.jpg','images/portfolio/slide4_图片 8.jpg','images/portfolio/slide4_图片 16.jpg','images/portfolio/slide4_图片 18.jpg','images/portfolio/slide4_图片 20.png','images/portfolio/slide4_图片 24.jpg'],role:'主视觉 / 物料延展 / 现场执行',year:'2026'},
+  images:['images/portfolio/work-23.jpg','images/portfolio/work-24.jpg','images/portfolio/work-25.jpg','images/portfolio/work-19.jpg','images/portfolio/work-20.jpg','images/portfolio/work-21.png','images/portfolio/work-22.jpg'],role:'主视觉 / 物料延展 / 现场执行',year:'2026'},
 
  {name:'培训数据看板搭建',cat:'数据运营',tags:['数据运营','BI','可视化'],
   desc:'独立搭建培训业务数据看板，把分散在多张表格中的培训数据整合为可视化仪表盘。\n覆盖参训率、完成率、考核成绩、满意度等多维指标，支持按部门、时间、课程类型交叉查看，帮助业务方快速定位问题并优化培训安排，显著减少人工统计时间。',
-  images:['images/portfolio/slide5_图片 16.png','images/portfolio/slide5_图片 18.png'],role:'数据可视化 / 业务优化',year:'2025'},
+  images:['images/portfolio/work-26.png','images/portfolio/work-27.png'],role:'数据可视化 / 业务优化',year:'2025'},
 
  {name:'乡村规划 / 汽车公园竞赛',cat:'城乡规划',tags:['城乡规划','竞赛','概念规划'],
   desc:'城乡规划专业竞赛作品。\n围绕乡村产业转型与汽车文化主题，完成从场地调研、概念生成、功能分区到空间形态推敲的完整设计推演，输出总平面、分析图与场景效果图，兼顾规划逻辑的严谨性与方案表达的视觉冲击力。',
-  images:['images/portfolio/slide7_图片 6.jpg'],role:'规划设计 / 竞赛方案',year:'2023'},
+  images:['images/portfolio/work-28.jpg'],role:'规划设计 / 竞赛方案',year:'2023'},
 
  {name:'自媒体内容运营',cat:'内容运营',tags:['内容运营','新媒体','小红书'],
   desc:'小红书、抖音平台自媒体内容运营实践。\n负责选题策划、图文与短视频视觉产出、发布节奏管理与数据复盘，通过封面点击率、互动率等指标持续迭代内容方向，多篇内容实现万级曝光，沉淀出可复用的内容方法论。',
-  images:['images/portfolio/slide11_Case image 1.png','images/portfolio/slide11_Case image 2.png','images/portfolio/slide11_图片 2.jpg','images/portfolio/slide11_图片 3.jpg','images/portfolio/slide11_图片 4.jpg','images/portfolio/slide11_图片 6.jpg','images/portfolio/slide11_图片 7.jpg'],role:'内容策划 / 视觉产出 / 数据复盘',year:'2025'},
+  images:['images/portfolio/work-09.png','images/portfolio/work-10.png','images/portfolio/work-11.jpg','images/portfolio/work-12.jpg','images/portfolio/work-13.jpg','images/portfolio/work-14.jpg','images/portfolio/work-15.jpg'],role:'内容策划 / 视觉产出 / 数据复盘',year:'2025'},
 
  {name:'校园活动视觉设计',cat:'平面设计',tags:['平面设计','海报','活动'],
   desc:'校园活动系列视觉设计。\n围绕活动主题建立视觉基调，输出主视觉海报、系列延展海报与线上宣传图，通过统一的色彩与版式语言强化活动辨识度，覆盖宣传预热到现场呈现的完整链路。',
-  images:['images/portfolio/slide9_图片 2.jpg','images/portfolio/slide9_图片 4.jpg','images/portfolio/slide9_图片 5.jpg'],role:'海报设计 / 活动视觉',year:'2024'},
+  images:['images/portfolio/work-33.jpg','images/portfolio/work-34.jpg','images/portfolio/work-35.jpg'],role:'海报设计 / 活动视觉',year:'2024'},
 
  {name:'平面设计合集',cat:'平面设计',tags:['平面设计','VI','品牌'],
   desc:'品牌视觉与平面设计作品合集。\n涵盖品牌VI系统、标识设计、版式探索与多风格视觉实验，在不同行业属性与调性要求下输出匹配的设计方案，展示对色彩、字体、构图与信息层级的综合把控能力。',
-  images:['images/portfolio/slide10_图片 3.jpg','images/portfolio/slide10_图片 6.jpg','images/portfolio/slide10_图片 18.png','images/portfolio/slide10_图片 20.jpg'],role:'品牌视觉 / 平面设计',year:'2024'},
+  images:['images/portfolio/work-07.jpg','images/portfolio/work-08.jpg','images/portfolio/work-05.png','images/portfolio/work-06.jpg'],role:'品牌视觉 / 平面设计',year:'2024'},
 
  {name:'专业能力展示',cat:'专业技能',tags:['专业技能','AIGC','方法'],
   desc:'复合型能力图谱与工作方法展示。\n梳理视觉设计、AIGC创意落地、项目全链路执行、数字化运营与内容营销五大能力模块，并展示AI辅助创意、生图改图、样机合成的实际工作流，体现从创意构思到实物落地的完整闭环能力。',
-  images:['images/portfolio/slide8_图片 1.png','images/portfolio/slide8_图片 2.png','images/portfolio/slide8_图片 3.png','images/portfolio/slide8_图片 5.png'],role:'能力梳理 / 工作流展示',year:'2025'},
+  images:['images/portfolio/work-29.png','images/portfolio/work-30.png','images/portfolio/work-31.png','images/portfolio/work-32.png'],role:'能力梳理 / 工作流展示',year:'2025'},
 
 // ===== 产品岗面试必备分析：卫生巾产品痛点挖掘与下一代产品设计 =====
  {name:'舒适安全型卫生巾产品设计',cat:'产品分析',tags:['产品分析','用户研究','需求分析','方案选型','商业化预估'],
@@ -1174,7 +1290,7 @@ var PROJECTS=[
        '<b>成本与风险</b>：医用级材质与立体结构会推高单件成本，需通过规模采购与规格组合平衡毛利；主要风险在于用户教育成本与教育周期。'
      ]}
   ],
-  images:['images/portfolio/goods-1.jpg','images/portfolio/goods-2.jpg','images/portfolio/goods-3.jpg','images/portfolio/goods-4.jpg']}
+  images:['images/portfolio/work-01.jpg','images/portfolio/work-02.jpg','images/portfolio/work-03.jpg','images/portfolio/work-04.jpg']}
 ];
 
 var marqueeTrack=document.getElementById('marqueeTrack');
