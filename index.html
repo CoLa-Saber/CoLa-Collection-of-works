@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陈雨可 | 设计师作品集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#111111;--bg-secondary:#0a0a0a;--card:#1a1a1a;--border:#222222;--border-hover:#333333;--fg:#ffffff;--fg-muted:#888888;--accent:#d1e1e8;--accent-dim:rgba(209,225,232,.1);--glass:rgba(255,255,255,.05);--font-display:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif;--radius:12px;--radius-lg:16px;--radius-full:9999px}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-height:1.6;overflow-x:hidden}
+
+/* ========== 全站暗纹背景（与封面同风格：细腻 / 低对比 / 克制） ==========
+   多层叠加顺序（由下到上）：底色 → 蓝图细网格 → 斜向暗纹 → 稀疏光点 → 中心柔光
+   用 fixed 固定，滚动时纹路不移动，视觉更稳；透明度均压在 2%-4%，不影响正文阅读 */
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-color:var(--bg);
+  background-image:
+    /* 1. 蓝图细网格：128px 大格 + 32px 小格，营造规划图纸质感 */
+    linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px),
+    linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px),
+    /* 2. 斜向暗纹：极浅的 45° 细纹，增加织物感 */
+    repeating-linear-gradient(45deg,rgba(255,255,255,.012) 0 1px,transparent 1px 14px),
+    /* 3. 稀疏光点：与首屏蓝青呼应，点缀而非铺满 */
+    radial-gradient(circle at 12% 18%,rgba(50,185,216,.055) 0 1.4px,transparent 1.6px),
+    radial-gradient(circle at 78% 42%,rgba(50,185,216,.045) 0 1.3px,transparent 1.5px),
+    radial-gradient(circle at 34% 76%,rgba(50,185,216,.05) 0 1.2px,transparent 1.4px),
+    radial-gradient(circle at 62% 12%,rgba(255,255,255,.04) 0 1.1px,transparent 1.3px),
+    /* 4. 中心柔光：让大面积底色不生硬 */
+    radial-gradient(ellipse 78% 58% at 52% 34%,rgba(50,185,216,.045) 0%,transparent 68%),
+    radial-gradient(ellipse 90% 70% at 18% 88%,rgba(209,225,232,.022) 0%,transparent 70%);
+  background-size:
+    128px 128px, 128px 128px,
+    32px 32px, 32px 32px,
+    auto,
+    320px 320px, 280px 280px, 360px 360px, 240px 240px,
+    100% 100%, 100% 100%;
+  background-position:
+    0 0, 0 0,
+    0 0, 0 0,
+    0 0,
+    0 0, 0 0, 0 0, 0 0,
+    0 0, 0 0;
+  /* 纹路整体淡化，越靠边缘越弱，避免和正文抢注意力 */
+  mask-image:radial-gradient(ellipse 120% 100% at 50% 30%,#000 42%,transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 120% 100% at 50% 30%,#000 42%,transparent 100%)}
+/* 内容层抬到暗纹之上 */
+.nav,.section,.hero,.footer{position:relative;z-index:1}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* ========== NAVIGATION ========== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;background:rgba(17,17,17,.85);backdrop-filter:blur(20px);border-bottom:1px solid transparent;transition:.3s}
+.nav.scrolled{border-bottom-color:var(--border)}
+.nav .container{display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--accent);text-decoration:none}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:14px;font-weight:500;transition:.3s;position:relative}
+.nav-links a:hover{color:var(--fg)}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--accent);transition:.3s}
+.nav-links a:hover::after{width:100%}
+.nav-cta{padding:10px 24px;background:var(--accent);color:var(--bg) !important;border-radius:var(--radius-full);font-weight:600 !important;transition:.3s}
+.nav-cta:hover{background:#fff !important;color:var(--bg) !important}
+.nav-cta::after{display:none !important}
+.mobile-toggle{display:none;background:none;border:none;color:var(--fg);cursor:pointer;padding:8px}
+
+/* ========== HERO 模块：首屏（极简科技风 / 杂志式左文右图） ==========
+   视觉构成：人物光晕 → 蓝图网格 → 轨道虚线圆 → 散布光点 → 准星坐标 → 暗角
+   右侧书脊描边字 PORTFOLIO + 4 张毛玻璃数据卡悬浮 */
+:root{
+  --hero-bg:#0A0C0E;        /* 近黑底色 */
+  --teal:#32B9D8;           /* 蓝青色单色系点缀 */
+  --teal-soft:rgba(50,185,216,.45);
+  --teal-faint:rgba(50,185,216,.14);
+}
+.hero{min-height:100vh;position:relative;overflow:hidden;display:block;background:var(--hero-bg)}
+.hero-bg{position:absolute;inset:0;z:0;overflow:hidden}
+
+/* 人物主体：置于画面右侧约 2/3 处，左侧留白给文字，视觉重心左右平衡 */
+.hero-bg video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;
+  object-position:50% 40%;
+  transform:translateX(14%) scale(1.05);
+  transition:transform .5s ease-out;
+  filter:saturate(.96) contrast(1.05) brightness(.9);
+}
+
+/* ===== 1. 人物光晕：青蓝色径向柔光，把人物从暗背景中托出 ===== */
+.hero-glow{position:absolute;inset:0;z:1;pointer-events:none;mix-blend-mode:screen;
+  background:
+    radial-gradient(ellipse 26% 40% at 63% 44%,rgba(50,185,216,.30) 0%,rgba(50,185,216,.13) 34%,transparent 70%),
+    radial-gradient(ellipse 42% 54% at 62% 46%,rgba(50,185,216,.10) 0%,transparent 66%);
+  filter:blur(46px);
+  animation:glowBreathe 9s ease-in-out infinite;
+}
+@keyframes glowBreathe{0%,100%{opacity:.9}50%{opacity:1}}
+
+/* ===== 2. 背景网格：规划图纸质感，64px 细线 3% 透明度 ===== */
+.hero-grid{position:absolute;inset:0;z:1;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 92% 88% at 50% 46%,#000 32%,transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 92% 88% at 50% 46%,#000 32%,transparent 100%);
+}
+
+/* ===== 3. 轨道虚线圆：两道同心椭圆 + 轨道光点 ===== */
+.hero-orbit{position:absolute;inset:0;z:2;pointer-events:none;display:flex;align-items:center;justify-content:center}
+.hero-orbit svg{width:min(1180px,104vw);height:auto;opacity:.85}
+.hero-orbit .ring{fill:none;stroke:var(--teal);stroke-width:1}
+.hero-orbit .ring-outer{stroke-dasharray:7 11;opacity:.34;animation:orbitSpin 140s linear infinite;transform-origin:center}
+.hero-orbit .ring-inner{stroke-dasharray:4 9;opacity:.26;animation:orbitSpin 90s linear infinite reverse;transform-origin:center}
+.hero-orbit .sat{fill:var(--teal);opacity:.9}
+.hero-orbit .sat-halo{fill:var(--teal);opacity:.22}
+@keyframes orbitSpin{to{transform:rotate(360deg)}}
+
+/* ===== 4. 散布光点：环境尘埃粒子（数量由脚本生成） ===== */
+.hero-particles{position:absolute;inset:0;z:2;pointer-events:none}
+.hero-particles i{position:absolute;border-radius:50%;background:var(--teal);
+  box-shadow:0 0 6px rgba(50,185,216,.85);animation:twinkle 5s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.12}50%{opacity:.7}}
+
+/* ===== 5. 准星 + 坐标：测绘 / 规划气质 ===== */
+.hero-crosshair{position:absolute;inset:0;z:3;pointer-events:none}
+.hero-crosshair .ch{position:absolute;width:22px;height:22px;opacity:.34}
+.hero-crosshair .ch::before,.hero-crosshair .ch::after{content:'';position:absolute;background:rgba(255,255,255,.75)}
+.hero-crosshair .ch::before{left:50%;top:0;width:1px;height:100%;transform:translateX(-50%)}
+.hero-crosshair .ch::after{top:50%;left:0;height:1px;width:100%;transform:translateY(-50%)}
+.hero-crosshair .ch.a{top:19%;left:40%}
+.hero-crosshair .ch.b{bottom:23%;left:33%}
+.hero-crosshair .coords{position:absolute;top:88px;right:96px;font-family:monospace;font-size:12.5px;
+  letter-spacing:.16em;color:rgba(255,255,255,.62)}
+.hero-crosshair .coordring{position:absolute;top:170px;left:24%;width:74px;height:74px;border-radius:50%;
+  border:1px dashed rgba(255,255,255,.2)}
+.hero-crosshair .coordring::after{content:'';position:absolute;inset:50% auto auto 50%;width:4px;height:4px;
+  margin:-2px 0 0 -2px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal)}
+
+/* ===== 6.5 巨型描边水印「2026」 =====
+   构成：描边空心数字 → 青蓝重影层
+   位于左文右图之间，作为视觉过渡层，不遮挡人物与按钮 */
+.hero-emblem{position:absolute;top:12%;left:22%;z:3;width:min(46vw,560px);
+  pointer-events:none;user-select:none;animation:fadeInUp 1s ease both;animation-delay:.5s}
+
+/* 巨型描边水印数字 */
+.emblem-year{position:relative;font-family:var(--font-display);font-weight:700;
+  font-size:clamp(72px,10.6vw,168px);line-height:1;letter-spacing:.02em;
+  color:transparent;-webkit-text-stroke:1.3px rgba(255,255,255,.24);
+  text-stroke:1.3px rgba(255,255,255,.24);margin-bottom:0}
+/* 青蓝色重影：向左侧轻微偏移、叠加，形成色差感 */
+.emblem-year::before{content:attr(data-year);position:absolute;left:-5px;top:-2px;
+  color:transparent;-webkit-text-stroke:1.1px rgba(50,185,216,.42);
+  text-stroke:1.1px rgba(50,185,216,.42);mix-blend-mode:screen;opacity:.9}
+/* 数字下方极淡的收尾光晕，替代原先的蓝线与标语，让下缘自然融入暗背景 */
+.emblem-year::after{content:'';position:absolute;left:0;right:0;bottom:-34px;height:78px;
+  background:radial-gradient(ellipse 70% 100% at 24% 0%,rgba(50,185,216,.07) 0%,transparent 72%);
+  pointer-events:none}
+
+/* ===== 6. 暗角：边缘压暗，聚焦中心 ===== */
+.hero-vignette{position:absolute;inset:0;z:4;pointer-events:none;
+  background:
+    radial-gradient(ellipse 82% 82% at 54% 50%,transparent 40%,rgba(6,8,10,.62) 100%),
+    linear-gradient(to bottom,rgba(10,12,14,.72) 0%,rgba(10,12,14,.12) 24%,rgba(10,12,14,.12) 70%,rgba(10,12,14,.86) 100%)}
+
+/* ===== 7. 右侧书脊描边字：PORTFOLIO ===== */
+.hero-spine{position:absolute;top:50%;right:26px;transform:translateY(-50%);z:6;
+  writing-mode:vertical-rl;text-orientation:upright;
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(40px,5.4vw,74px);letter-spacing:.16em;line-height:1;
+  color:transparent;-webkit-text-stroke:1.4px rgba(255,255,255,.26);
+  pointer-events:none;user-select:none}
+/* 书脊两侧的细发丝线 */
+.hero-spine::before,.hero-spine::after{content:'';position:absolute;top:-6%;bottom:-6%;width:1px;
+  background:linear-gradient(to bottom,transparent,rgba(255,255,255,.22),transparent)}
+.hero-spine::before{left:-16px}
+.hero-spine::after{right:-16px}
+
+/* ===== 8. 悬浮玻璃数据卡（毛玻璃拟态） ===== */
+.hero-stats{position:absolute;inset:0;z:7;pointer-events:none}
+.glass-card{
+  position:absolute;pointer-events:auto;
+  padding:16px 20px;border-radius:8px;
+  background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.2);
+  backdrop-filter:blur(14px) saturate(1.2);
+  -webkit-backdrop-filter:blur(14px) saturate(1.2);
+  box-shadow:0 12px 34px rgba(0,0,0,.32);
+  animation:cardFloat 7s ease-in-out infinite;
+  transition:background .35s ease,border-color .35s ease,box-shadow .35s ease;
+  will-change:transform}
+.glass-card:hover{
+  background:rgba(255,255,255,.22);
+  border-color:rgba(50,185,216,.5);
+  box-shadow:0 18px 44px rgba(50,185,216,.24)}
+.gc-num{font-family:var(--font-display);font-size:clamp(20px,1.9vw,28px);font-weight:700;
+  line-height:1.1;color:#fff;letter-spacing:-.01em}
+.gc-label{font-size:13.5px;font-weight:500;color:rgba(255,255,255,.7);margin-top:3px}
+.gc-sub{font-size:11.5px;color:rgba(255,255,255,.45);margin-top:3px;white-space:nowrap}
+/* 四张卡错开漂浮，节奏自然不机械（纵向错落，避开文字与书脊字） */
+.glass-card.c1{top:16%;right:13%;animation-delay:0s}
+.glass-card.c2{top:45%;right:9%;animation-delay:-1.8s}
+.glass-card.c3{top:71%;right:6.5%;animation-delay:-3.4s}
+.glass-card.c4{bottom:56px;left:48px;animation-delay:-5s}
+@keyframes cardFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+
+/* ===== 9. 底部标识文字 ===== */
+.hero-footer{position:absolute;left:48px;bottom:20px;z:8;
+  font-family:var(--font-display);font-size:12px;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.7);
+  pointer-events:none}
+
+/* 四角容器 */
+.hero-corners{position:absolute;inset:0;z:9;pointer-events:none}
+.hero-corner{position:absolute;pointer-events:auto;max-width:min(38vw,420px)}
+.hero-corner.tl{top:104px;left:48px;text-align:left;animation:fadeInUp .9s ease both;animation-delay:.3s}
+.hero-corner.bl{bottom:206px;left:48px;text-align:left;animation:fadeInUp .9s ease both;animation-delay:.6s}
+/* 中下方：按钮区，水平居中 */
+.hero-corner.bc{bottom:44px;left:50%;transform:translateX(-50%);text-align:center;display:flex;flex-direction:column;align-items:center;width:auto;max-width:90vw;animation:fadeInUp .9s ease both;animation-delay:.9s}
+/* 左侧文字区加一层极淡的暗色衬底，避免与人物主体粘连、提升可读性 */
+.hero-corner.tl::before,.hero-corner.bl::before{content:'';position:absolute;left:-40px;right:-90px;top:-40px;bottom:-40px;z:-1;
+  background:radial-gradient(ellipse 100% 100% at 0% 50%,rgba(10,12,16,.62) 0%,rgba(10,12,16,.28) 48%,transparent 78%);pointer-events:none}
+
+/* 左上：姓名 + 作品集 */
+.hero h1{font-family:var(--font-display);font-size:clamp(34px,4.4vw,62px);font-weight:700;line-height:1.02;letter-spacing:-.02em}
+.hero h1 .name{display:block;color:var(--fg)}
+.hero h1 .title{display:block;background:linear-gradient(135deg,var(--accent),#a5c4d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-top:4px}
+.hero-role{margin-top:18px;font-size:13px;font-family:monospace;color:var(--accent);letter-spacing:.05em}
+
+/* 左下：标签 + 简介 */
+.hero-tags{display:flex;flex-wrap:wrap;gap:10px}
+.hero-tag{font-size:13px;color:var(--fg-muted);border:1px solid rgba(255,255,255,.15);border-radius:var(--radius-full);padding:7px 18px;transition:.3s;cursor:default;background:rgba(17,17,17,.35);backdrop-filter:blur(8px)}
+.hero-tag:hover{border-color:var(--accent);color:var(--accent)}
+.hero-desc{margin-top:20px;font-size:14px;color:var(--fg-muted);line-height:1.8}
+
+/* 右下：按钮 */
+.hero-ctas{display:flex;flex-wrap:wrap;gap:14px;justify-content:flex-end}
+.hero-ctas .btn{padding:12px 26px;font-size:14px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:var(--radius-full);font-size:15px;font-weight:600;text-decoration:none;transition:.3s;cursor:pointer;border:none}
+.btn-primary{background:var(--fg);color:var(--bg)}
+.btn-primary:hover{background:var(--accent);transform:translateY(-2px);box-shadow:0 8px 30px rgba(209,225,232,.2)}
+.btn-outline{background:transparent;color:var(--fg);border:1px solid var(--border)}
+.btn-outline:hover{border-color:var(--fg);transform:translateY(-2px)}
+.btn svg{width:16px;height:16px;transition:transform .3s}
+.btn:hover svg{transform:translateY(2px)}
+
+/* ========== 作品详情弹窗模块 ========== */
+/* 长文项目（如产品分析）的分段排版：小标题 + 段落 + 要点列表 */
+.detail-sections{display:flex;flex-direction:column;gap:22px;margin-bottom:28px}
+.detail-sec h4{
+  font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.04em;margin-bottom:9px;
+  display:flex;align-items:center;gap:9px;
+}
+.detail-sec h4::before{content:'';width:14px;height:2px;border-radius:2px;background:var(--accent);flex:0 0 auto}
+.detail-sec p{font-size:13.5px;line-height:1.85;color:var(--fg-muted)}
+.detail-sec ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.detail-sec li{position:relative;padding-left:16px;font-size:13.5px;line-height:1.8;color:var(--fg-muted)}
+.detail-sec li::before{content:'';position:absolute;left:0;top:.68em;width:5px;height:5px;border-radius:50%;background:rgba(209,225,232,.45)}
+.detail-sec li b{color:#d8d8d8;font-weight:600}
+.detail-desc--sections{display:none}
+
+.detail-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;
+  padding:40px 24px;background:rgba(6,6,8,.82);backdrop-filter:blur(22px);opacity:0;transition:opacity .35s ease}
+.detail-modal.open{display:flex;opacity:1}
+.detail-panel{
+  display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);
+  /* 关键：把行高锁定为容器高度，否则长文会把整个面板撑高、图片区被挤出可视范围 */
+  grid-template-rows:minmax(0,1fr);
+  width:min(1160px,100%);max-height:min(88vh,900px);
+  background:var(--card);border:1px solid var(--border);border-radius:22px;overflow:hidden;
+  box-shadow:0 40px 120px rgba(0,0,0,.7);
+  transform:translateY(18px) scale(.985);opacity:0;
+  transition:transform .42s cubic-bezier(.22,.68,.36,1),opacity .42s ease;
+}
+.detail-modal.open .detail-panel{transform:translateY(0) scale(1);opacity:1}
+
+/* 左侧：图片浏览区 */
+.detail-media{position:relative;background:#0c0c0e;display:flex;flex-direction:column;min-width:0;min-height:0}
+.detail-media .lb-img{flex:1;width:100%;min-height:0;object-fit:contain;padding:18px;cursor:zoom-in;user-select:none;-webkit-user-drag:none}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.16);background:rgba(18,18,20,.72);backdrop-filter:blur(10px);
+  color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.28s;z-index:6}
+.lb-nav:hover{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.lb-nav:disabled{opacity:.16;cursor:not-allowed}
+.lb-nav:disabled:hover{background:rgba(18,18,20,.72);color:#fff;border-color:rgba(255,255,255,.16)}
+.lb-prev{left:16px}
+.lb-next{right:16px}
+.detail-thumbs{display:flex;gap:8px;flex-wrap:wrap;padding:0 18px 14px;flex-shrink:0}
+.lb-thumb{width:56px;height:42px;border-radius:7px;overflow:hidden;border:2px solid transparent;cursor:pointer;
+  opacity:.45;transition:.28s;background:#1a1a1a;padding:0;flex-shrink:0}
+.lb-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.lb-thumb:hover{opacity:.8}
+.lb-thumb.active{border-color:var(--accent);opacity:1}
+.detail-counter{text-align:center;padding:0 18px 14px;font-size:12px;font-family:monospace;color:var(--fg-muted);flex-shrink:0}
+
+/* 右侧：作品信息区 */
+.detail-info{position:relative;padding:40px 36px 36px;overflow-y:auto;min-width:0;min-height:0}
+.detail-close{position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;
+  border:1px solid var(--border);background:rgba(255,255,255,.05);color:var(--fg);font-size:22px;line-height:1;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.28s}
+.detail-close:hover{background:rgba(255,255,255,.13);border-color:var(--fg);transform:rotate(90deg)}
+.detail-cat{font-size:11px;font-family:monospace;color:var(--accent);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+.detail-title{font-family:var(--font-display);font-size:clamp(22px,2.4vw,30px);font-weight:700;line-height:1.25;margin-bottom:16px;padding-right:44px}
+.detail-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px}
+.detail-tags span{padding:5px 13px;background:var(--bg);border:1px solid var(--border);border-radius:12px;font-size:11px;color:var(--fg-muted)}
+.detail-desc{font-size:14px;line-height:1.85;color:var(--fg-muted);margin-bottom:28px;white-space:pre-line}
+.detail-meta{border-top:1px solid var(--border);padding-top:20px;display:flex;flex-direction:column;gap:12px}
+.detail-meta .row{display:flex;justify-content:space-between;gap:16px;font-size:13px}
+.detail-meta .k{color:rgba(136,136,136,.75);flex-shrink:0}
+.detail-meta .v{color:var(--accent);text-align:right}
+
+/* ========== SECTION COMMON ========== */
+.section{padding:120px 0;position:relative}
+.section-label{font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:3px;font-weight:600;margin-bottom:16px}
+.section-title{font-family:var(--font-display);font-size:clamp(32px,5vw,56px);font-weight:700;line-height:1.1;margin-bottom:20px}
+.section-desc{font-size:16px;color:var(--fg-muted);max-width:560px;line-height:1.7}
+
+/* ========== PORTFOLIO ========== */
+.filter-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px;justify-content:center}
+/* ========== 作品集滚动卡片模块 ========== */
+/* 外层：裁掉溢出的卡片，并在左右留出渐隐空间 */
+.marquee-wrap{position:relative;padding:8px 0 28px;overflow:hidden;
+  /* 拖拽时禁止选中文字 / 拖出图片幽灵图 */
+  user-select:none;-webkit-user-select:none}
+.marquee-track{
+  display:flex;
+  gap:38px;
+  width:max-content;
+  padding:26px 0;
+  /* 位移由 JS 统一驱动（自动滚动 + 鼠标拖拽共享同一个 offset，避免互相冲突） */
+  will-change:transform;
+}
+/* 拖拽中：禁用卡片过渡，保证跟手 */
+.marquee-wrap.is-dragging{cursor:grabbing}
+.marquee-wrap.is-dragging .p-card,
+.marquee-wrap.is-dragging .p-card img{transition:none}
+/* 只有真正拖起来（超过阈值）才屏蔽卡片指针事件，否则会吃掉普通点击 */
+.marquee-wrap.is-moving .p-card{pointer-events:none}
+.marquee-wrap.is-moving{cursor:grabbing}
+
+/* 单张卡片：圆角方形 */
+.p-card{
+  position:relative;
+  width:var(--card-size);height:var(--card-size);
+  flex:0 0 auto;
+  border-radius:26px;
+  overflow:hidden;
+  cursor:pointer;
+  background:var(--card);
+  border:1px solid var(--border);
+  /* 尺寸与透明度平滑过渡，避免生硬 */
+  transition:transform .55s cubic-bezier(.22,.68,.36,1),
+             opacity .45s ease,
+             box-shadow .55s ease,
+             border-color .45s ease,
+             filter .45s ease;
+}
+/* 一屏约 3 张：中间略大，左右略小（--card-size 由 JS 按视口宽度写入） */
+.p-card.is-side{width:calc(var(--card-size) * .84);height:calc(var(--card-size) * .84);opacity:.42;filter:saturate(.72)}
+.p-card.is-center{opacity:1;transform:scale(1.07);z-index:2;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+
+/* 悬停微交互：卡片轻微放大 + 滚动暂停（轨道暂停见上方规则） */
+.p-card:hover{
+  transform:scale(1.12) translateY(-6px);
+  opacity:1;
+  filter:saturate(1);
+  border-color:var(--border-hover);
+  box-shadow:0 30px 70px rgba(0,0,0,.5);
+  z-index:3;
+}
+.p-card.is-center:hover{transform:scale(1.14) translateY(-6px)}
+
+.p-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.22,.68,.36,1)}
+.p-card:hover img{transform:scale(1.06)}
+/* 卡片遮罩：保证名称文字可读 */
+.p-card::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:linear-gradient(to top,rgba(8,8,10,.92) 0%,rgba(8,8,10,.6) 26%,rgba(8,8,10,.12) 52%,transparent 72%);transition:opacity .4s}
+.p-card:hover::after{opacity:.75}
+/* 查看提示 */
+.p-card-hint{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s;pointer-events:none}
+.p-card:hover .p-card-hint{opacity:1}
+.p-card-hint span{background:rgba(209,225,232,.95);color:#111;padding:9px 20px;border-radius:var(--radius-full);
+  font-size:12px;font-weight:600;transform:translateY(6px);transition:transform .35s}
+.p-card:hover .p-card-hint span{transform:translateY(0)}
+/* 卡片下方作品名称 */
+.p-card-name{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:18px 20px;
+  font-size:14.5px;font-weight:700;color:#fff;letter-spacing:.02em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-shadow:0 2px 12px rgba(0,0,0,.85);
+  transition:color .35s,transform .35s}
+.p-card:hover .p-card-name{color:var(--accent);transform:translateY(-3px)}
+
+/* 左右渐隐遮罩：卡片滚到边界自然淡出 */
+.marquee-fade{position:absolute;top:0;bottom:0;width:16%;z-index:5;pointer-events:none}
+.marquee-fade.left{left:0;background:linear-gradient(to right,var(--bg) 0%,rgba(17,17,17,.86) 38%,transparent 100%)}
+.marquee-fade.right{right:0;background:linear-gradient(to left,var(--bg) 0%,rgba(17,17,17,.86) 38%,transparent 100%)}
+
+/* 滚动条两端留白提示 */
+.marquee-tip{text-align:center;font-size:12px;font-family:monospace;color:var(--fg-muted);opacity:.55;margin-top:10px}
+
+/* 尊重系统「减少动态效果」：停止自动滚动，改为可手动横向滚动 */
+@media(prefers-reduced-motion:reduce){
+  .marquee-wrap{overflow-x:auto}
+}
+
+/* 简历档案模块（RESUME） */
+/* 标题行：大标题与描述文字同行横向排版，基线对齐 */
+.resume-headline{display:flex;align-items:baseline;flex-wrap:wrap;gap:8px 28px;margin-bottom:8px}
+.resume-headline .section-title{margin-bottom:0}
+.resume-headline .section-desc{max-width:none;flex:1;min-width:260px;margin-bottom:0}
+/* 顶部档案卡：姓名 / 身份 / 联系方式 / 学历概览 */
+.resume-hero{
+  position:relative;overflow:hidden;margin-top:48px;
+  background:linear-gradient(135deg,rgba(209,225,232,.07) 0%,rgba(26,26,26,1) 46%,rgba(10,10,10,1) 100%);
+  border:1px solid var(--border);border-radius:22px;padding:44px 44px 38px;
+}
+/* 右上角装饰光晕，呼应 Hero 的打光语言 */
+.resume-hero::after{
+  content:'';position:absolute;top:-120px;right:-100px;width:340px;height:340px;border-radius:50%;
+  background:radial-gradient(circle,rgba(209,225,232,.13) 0%,transparent 68%);pointer-events:none;
+}
+.resume-head{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 26px;position:relative;z-index:1}
+.resume-name{font-family:var(--font-display);font-size:clamp(30px,4.2vw,44px);font-weight:700;line-height:1.1;letter-spacing:.01em}
+.resume-title{
+  font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.14em;text-transform:uppercase;
+  padding:7px 16px;border:1px solid rgba(209,225,232,.28);border-radius:var(--radius-full);background:var(--accent-dim);
+}
+/* 方向标签组：策划 / 产品 / 运营 / 设计 */
+.resume-titles{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
+.resume-tagline{font-size:15px;color:var(--fg-muted);margin-top:16px;line-height:1.75;max-width:640px;position:relative;z-index:1}
+.resume-contacts{display:flex;flex-wrap:wrap;gap:10px 12px;margin-top:26px;position:relative;z-index:1}
+.resume-contact{
+  display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:var(--radius-full);
+  background:rgba(255,255,255,.045);border:1px solid var(--border);font-size:13px;color:#cfcfcf;
+  text-decoration:none;transition:.3s;
+}
+.resume-contact:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.resume-contact b{color:var(--fg-muted);font-weight:500}
+
+/* 中部：左（能力亮点）右（经历时间线）双栏 */
+.resume-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:28px;margin-top:28px}
+.resume-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px 30px}
+.resume-block-title{
+  font-size:12px;font-family:monospace;color:var(--accent);letter-spacing:.16em;text-transform:uppercase;
+  margin-bottom:24px;display:flex;align-items:center;gap:10px;
+}
+.resume-block-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* 能力亮点：数字序号 + 标题 + 说明 */
+.cap-item{display:flex;gap:16px;padding:16px 0;border-bottom:1px dashed rgba(255,255,255,.07)}
+.cap-item:last-child{border-bottom:none;padding-bottom:0}
+.cap-item:first-child{padding-top:0}
+.cap-num{
+  flex:0 0 auto;width:28px;height:28px;border-radius:9px;background:var(--accent-dim);border:1px solid rgba(209,225,232,.22);
+  color:var(--accent);font-size:12px;font-weight:700;font-family:var(--font-display);
+  display:flex;align-items:center;justify-content:center;margin-top:2px;
+}
+.cap-text h4{font-size:14.5px;font-weight:600;margin-bottom:6px;color:#f2f2f2}
+.cap-text p{font-size:13px;color:var(--fg-muted);line-height:1.7}
+
+/* 经历时间线 */
+.exp-item{position:relative;padding:0 0 26px 22px;border-left:1px solid var(--border)}
+.exp-item:last-child{padding-bottom:0}
+.exp-item::before{
+  content:'';position:absolute;left:-4.5px;top:6px;width:8px;height:8px;border-radius:50%;
+  background:var(--accent);box-shadow:0 0 0 4px rgba(209,225,232,.12);
+}
+.exp-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;margin-bottom:8px}
+.exp-period{font-size:11.5px;font-family:monospace;color:var(--accent);letter-spacing:.06em}
+.exp-org{font-size:15px;font-weight:600;color:#f2f2f2}
+.exp-role{font-size:12px;color:var(--fg-muted);padding:3px 10px;border-radius:var(--radius-full);background:rgba(255,255,255,.05)}
+.exp-desc{font-size:13px;color:var(--fg-muted);line-height:1.78}
+.exp-desc strong{color:#c9c9c9;font-weight:600}
+.exp-sub{margin-top:10px;padding-left:14px;border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:9px}
+.exp-sub p{font-size:12.5px;color:rgba(136,136,136,.95);line-height:1.75}
+.exp-sub strong{color:var(--accent);font-weight:600}
+
+/* 底部：奖项 / 教育 / 技能 三栏 */
+.resume-foot{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:28px}
+.award-item{padding:14px 0;border-bottom:1px dashed rgba(255,255,255,.07)}
+.award-item:last-child{border-bottom:none;padding-bottom:0}
+.award-item:first-child{padding-top:0}
+.award-name{font-size:13.5px;font-weight:600;color:#eaeaea;line-height:1.6}
+.award-meta{font-size:12px;color:var(--fg-muted);margin-top:5px;display:flex;flex-wrap:wrap;gap:6px 12px}
+.award-meta em{font-style:normal;color:var(--accent)}
+
+.edu-item{margin-bottom:22px}
+.edu-item:last-child{margin-bottom:0}
+.edu-item .edu-org{font-size:14.5px;font-weight:600;color:#f2f2f2}
+.edu-item .edu-degree{font-size:12.5px;color:var(--fg-muted);margin-top:5px}
+.edu-item .edu-course{font-size:12.5px;color:rgba(136,136,136,.9);margin-top:8px;line-height:1.7}
+
+/* 技能标签分组 */
+.skill-group{margin-bottom:20px}
+.skill-group:last-child{margin-bottom:0}
+.skill-group-name{font-size:12.5px;color:var(--fg-muted);margin-bottom:10px}
+.skill-chips{display:flex;flex-wrap:wrap;gap:7px}
+.skill-chips span{
+  padding:5px 12px;border-radius:8px;font-size:12px;color:#d4d4d4;
+  background:rgba(255,255,255,.045);border:1px solid var(--border);transition:.28s;
+}
+.skill-chips span:hover{border-color:rgba(209,225,232,.35);color:var(--accent);transform:translateY(-1px)}
+
+/* ========== STATS ========== */
+.stats-wrapper{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:60px 40px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:32px;text-align:center}
+.stat-item{padding:20px}
+.stat-number{font-family:var(--font-display);font-size:clamp(36px,5vw,56px);font-weight:700;color:var(--accent);line-height:1}
+.stat-label{font-size:14px;color:var(--fg-muted);margin-top:8px}
+.stat-desc{font-size:12px;color:rgba(136,136,136,.7);margin-top:4px}
+.stats-cta{text-align:center;margin-top:44px}
+.stats-cta p{color:var(--fg-muted);margin-bottom:20px;font-size:15px}
+
+/* ========== CONTACT ========== */
+/* 联系区块不再用实色底，改用极淡的上缘分隔渐变，让全站暗纹连续贯通 */
+.section#contact::before{content:'';position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent)}
+.section#contact{background:linear-gradient(to bottom,rgba(10,10,10,.55) 0%,rgba(10,10,10,.18) 42%,transparent 100%)}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:700px;margin:48px auto 0}
+.contact-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:44px 32px;text-align:center;transition:.3s}
+.contact-card:hover{border-color:var(--border-hover);transform:translateY(-4px)}
+.contact-icon{font-size:36px;margin-bottom:16px}
+.contact-card h3{font-size:18px;margin-bottom:10px}
+.contact-card p{font-size:14px;color:var(--fg-muted);margin-bottom:24px}
+
+/* ========== FOOTER ========== */
+.footer{border-top:1px solid var(--border);padding:48px 0;text-align:center}
+.footer p{font-size:14px;color:var(--fg-muted)}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* 尊重系统「减少动态效果」设置：关闭装饰性动画 */
+@media(prefers-reduced-motion:reduce){
+.hero-glow,.hero-orbit .ring,.hero-particles i,.glass-card{animation:none}
+}
+
+/* ========== RESPONSIVE ========== */
+@media(max-width:768px){
+/* 移动端：导航链接收进汉堡菜单，只显示按钮 */
+.nav-links{display:none}
+.mobile-toggle{display:block}
+.section{padding:80px 0}
+.stats-wrapper{padding:40px 24px}
+.contact-grid{grid-template-columns:1fr}
+/* Hero 在移动端改为纵向堆叠，中间仍留出视频空间 */
+.hero{min-height:100vh;padding:100px 0 56px;display:flex;flex-direction:column}
+.hero-corners{position:relative;inset:auto;height:auto;display:flex;flex-direction:column;
+  justify-content:flex-start;min-height:0;gap:22px;flex:1;order:1}
+.hero-corner{position:static;max-width:100%;text-align:left !important;align-items:flex-start !important;transform:none !important}
+.hero-corner.bc{display:flex;flex-direction:column;align-items:flex-start;left:auto}
+.hero h1{font-size:40px}
+.hero-ctas{justify-content:flex-start}
+/* Hero 新增装饰层在移动端收敛：书脊字隐藏、轨道收缩、玻璃卡转为两列网格 */
+.hero-spine{display:none}
+.hero-crosshair .coords{top:84px;right:20px;font-size:11px}
+.hero-crosshair .coordring{display:none}
+.hero-crosshair .ch.a,.hero-crosshair .ch.b{display:none}
+/* 水印徽标：缩小并贴在玻璃卡之前，保持装饰感又不挤压内容 */
+.hero-emblem{position:relative;top:auto;left:auto;width:100%;max-width:100%;
+  padding:0 20px;order:2;margin:0}
+.emblem-year{font-size:clamp(58px,18vw,96px);-webkit-text-stroke-width:1px}
+.hero-orbit{opacity:.5}
+.hero-orbit svg{width:180vw}
+.hero-grid{background-size:44px 44px}
+/* 玻璃卡：脱离绝对定位，改为两列网格排在文字之后 */
+.hero-stats{position:relative;inset:auto;z:9;display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+  padding:0 20px 16px;order:3}.glass-card{position:static !important;top:auto !important;right:auto !important;
+  bottom:auto !important;left:auto !important;padding:12px 14px;animation:none}
+.gc-num{font-size:20px}
+.gc-sub{font-size:10.5px;white-space:normal}
+.hero-footer{left:20px;bottom:14px;font-size:10px;letter-spacing:.14em}
+.hero-glow{background:radial-gradient(ellipse 62% 34% at 55% 34%,rgba(50,185,216,.28) 0%,transparent 72%);filter:blur(34px)}
+.hero-vignette{background:linear-gradient(to bottom,rgba(10,12,14,.86) 0%,rgba(10,12,14,.34) 34%,rgba(10,12,14,.72) 70%,rgba(10,12,14,.92) 100%)}
+.hero-corner.bl{bottom:auto;position:static}
+.hero-corners{gap:22px}
+.hero-bg video{transform:translateX(0) scale(1.1);object-position:62% 34%}
+
+/* 滚动卡片：移动端卡片更小、间距更紧，一屏约 2.5 张 */
+.marquee-track{gap:20px}
+.marquee-fade{width:12%}
+
+/* 简历档案：移动端改为单栏堆叠 */
+.resume-headline{flex-direction:column;align-items:flex-start;gap:10px}
+.resume-headline .section-desc{min-width:0}
+.resume-hero{padding:30px 22px 26px;border-radius:18px}
+.resume-head{align-items:flex-start;gap:12px}
+.resume-block{padding:24px 20px}
+.resume-body{grid-template-columns:1fr;gap:20px}
+.resume-foot{grid-template-columns:1fr;gap:20px}
+.exp-top{gap:6px 10px}
+.cap-item{gap:13px}
+
+/* 详情弹窗：移动端改为上下堆叠 */
+.detail-modal{padding:14px;align-items:flex-start;overflow-y:auto}
+.detail-panel{grid-template-columns:1fr;max-height:none;border-radius:18px}
+.detail-media{min-height:44vh}
+.detail-media .lb-img{padding:12px}
+.detail-info{padding:26px 20px 28px}
+.detail-title{font-size:21px;padding-right:40px}
+.detail-close{top:14px;right:14px;width:36px;height:36px}
+.lb-nav{width:40px;height:40px}
+.lb-prev{left:8px}
+.lb-next{right:8px}
+.lb-thumb{width:46px;height:36px}
+.detail-thumbs{padding:0 12px 10px}
+.detail-counter{padding:0 12px 12px}
+}
+@media(min-width:769px) and (max-width:1024px){
+/* 平板：弹窗图片区略窄 */
+.detail-panel{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+}
+@media(min-width:769px){.nav-links{display:flex !important}}
+
+/* Mobile menu */
+.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:99;background:rgba(17,17,17,.98);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:32px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:var(--fg);font-size:24px;text-decoration:none;font-family:var(--font-display)}
+.mobile-close{position:absolute;top:20px;right:24px;background:none;border:none;color:var(--fg);font-size:32px;cursor:pointer}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+<div class="container">
+<a href="#" class="logo">陈雨可 | 作品集</a>
+<ul class="nav-links">
+<li><a href="#home">首页</a></li>
+<li><a href="#portfolio">作品</a></li>
+<li><a href="#resume">简历</a></li>
+<li><a href="#contact">联系</a></li>
+<li><a href="#contact" class="nav-cta">联系我</a></li>
+</ul>
+<button class="mobile-toggle" onclick="toggleMenu()">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+</button>
+</div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+<button class="mobile-close" onclick="toggleMenu()">&times;</button>
+<a href="#home" onclick="toggleMenu()">首页</a>
+<a href="#portfolio" onclick="toggleMenu()">作品</a>
+<a href="#resume" onclick="toggleMenu()">简历</a>
+<a href="#contact" onclick="toggleMenu()">联系</a>
+</div>
+
+<!-- HERO SECTION：极简科技风首屏 -->
+<section class="hero" id="home">
+<div class="hero-bg">
+<video autoplay muted loop playsinline id="heroVideo">
+<source src="videos/hero-bg.mp4" type="video/mp4">
+</video>
+</div>
+
+<!-- 1. 人物光晕（青蓝径向柔光） -->
+<div class="hero-glow"></div>
+<!-- 2. 蓝图网格背景 -->
+<div class="hero-grid"></div>
+
+<!-- 3. 轨道虚线圆 + 轨道光点 -->
+<div class="hero-orbit">
+<svg viewBox="0 0 1200 620" fill="none" aria-hidden="true">
+<ellipse class="ring ring-outer" cx="600" cy="310" rx="470" ry="252"/>
+<ellipse class="ring ring-inner" cx="600" cy="310" rx="332" ry="176"/>
+</svg>
+</div>
+
+<!-- 4. 散布光点（脚本注入） -->
+<div class="hero-particles" id="heroParticles"></div>
+
+<!-- 5. 准星与坐标装饰 -->
+<div class="hero-crosshair">
+<span class="ch a"></span>
+<span class="ch b"></span>
+<span class="coordring"></span>
+<span class="coords">22.54°N / 114.06°E</span>
+</div>
+
+<!-- 6.5 巨型描边水印「2026」 -->
+<div class="hero-emblem">
+<div class="emblem-year" data-year="2026">2026</div>
+</div>
+
+<!-- 6. 暗角 -->
+<div class="hero-vignette"></div>
+
+<!-- 7. 右侧书脊描边字 -->
+<div class="hero-spine">PORTFOLIO</div>
+
+<!-- 8. 悬浮玻璃数据卡 ×4 -->
+<div class="hero-stats">
+<div class="glass-card c1">
+<div class="gc-num">30%</div>
+<div class="gc-label">效率提升</div>
+<div class="gc-sub">流程优化与工具赋能</div>
+</div>
+<div class="glass-card c2">
+<div class="gc-num">10万+</div>
+<div class="gc-label">内容触达</div>
+<div class="gc-sub">多平台累计曝光</div>
+</div>
+<div class="glass-card c3">
+<div class="gc-num">20+</div>
+<div class="gc-label">项目交付</div>
+<div class="gc-sub">设计 / 运营 / 数据领域</div>
+</div>
+<div class="glass-card c4">
+<div class="gc-num">5项</div>
+<div class="gc-label">竞赛获奖</div>
+<div class="gc-sub">规划与设计类奖项</div>
+</div>
+</div>
+
+<div class="hero-corners">
+<!-- 左上：姓名 + 作品集 -->
+<div class="hero-corner tl">
+<h1><span class="name">陈雨可</span><span class="title">作品集</span></h1>
+<div class="hero-role">PORTFOLIO / 2026</div>
+</div>
+
+<!-- 左下：标签 + 简介 -->
+<div class="hero-corner bl">
+<div class="hero-tags">
+<span class="hero-tag">复合型运营策划</span>
+<span class="hero-tag">内容运营</span>
+<span class="hero-tag">数据复盘</span>
+</div>
+<p class="hero-desc">具备"用户洞察+内容爆款+数据逻辑"的跨界统筹力<br>深圳大学城乡规划硕士 | 策划·设计·数据 全链路能力</p>
+</div>
+
+<!-- 中下方：按钮 -->
+<div class="hero-corner bc">
+<div class="hero-ctas">
+<a href="#portfolio" class="btn btn-primary">浏览作品 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+<a href="#resume" class="btn btn-outline">了解我</a>
+</div>
+</div>
+</div>
+
+<!-- 9. 底部标识文字 -->
+<div class="hero-footer">SHENZHEN / URBAN PLANNING × OPERATION</div>
+</section>
+
+<!-- PORTFOLIO SECTION -->
+<section class="section" id="portfolio">
+<div class="container">
+<div class="section-label">精选项目</div>
+<h2 class="section-title">我的作品</h2>
+<p class="section-desc">从策略规划到视觉设计，从数据分析到内容运营，每个项目都是一次全新的探索与突破。</p>
+</div>
+
+<!-- 作品集滚动卡片模块：自动向左滚动，中间卡片略大，两侧渐隐 -->
+<div class="marquee-wrap" id="marqueeWrap">
+<div class="marquee-track" id="marqueeTrack"><!-- 卡片由脚本注入（内容复制一份实现无缝循环） --></div>
+<div class="marquee-fade left"></div>
+<div class="marquee-fade right"></div>
+</div>
+<div class="marquee-tip">可拖拽左右浏览 · 悬停暂停 · 点击查看详情</div>
+
+</section>
+
+<section class="section" id="resume">
+<div class="container">
+<!-- 标题与描述同行横向排版 -->
+<div class="resume-headline">
+<h2 class="section-title">简历</h2>
+<p class="section-desc">深圳大学城乡规划学硕士 · 策划 / 设计 / 数据 全链路复合能力。</p>
+</div>
+
+<!-- 档案卡头部：姓名 + 身份 + 联系方式 -->
+<div class="resume-hero fade-in">
+<div class="resume-head">
+<span class="resume-name">陈雨可</span>
+<span class="resume-titles">
+<span class="resume-title">策划</span>
+<span class="resume-title">产品</span>
+<span class="resume-title">运营</span>
+<span class="resume-title">设计</span>
+</span>
+</div>
+<p class="resume-tagline">规划设计出身，跨界品牌营销与产品运营。擅长把用户洞察转译为可落地的创意方案，从千人级活动策划、AIGC 创意物料生产，到数据看板搭建与内容传播，形成策划—执行—复盘的完整闭环。</p>
+
+<div class="resume-contacts">
+<a class="resume-contact" href="tel:13603094492"><b>电话</b> 136-0309-4492</a>
+<a class="resume-contact" href="mailto:1174956003@qq.com"><b>邮箱</b> 1174956003@qq.com</a>
+<span class="resume-contact"><b>学历</b> 硕士研究生</span>
+<span class="resume-contact"><b>年龄</b> 24 岁</span>
+<span class="resume-contact"><b>专业</b> 城乡规划学</span>
+</div>
+</div>
+
+<!-- 档案主体：左＝能力亮点，右＝经历时间线 -->
+<div class="resume-body">
+
+<!-- 核心能力 -->
+<div class="resume-block fade-in">
+<div class="resume-block-title">核心能力</div>
+<div class="cap-item">
+<span class="cap-num">01</span>
+<div class="cap-text">
+<h4>AIGC 营销创意落地</h4>
+<p>熟练 Midjourney、ChatGPT，实现 AI 创意到实体品牌物料的完整落地。</p>
+</div>
+</div>
+<div class="cap-item">
+<span class="cap-num">02</span>
+<div class="cap-text">
+<h4>项目与需求落地</h4>
+<p>具备千人级企业年会、品牌培训全流程实操，覆盖策划、物料生产、现场执行。</p>
+</div>
+</div>
+<div class="cap-item">
+<span class="cap-num">03</span>
+<div class="cap-text">
+<h4>内容与用户洞察</h4>
+<p>小红书、抖音自媒体实操，擅长产品卖点提炼，结合视觉物料做内容传播。</p>
+</div>
+</div>
+<div class="cap-item">
+<span class="cap-num">04</span>
+<div class="cap-text">
+<h4>数字化工具</h4>
+<p>熟练飞书多维表格，可完成项目的数据统计、流程管理，提升项目运转效率。</p>
+</div>
+</div>
+</div>
+
+<!-- 实习经历 -->
+<div class="resume-block fade-in">
+<div class="resume-block-title">实习经历</div>
+
+<div class="exp-item">
+<div class="exp-top">
+<span class="exp-period">2026.03 - 2026.07</span>
+<span class="exp-org">锦江酒店（中国区）</span>
+<span class="exp-role">文化培训 / 活动策划</span>
+</div>
+<p class="exp-desc">负责集团大型品牌活动、企业文化项目策划落地，承担品牌创意物料输出、活动全流程统筹，利用数字化工具辅助项目管理。</p>
+<div class="exp-sub">
+<p><strong>千人集团年会</strong>｜品牌活动与文创物料落地：参与数千人规模集团品牌年会，负责主 KV 延展、宣传推文、文创周边策划；运用 AIGC 生成创意素材，完成奖品包装盒、品牌帆布袋设计与样机验证；对接供应商完成打样及落地交付。</p>
+<p><strong>高管文化培训项目执行</strong>：作为核心成员参与多场高管培训项目，统筹场地、物资与现场执行，产出影像宣传素材，沉淀企业文化内容资产。</p>
+</div>
+</div>
+
+<div class="exp-item">
+<div class="exp-top">
+<span class="exp-period">2025.03 - 2025.06</span>
+<span class="exp-org">深圳市嗨走科技有限公司</span>
+<span class="exp-role">产品运营 / 产品助理</span>
+</div>
+<p class="exp-desc">负责乡村文旅 APP「嗨走乡村」民宿板块运营，对接 B 端商家、协助商品上线与营销活动落地。</p>
+<div class="exp-sub">
+<p>参与促销活动策划，提炼产品卖点，输出视觉需求；收集商家业务反馈，整理产品优化建议协助迭代。</p>
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- 档案底部：竞赛奖项 / 教育背景 / 技能标签 -->
+<div class="resume-foot">
+
+<div class="resume-block fade-in">
+<div class="resume-block-title">竞赛与项目奖项</div>
+<div class="award-item">
+<div class="award-name">大学生创新创业大赛｜IP 盲盒项目负责人</div>
+<div class="award-meta"><span>2021.09 - 2022.03</span></div>
+<p class="exp-desc" style="margin-top:8px">打造濒危海洋生物科普潮玩 IP 盲盒，完成目标受众分析、IP 人设创作、插画建模，输出营销传播方案。</p>
+</div>
+<div class="award-item">
+<div class="award-name">全国高等院校大学生乡村规划方案竞赛｜方案负责人</div>
+<div class="award-meta"><span>2024.09 - 2025.06</span><em>二等奖</em></div>
+<p class="exp-desc" style="margin-top:8px">全国 200+ 队伍参赛，拆解人群受众、文旅场景策划、全套可视化成果输出，思考文旅运营与品牌叙事。</p>
+</div>
+<div class="award-item">
+<div class="award-name">肇庆高新区汽车公园全国大学生竞赛｜方案负责人</div>
+<div class="award-meta"><span>2023.06 - 2023.10</span><em>优秀奖</em></div>
+<p class="exp-desc" style="margin-top:8px">现状分析，完成用户痛点挖掘、业态策划、动线体验设计；规划后期运营与商业变现方案，输出可视化成果。</p>
+</div>
+</div>
+
+<div class="resume-block fade-in">
+<div class="resume-block-title">教育背景</div>
+<div class="edu-item">
+<div class="edu-org">深圳大学 ｜ 硕士</div>
+<div class="edu-degree">城乡规划学 · 2024.09 - 2027.06</div>
+<div class="edu-course">重点课程：城市设计方法与实例研究、数理统计与数据分析、城市经济学分析等</div>
+<div class="edu-course">任职经历｜研究生院助理：负责会议统筹、材料协调，具备多任务处理、跨部门沟通协调能力。</div>
+</div>
+<div class="edu-item">
+<div class="edu-org">广东海洋大学 ｜ 本科</div>
+<div class="edu-degree">园林 · 2020.09 - 2024.06</div>
+<div class="edu-course">重点课程：CAD 工程制图、建模与渲染、Photoshop、图文设计排版、测量学、景观设计等</div>
+<div class="edu-course">任职经历｜学生会文娱部：统筹校园大型活动策划，负责宣传海报、活动周边物料设计落地。</div>
+</div>
+</div>
+
+<div class="resume-block fade-in">
+<div class="resume-block-title">技能与工具</div>
+<div class="skill-group">
+<div class="skill-group-name">办公数字化</div>
+<div class="skill-chips"><span>飞书多维表格</span><span>Codex</span><span>Xmind</span><span>SPSS</span></div>
+</div>
+<div class="skill-group">
+<div class="skill-group-name">AIGC</div>
+<div class="skill-chips"><span>Midjourney</span><span>ChatGPT</span><span>即梦</span></div>
+</div>
+<div class="skill-group">
+<div class="skill-group-name">视觉设计</div>
+<div class="skill-chips"><span>PS</span><span>Illustrator</span><span>InDesign</span><span>剪映</span><span>秀米</span></div>
+</div>
+<div class="skill-group">
+<div class="skill-group-name">三维</div>
+<div class="skill-chips"><span>SketchUp</span><span>Lumion</span><span>Enscape</span><span>C4D</span></div>
+</div>
+<div class="skill-group">
+<div class="skill-group-name">自媒体</div>
+<div class="skill-chips"><span>小红书最高 3.2w 浏览</span><span>抖音最高 2.7w 浏览</span></div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- STATS SECTION -->
+<section class="section">
+<div class="container">
+<div class="section-label">成果数据</div>
+<h2 class="section-title">用数字说话</h2>
+
+<div class="stats-wrapper">
+<div class="stats-grid">
+<div class="stat-item fade-in">
+<div class="stat-number" data-target="30">0</div>
+<div class="stat-label">效率提升</div>
+<div class="stat-desc">通过流程优化与工具赋能</div>
+</div>
+<div class="stat-item fade-in">
+<div class="stat-number" data-target="10">0</div>
+<div class="stat-label">万级内容触达</div>
+<div class="stat-desc">多平台累计曝光量</div>
+</div>
+<div class="stat-item fade-in">
+<div class="stat-number" data-target="20">0</div>
+<div class="stat-label">项目交付</div>
+<div class="stat-desc">涵盖设计/运营/数据领域</div>
+</div>
+<div class="stat-item fade-in">
+<div class="stat-number" data-target="5">0</div>
+<div class="stat-label">竞赛获奖</div>
+<div class="stat-desc">规划与设计类奖项</div>
+</div>
+</div>
+<div class="stats-cta">
+<p>有项目想法？让我们一起把它变成现实。</p>
+<a href="#contact" class="btn btn-primary">一起合作吧？</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="section" id="contact" style="background:transparent">
+<div class="container" style="text-align:center">
+<div class="section-label">联系方式</div>
+<h2 class="section-title">一起创造精彩作品</h2>
+<p class="section-desc" style="margin:0 auto">无论是项目合作、全职机会还是单纯交流，都欢迎与我联系。</p>
+
+<div class="contact-grid">
+<div class="contact-card fade-in">
+<div class="contact-icon">&#x2709;&#xFE0F;</div>
+<h3>邮件联系</h3>
+<p>发送邮件讨论项目详情与合作可能</p>
+<a href="mailto:chenyuke@example.com" class="btn btn-primary">发送邮件</a>
+</div>
+<div class="contact-card fade-in">
+<div class="contact-icon">&#x260E;&#xFE0F;</div>
+<h3>微信 / 电话</h3>
+<p>工作时间 9:00 - 21:00 快速响应</p>
+<a href="tel:+8613800138000" class="btn btn-outline">联系我</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+<div class="container">
+<p>&copy; 2026 陈雨可 | 个人作品集</p>
+</div>
+</footer>
+
+<!-- 作品详情弹窗模块 -->
+<div class="detail-modal" id="detailModal" onclick="if(event.target===this)closeLightbox()" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+<div class="detail-panel">
+
+<!-- 弹窗左侧：作品图片浏览 -->
+<div class="detail-media">
+<img class="lb-img" id="detailImg" src="" alt="" onclick="changeSlide(1)">
+<button class="lb-nav lb-prev" id="detailPrev" onclick="changeSlide(-1)" aria-label="上一张">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+</button>
+<button class="lb-nav lb-next" id="detailNext" onclick="changeSlide(1)" aria-label="下一张">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+</button>
+<div class="detail-thumbs" id="detailThumbs"></div>
+<div class="detail-counter" id="detailCounter"></div>
+</div>
+
+<!-- 弹窗右侧：作品信息 -->
+<div class="detail-info">
+<button class="detail-close" onclick="closeLightbox()" aria-label="关闭">&times;</button>
+<div class="detail-cat" id="detailCat"></div>
+<h3 class="detail-title" id="detailTitle"></h3>
+<div class="detail-tags" id="detailTags"></div>
+<p class="detail-desc" id="detailDesc"></p>
+<!-- 长文项目分段内容容器（有 sections 数据时启用，替代上方单段 desc） -->
+<div class="detail-sections" id="detailSections"></div>
+<div class="detail-meta" id="detailMeta"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+// ===== Mobile Menu =====
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+
+// ===== Nav scroll effect =====
+window.addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50)});
+
+// ===== Hero 模块：散布光点生成（环境尘埃粒子） =====
+(function heroParticles(){
+  var wrap=document.getElementById('heroParticles');
+  if(!wrap)return;
+  var n=window.innerWidth<768?18:34;   // 移动端减少数量，保证性能
+  var html='';
+  for(var i=0;i<n;i++){
+    var size=(Math.random()*2+1).toFixed(1);          // 1-3px
+    var x=(Math.random()*100).toFixed(2);
+    var y=(Math.random()*100).toFixed(2);
+    var delay=(-Math.random()*5).toFixed(2);
+    var dur=(4+Math.random()*4).toFixed(2);
+    var op=(Math.random()*.5+.25).toFixed(2);
+    html+='<i style="left:'+x+'%;top:'+y+'%;width:'+size+'px;height:'+size+'px;'+
+      'animation-delay:'+delay+'s;animation-duration:'+dur+'s;opacity:'+op+'"></i>';
+  }
+  wrap.innerHTML=html;
+})();
+
+// ===== Hero 模块：视频鼠标视差（保留人物 2/3 右移基准） =====
+const heroVideo=document.getElementById('heroVideo');
+document.addEventListener('mousemove',function(e){
+  const x=(e.clientX/window.innerWidth-.5)*15;
+  const y=(e.clientY/window.innerHeight-.5)*15;
+  if(heroVideo)heroVideo.style.transform='translateX(calc(13% + '+x+'px)) translateY('+y+'px) scale(1.04)';
+});
+
+// ===== 作品集滚动卡片模块（自动左滚 + 中间放大 + 悬停暂停） =====
+// 作品数据（名称 / 分类 / 详细介绍 / 图片）
+var PROJECTS=[
+ {name:'濒危海洋生物盲盒',cat:'产品设计',tags:['产品设计','包装','IP设计'],
+  desc:'以濒危海洋生物为原型的盲盒产品设计。\n从IP形象设定、包装结构到周边物料完整落地，把可持续发展理念转译成年轻化、可收藏的视觉语言，让公益议题通过消费场景自然触达大众。产品线包含角色设定、盒型结构、系列包装与配套周边。',
+  images:['images/portfolio/slide3_图片 2.png'],role:'IP形象 / 包装设计',year:'2024'},
+
+ {name:'锦江酒店2026年会',cat:'活动视觉',tags:['活动视觉','品牌','主KV'],
+  desc:'千人级企业年会全流程视觉统筹。\n独立完成主视觉KV设计、全套物料延展（邀请函、签到墙、舞台背景、伴手礼、桌卡等），并跟进现场执行与布置落地。在统一的视觉体系下平衡商务质感与节日氛围，保证大屏、印刷、物料多场景的一致性呈现。',
+  images:['images/portfolio/slide4_图片 3.jpg','images/portfolio/slide4_图片 7.jpg','images/portfolio/slide4_图片 8.jpg','images/portfolio/slide4_图片 16.jpg','images/portfolio/slide4_图片 18.jpg','images/portfolio/slide4_图片 20.png','images/portfolio/slide4_图片 24.jpg'],role:'主视觉 / 物料延展 / 现场执行',year:'2026'},
+
+ {name:'培训数据看板搭建',cat:'数据运营',tags:['数据运营','BI','可视化'],
+  desc:'独立搭建培训业务数据看板，把分散在多张表格中的培训数据整合为可视化仪表盘。\n覆盖参训率、完成率、考核成绩、满意度等多维指标，支持按部门、时间、课程类型交叉查看，帮助业务方快速定位问题并优化培训安排，显著减少人工统计时间。',
+  images:['images/portfolio/slide5_图片 16.png','images/portfolio/slide5_图片 18.png'],role:'数据可视化 / 业务优化',year:'2025'},
+
+ {name:'乡村规划 / 汽车公园竞赛',cat:'城乡规划',tags:['城乡规划','竞赛','概念规划'],
+  desc:'城乡规划专业竞赛作品。\n围绕乡村产业转型与汽车文化主题，完成从场地调研、概念生成、功能分区到空间形态推敲的完整设计推演，输出总平面、分析图与场景效果图，兼顾规划逻辑的严谨性与方案表达的视觉冲击力。',
+  images:['images/portfolio/slide7_图片 6.jpg'],role:'规划设计 / 竞赛方案',year:'2023'},
+
+ {name:'自媒体内容运营',cat:'内容运营',tags:['内容运营','新媒体','小红书'],
+  desc:'小红书、抖音平台自媒体内容运营实践。\n负责选题策划、图文与短视频视觉产出、发布节奏管理与数据复盘，通过封面点击率、互动率等指标持续迭代内容方向，多篇内容实现万级曝光，沉淀出可复用的内容方法论。',
+  images:['images/portfolio/slide11_Case image 1.png','images/portfolio/slide11_Case image 2.png','images/portfolio/slide11_图片 2.jpg','images/portfolio/slide11_图片 3.jpg','images/portfolio/slide11_图片 4.jpg','images/portfolio/slide11_图片 6.jpg','images/portfolio/slide11_图片 7.jpg'],role:'内容策划 / 视觉产出 / 数据复盘',year:'2025'},
+
+ {name:'校园活动视觉设计',cat:'平面设计',tags:['平面设计','海报','活动'],
+  desc:'校园活动系列视觉设计。\n围绕活动主题建立视觉基调，输出主视觉海报、系列延展海报与线上宣传图，通过统一的色彩与版式语言强化活动辨识度，覆盖宣传预热到现场呈现的完整链路。',
+  images:['images/portfolio/slide9_图片 2.jpg','images/portfolio/slide9_图片 4.jpg','images/portfolio/slide9_图片 5.jpg'],role:'海报设计 / 活动视觉',year:'2024'},
+
+ {name:'平面设计合集',cat:'平面设计',tags:['平面设计','VI','品牌'],
+  desc:'品牌视觉与平面设计作品合集。\n涵盖品牌VI系统、标识设计、版式探索与多风格视觉实验，在不同行业属性与调性要求下输出匹配的设计方案，展示对色彩、字体、构图与信息层级的综合把控能力。',
+  images:['images/portfolio/slide10_图片 3.jpg','images/portfolio/slide10_图片 6.jpg','images/portfolio/slide10_图片 18.png','images/portfolio/slide10_图片 20.jpg'],role:'品牌视觉 / 平面设计',year:'2024'},
+
+ {name:'专业能力展示',cat:'专业技能',tags:['专业技能','AIGC','方法'],
+  desc:'复合型能力图谱与工作方法展示。\n梳理视觉设计、AIGC创意落地、项目全链路执行、数字化运营与内容营销五大能力模块，并展示AI辅助创意、生图改图、样机合成的实际工作流，体现从创意构思到实物落地的完整闭环能力。',
+  images:['images/portfolio/slide8_图片 1.png','images/portfolio/slide8_图片 2.png','images/portfolio/slide8_图片 3.png','images/portfolio/slide8_图片 5.png'],role:'能力梳理 / 工作流展示',year:'2025'},
+
+// ===== 产品岗面试必备分析：卫生巾产品痛点挖掘与下一代产品设计 =====
+ {name:'舒适安全型卫生巾产品设计',cat:'产品分析',tags:['产品分析','用户研究','需求分析','方案选型','商业化预估'],
+  role:'产品定位 / 用户研究 / 方案设计',year:'2026',
+  desc:'基于真实用户访谈的卫生巾产品痛点挖掘与下一代舒适安全型产品设计。',
+  sections:[
+    {h:'P1 项目背景 & 用户痛点',
+     p:'传统卫生巾产品长期停留在"够用"层面，真实使用中的不适感与安全隐患被习惯性忽略。本项目从自身与身边使用者的真实体验出发，通过访谈还原使用场景，定位可被产品化解决的痛点。',
+     list:[
+       '<b>研究方式</b>：基于真实用户访谈（本人 + 身边使用者），围绕经期不同阶段的使用场景、更换频率、体感反馈展开半结构化访谈。',
+       '<b>痛点一｜侧漏焦虑</b>：夜间与久坐场景下侧漏风险高，用户被迫增加更换频率，影响睡眠与工作专注度。',
+       '<b>痛点二｜材质刺激</b>：表层材质粗糙、含荧光剂担忧，敏感肌用户出现瘙痒、闷热等不适。',
+       '<b>痛点三｜贴合度差</b>：巾身与内裤贴合不足，运动、走动时产生位移与褶皱，异物感明显。',
+       '<b>痛点四｜信息不透明</b>：成分、材质、吸收量等关键信息标注模糊，用户难以做出知情选择。'
+     ]},
+
+    {h:'P2 需求分析 & 用户任务流程',
+     p:'把访谈中零散的抱怨结构化为可执行的产品需求，并梳理用户完成一次"经期护理"任务的完整路径，识别体验断点。',
+     list:[
+       '<b>用户任务流程</b>：经期将至（储备采购）→ 经期开始（选择规格）→ 佩戴（贴合与舒适）→ 日常活动（防漏与位移）→ 更换（便携与私密）→ 经期结束（清洁与收纳）。',
+       '<b>需求分层</b>：<b>基础需求</b>——不侧漏、不掉屑；<b>进阶需求</b>——亲肤无刺激、久戴不闷；<b>情感需求</b>——隐私感、被尊重感、对身体的正向认知。',
+       '<b>关键断点</b>：更换场景缺少私密便捷方案；夜间防漏依赖加长而非结构优化；敏感肌缺乏明确的安全认证标识。',
+       '<b>需求优先级</b>：以防漏结构 ＞ 材质安全 ＞ 贴合体感 ＞ 信息透明 ＞ 便携私密 排序，作为后续方案选型的判断依据。'
+     ]},
+
+    {h:'P3 解决方案 & 方案选型',
+     p:'针对每一层需求给出候选方案，并按可行性、成本、体验收益三个维度做选型对比，形成最终产品方案。',
+     list:[
+       '<b>防漏结构</b>：候选为"单纯加长"与"立体护围 + 导流槽"，后者在不增加厚重感的前提下用结构拦截侧流，选型确定为立体护围复合导流设计。',
+       '<b>表层材质</b>：候选为普通无纺布与医用级亲肤棉柔层，后者透气性与低致敏性更优，作为敏感肌版本的核心配置。',
+       '<b>贴合体感</b>：采用人体工学弧形剪裁 + 弹性侧翼，减少运动位移与褶皱，提升久坐与行走时的稳定度。',
+       '<b>芯体吸收</b>：多层复合芯体（瞬吸层 + 锁水层 + 防返渗层），在提升吸收量的同时控制厚度，兼顾轻薄与安全感。',
+       '<b>信息透明</b>：包装正面标注材质成分、吸收量等级与安全认证，把选择权交还用户。'
+     ]},
+
+    {h:'P4 评测方案',
+     p:'设计方案验证路径，用可量化的指标替代主观感受，确保产品改善可被证明。',
+     list:[
+       '<b>定量测试</b>：吸收速度（秒）、回渗量（g）、侧漏发生率（%）三项作为核心指标横向对比。',
+       '<b>体感量表</b>：采用 5 分制主观量表评估舒适度、贴合度、闷热感，招募不同肤质与经量用户参与。',
+       '<b>场景实测</b>：设置夜间睡眠 8 小时、久坐办公 4 小时、轻度运动 1 小时三类典型场景做实地跟踪。',
+       '<b>对照组设计</b>：以市面主流产品为对照组，保证结论具有可比性与说服力。'
+     ]},
+
+    {h:'P5 复盘',
+     p:'对整个分析过程做方法与结论层面的复盘，沉淀可复用的产品思维。',
+     list:[
+       '<b>做对了什么</b>：从真实访谈切入而非先入为主定义需求，让痛点有事实支撑；用优先级排序避免方案面面俱到却都不极致。',
+       '<b>样本局限</b>：访谈样本量有限、集中于同年龄段女性，结论在泛人群上的外推需要更大样本验证。',
+       '<b>可优化点</b>：后续应引入量化问卷扩大样本，并在评测阶段加入成本核算，让方案在商业上同样成立。',
+       '<b>能力沉淀</b>：形成了"访谈 → 痛点结构化 → 需求分层 → 方案选型 → 评测验证 → 复盘"的完整产品分析链路，可迁移到其他消费品类。'
+     ]},
+
+    {h:'竞品分析',
+     p:'选取市面主流产品按核心卖点分档，定位当前市场空白。',
+     list:[
+       '<b>第一档｜大众基础款</b>：以价格与铺货取胜，防漏依赖加长加厚，材质与贴合度改善有限。',
+       '<b>第二档｜舒适升级款</b>：主打棉柔表层与轻薄芯体，但防漏结构创新不足，敏感肌适配仍是短板。',
+       '<b>第三档｜高端功能性</b>：强调材质安全与认证，体验优秀但价格偏高，覆盖人群有限。',
+       '<b>市场空白</b>：缺少一款"立体防漏结构 + 医用级亲肤材质 + 信息透明 + 价格可接受"的综合型产品，这正是本项目的切入位。',
+       '<b>差异化结论</b>：不与高端款比价格，也不与基础款比便宜，而是用结构创新在中间价位建立体验优势。'
+     ]},
+
+    {h:'产品定位与商业化预估',
+     p:'明确产品定位、目标人群与商业化路径，让方案具备落地可能。',
+     list:[
+       '<b>产品定位</b>：面向 18-30 岁敏感肌与高频使用人群的"舒适安全型卫生巾"，核心主张是"结构防漏 + 材质安心"。',
+       '<b>产品矩阵</b>：按经量与场景分为日用轻薄、夜用加长、敏感肌专用三条线，覆盖完整经期周期。',
+       '<b>定价策略</b>：定位中间价位带，敏感肌专用线可适度上探，用过体验溢价而非品牌溢价支撑价格。',
+       '<b>商业化路径</b>：先以敏感肌细分人群切入建立口碑，再通过内容种草与真实用户评测扩散至泛人群。',
+       '<b>成本与风险</b>：医用级材质与立体结构会推高单件成本，需通过规模采购与规格组合平衡毛利；主要风险在于用户教育成本与教育周期。'
+     ]}
+  ],
+  images:['images/portfolio/goods-1.jpg','images/portfolio/goods-2.jpg','images/portfolio/goods-3.jpg','images/portfolio/goods-4.jpg']}
+];
+
+var marqueeTrack=document.getElementById('marqueeTrack');
+var marqueeWrap=document.getElementById('marqueeWrap');
+
+// 渲染单张卡片
+function buildCard(p,idx){
+  return '<div class="p-card" data-idx="'+idx+'" onclick="openDetail('+idx+')">'+
+    '<img src="'+p.images[0]+'" alt="'+p.name+'" loading="lazy">'+
+    '<div class="p-card-hint"><span>查看详情</span></div>'+
+    '<div class="p-card-name">'+p.name+'</div>'+
+  '</div>';
+}
+
+// 注入卡片：内容复制两份，实现无缝循环滚动
+function renderMarquee(){
+  if(!marqueeTrack)return;
+  var one=PROJECTS.map(function(p,i){return buildCard(p,i)}).join('');
+  marqueeTrack.innerHTML=one+one;   // 复制一份用于首尾衔接
+  sizeMarqueeCards();
+  updateCardScale();
+}
+
+// 按视口宽度计算卡片尺寸（一屏约 3 张）
+function sizeMarqueeCards(){
+  var w=window.innerWidth;
+  var size = w<600 ? Math.min(w*0.56,210)
+          : w<900 ? Math.min(w*0.34,270)
+          : w<1400 ? Math.min(w*0.245,340)
+          : Math.min(w*0.235,350);
+  marqueeWrap.style.setProperty('--card-size',size+'px');
+}
+
+// 根据卡片在视口中的位置，标出「中间」与「左右侧」
+function updateCardScale(){
+  var cards=marqueeTrack.querySelectorAll('.p-card');
+  var mid=window.innerWidth/2;
+  var centerZone=window.innerWidth*(window.innerWidth<900?0.19:0.13);
+  cards.forEach(function(c){
+    var r=c.getBoundingClientRect();
+    var cCenter=r.left+r.width/2;
+    var isCenter=Math.abs(cCenter-mid)<centerZone;
+    c.classList.toggle('is-center',isCenter);
+    c.classList.toggle('is-side',!isCenter);
+  });
+}
+
+/* ===== 滚动驱动：自动滚动 + 鼠标拖拽共用同一个 offset =====
+   卡片内容渲染了两份，offset 越过一份宽度（-50%）时无缝回绕，
+   因此拖拽和自动滚动不会互相打断。 */
+var offset=0;          // 当前位移（px，向左为负）
+var baseSpeed=0.55;    // 自动滚动速度（px/帧）
+var paused=false;      // 悬停暂停
+var dragging=false;    // 是否正在拖拽
+var dragStartX=0, dragStartOffset=0;
+var dragVelocity=0, lastX=0, lastT=0, lastMoveT=0;
+var movedDistance=0;   // 本次拖拽累计位移，用于判断是否算「点击」
+var halfWidth=0;       // 一份内容的宽度
+
+// 计算一份内容的宽度（总宽的一半，因为内容复制了两份）
+function measureHalfWidth(){
+  halfWidth=marqueeTrack.scrollWidth/2;
+}
+
+// 位移回绕：始终保持 offset 落在 [-halfWidth, 0]
+function wrapOffset(){
+  if(halfWidth<=0)return;
+  while(offset<=-halfWidth)offset+=halfWidth;
+  while(offset>0)offset-=halfWidth;
+}
+
+// 主循环：自动滚动 / 惯性衰减 / 悬停暂停，统一在这里推进
+(function marqueeLoop(){
+  updateCardScale();
+
+  if(dragging){
+    // 拖拽中位移由 pointermove 直接写入，这里只记录速度
+  }else if(Math.abs(dragVelocity)>0.05){
+    // 松手后的惯性：位移按速度推进，速度逐步衰减
+    offset+=dragVelocity;
+    dragVelocity*=0.94;
+  }else{
+    dragVelocity=0;
+    if(!paused)offset-=baseSpeed;   // 常规自动向左滚动
+  }
+
+  wrapOffset();
+  marqueeTrack.style.transform='translate3d('+offset+'px,0,0)';
+  requestAnimationFrame(marqueeLoop);
+})();
+
+// 启动：等卡片渲染完成后再测量宽度
+function startMarquee(){
+  renderMarquee();
+  measureHalfWidth();
+}
+
+window.addEventListener('resize',function(){sizeMarqueeCards();updateCardScale();measureHalfWidth()});
+
+/* ===== 鼠标拖拽左右滚动（仅鼠标，移动端保持原生滑动） ===== */
+(function initDrag(){
+  if(!marqueeWrap)return;
+  var DRAG_THRESHOLD=6;   // 超过这个位移才算拖拽，避免误伤点击
+
+  marqueeWrap.addEventListener('pointerdown',function(e){
+    if(e.pointerType!=='mouse'||e.button!==0)return;   // 只接管鼠标左键
+    dragging=true;
+    movedDistance=0;
+    dragVelocity=0;
+    dragStartX=e.clientX;
+    dragStartOffset=offset;
+    lastX=e.clientX;
+    lastT=lastMoveT=performance.now();
+    marqueeWrap.classList.add('is-dragging');
+  });
+
+  window.addEventListener('pointermove',function(e){
+    if(!dragging)return;
+    var dx=e.clientX-dragStartX;
+    movedDistance=Math.max(movedDistance,Math.abs(dx));
+    // 超过阈值才进入「真正拖拽」态：屏蔽卡片指针事件，避免拖拽中触发 hover/点击
+    if(movedDistance>DRAG_THRESHOLD)marqueeWrap.classList.add('is-moving');
+    offset=dragStartOffset+dx;
+    wrapOffset();
+
+    // 依据最近一次移动计算速度，用于松手后的惯性
+    var now=performance.now();
+    var dt=now-lastT;
+    if(dt>0){
+      dragVelocity=(e.clientX-lastX)/dt*16;   // 归一化到每帧位移
+      dragVelocity=Math.max(-40,Math.min(40,dragVelocity));
+    }
+    lastX=e.clientX;
+    lastT=now;
+    lastMoveT=now;
+    e.preventDefault();
+  },{passive:false});
+
+  function endDrag(){
+    if(!dragging)return;
+    dragging=false;
+    marqueeWrap.classList.remove('is-dragging');
+    // 如果最后一次移动已过去较久，视为无惯性（静置松手）
+    if(performance.now()-lastMoveT>90)dragVelocity=0;
+    // 拖拽后紧接着的这次 click 要吞掉，避免误开详情
+    if(movedDistance>DRAG_THRESHOLD){
+      var swallow=function(ev){ev.stopPropagation();ev.preventDefault()};
+      marqueeWrap.addEventListener('click',swallow,{capture:true,once:true});
+      setTimeout(function(){
+        marqueeWrap.removeEventListener('click',swallow,true);
+        marqueeWrap.classList.remove('is-moving');
+      },0);
+    }else{
+      marqueeWrap.classList.remove('is-moving');
+    }
+  }
+
+  window.addEventListener('pointerup',endDrag);
+  window.addEventListener('pointercancel',endDrag);
+
+  // 悬停暂停：鼠标在卡片区时停住自动滚动
+  marqueeWrap.addEventListener('mouseenter',function(){if(!dragging)paused=true});
+  marqueeWrap.addEventListener('mouseleave',function(){paused=false});
+})();
+
+// 启动滚动（卡片注入 → 测量宽度）
+startMarquee();
+// 字体 / 图片加载完成后宽度可能变化，重新测量一次，保证循环无缝
+window.addEventListener('load',measureHalfWidth);
+
+// ===== Scroll animations =====
+const observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('visible')}})},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(function(el){observer.observe(el)});
+
+// ===== Counter animation =====
+const counterObserver=new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(!entry.isIntersecting)return;
+    const el=entry.target.querySelector('.stat-number');
+    if(!el||el.dataset.counted)return;
+    el.dataset.counted='true';
+    const target=parseInt(el.dataset.target)||0;
+    const suffix=el.dataset.suffix||'';
+    let current=0;
+    const step=target/40;
+    const timer=setInterval(function(){
+      current+=step;
+      if(current>=target){current=target;clearInterval(timer)}
+      el.textContent=Math.floor(current)+suffix;
+    },40);
+  });
+},{threshold:0.5});
+document.querySelectorAll('.stat-item').forEach(function(el){counterObserver.observe(el)});
+
+// ===== 作品详情弹窗模块（名称 / 详细介绍 / 图片） =====
+var lbImages=[], lbIndex=0, lbProject=null;
+
+// 打开详情：注入名称、介绍、图片、标签、信息
+function openDetail(idx){
+  var p=PROJECTS[idx];
+  if(!p)return;
+  lbProject=p;
+  lbImages=p.images||[];
+  lbIndex=0;
+
+  document.getElementById('detailCat').textContent=p.cat;
+  document.getElementById('detailTitle').textContent=p.name;
+  renderDetailBody(p);
+  document.getElementById('detailTags').innerHTML=(p.tags||[]).map(function(t){
+    return '<span>'+t+'</span>';
+  }).join('');
+  document.getElementById('detailMeta').innerHTML=
+    '<div class="row"><span class="k">项目类型</span><span class="v">'+p.role+'</span></div>'+
+    '<div class="row"><span class="k">年份</span><span class="v">'+p.year+'</span></div>'+
+    '<div class="row"><span class="k">图片数量</span><span class="v">'+lbImages.length+' 张</span></div>';
+
+  renderThumbs();
+  updateDetail();
+  document.getElementById('detailModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+// 渲染详情正文：有 sections 走分段排版（长文项目），否则走原来的单段描述
+function renderDetailBody(p){
+  var descEl=document.getElementById('detailDesc');
+  var secEl=document.getElementById('detailSections');
+  var secs=p.sections||[];
+
+  if(secs.length){
+    descEl.style.display='none';
+    descEl.textContent='';
+    secEl.style.display='flex';
+    secEl.innerHTML=secs.map(function(s){
+      var inner='';
+      if(s.p)inner+='<p>'+s.p+'</p>';
+      if(s.list&&s.list.length){
+        inner+='<ul>'+s.list.map(function(it){return '<li>'+it+'</li>'}).join('')+'</ul>';
+      }
+      return '<div class="detail-sec"><h4>'+s.h+'</h4>'+inner+'</div>';
+    }).join('');
+  }else{
+    secEl.style.display='none';
+    secEl.innerHTML='';
+    descEl.style.display='';
+    descEl.textContent=p.desc||'';
+  }
+}
+
+function closeLightbox(){
+  document.getElementById('detailModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function changeSlide(dir){
+  if(lbImages.length<2)return;
+  lbIndex=(lbIndex+dir+lbImages.length)%lbImages.length;
+  updateDetail();
+}
+
+function goToSlide(i){
+  lbIndex=i;
+  updateDetail();
+}
+
+function updateDetail(){
+  document.getElementById('detailImg').src=lbImages[lbIndex];
+  document.getElementById('detailCounter').textContent=(lbIndex+1)+' / '+lbImages.length;
+  var single=lbImages.length<2;
+  document.getElementById('detailPrev').disabled=single;
+  document.getElementById('detailNext').disabled=single;
+  document.querySelectorAll('.lb-thumb').forEach(function(t,i){t.classList.toggle('active',i===lbIndex)});
+}
+
+function renderThumbs(){
+  var wrap=document.getElementById('detailThumbs');
+  if(lbImages.length<2){wrap.innerHTML='';return}
+  wrap.innerHTML=lbImages.map(function(src,i){
+    return '<button class="lb-thumb" onclick="event.stopPropagation();goToSlide('+i+')"><img src="'+src+'" alt="缩略图 '+(i+1)+'"></button>';
+  }).join('');
+}
+
+// 键盘控制：← → 切换，Esc 关闭
+document.addEventListener('keydown',function(e){
+  if(!document.getElementById('detailModal').classList.contains('open'))return;
+  if(e.key==='Escape')closeLightbox();
+  if(e.key==='ArrowLeft')changeSlide(-1);
+  if(e.key==='ArrowRight')changeSlide(1);
+});
+
+// 兼容旧调用（保留函数名，避免历史引用报错）
+function openLightbox(title,desc,images){
+  var found=PROJECTS.filter(function(p){return p.name===title})[0];
+  if(found){openDetail(PROJECTS.indexOf(found));return}
+  lbImages=images||[];lbIndex=0;
+  document.getElementById('detailCat').textContent='';
+  document.getElementById('detailTitle').textContent=title;
+  renderDetailBody({desc:desc||''});
+  document.getElementById('detailTags').innerHTML='';
+  document.getElementById('detailMeta').innerHTML='';
+  renderThumbs();updateDetail();
+  document.getElementById('detailModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+// ===== Smooth scroll for anchor links =====
+document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();const target=document.querySelector(this.getAttribute('href'));if(target){target.scrollIntoView({behavior:'smooth',block:'start'})}})});
+</script>
+</body>
+</html>
