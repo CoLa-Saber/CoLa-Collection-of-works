@@ -3,12 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>陈雨可 | 设计师作品集</title>
+<title>陈雨可 | 产品 · 策划运营 · 个人作品集</title>
+<meta name="description" content="陈雨可的个人作品集——产品分析、活动策划、内容运营与视觉设计全链路实践。深圳大学城乡规划学硕士，2026 秋招求职中。">
+<meta name="theme-color" content="#111111">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111111'/%3E%3Ctext x='32' y='44' font-size='34' font-family='Arial' font-weight='bold' fill='%23d1e1e8' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#111111;--bg-secondary:#0a0a0a;--card:#1a1a1a;--border:#222222;--border-hover:#333333;--fg:#ffffff;--fg-muted:#888888;--accent:#d1e1e8;--accent-dim:rgba(209,225,232,.1);--glass:rgba(255,255,255,.05);--font-display:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif;--radius:12px;--radius-lg:16px;--radius-full:9999px}
+:root{--bg:#111111;--bg-secondary:#0a0a0a;--card:#1a1a1a;--border:#222222;--border-hover:#333333;--fg:#ffffff;--fg-muted:#888888;--accent:#d1e1e8;--accent-dim:rgba(209,225,232,.1);--glass:rgba(255,255,255,.05);--font-display:'Space Grotesk','PingFang SC','Microsoft YaHei',sans-serif;--font-body:'Inter','PingFang SC','Microsoft YaHei',sans-serif;--radius:12px;--radius-lg:16px;--radius-full:9999px}
 html{scroll-behavior:smooth}
 body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-height:1.6;overflow-x:hidden}
 
@@ -553,93 +557,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .contact-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:44px 32px;text-align:center;transition:.3s}
 .contact-card:hover{border-color:var(--border-hover);transform:translateY(-4px)}
 .contact-icon{font-size:36px;margin-bottom:16px}
+.contact-icon{font-size:36px;margin-bottom:16px;color:var(--accent)}
+.contact-icon svg{width:38px;height:38px;display:block;margin:0 auto}
+.contact-line{font-size:15.5px;font-weight:600;color:var(--fg);margin-bottom:8px !important;letter-spacing:.02em}
 .contact-card h3{font-size:18px;margin-bottom:10px}
 .contact-card p{font-size:14px;color:var(--fg-muted);margin-bottom:24px}
 
-/* ========== INTERACT 互动区（访问统计 + 留言板） ==========
-   数据来自云端，页面打开时匿名读取；留言与访问记录由访客匿名写入 */
-.section#interact::before{content:'';position:absolute;left:0;right:0;top:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent)}
-
-/* 顶部四格统计条 */
-.iv-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-top:44px}
-.iv-stat{
-  position:relative;overflow:hidden;text-align:center;padding:26px 18px;
-  background:linear-gradient(150deg,rgba(209,225,232,.06) 0%,rgba(26,26,26,1) 55%,rgba(17,17,17,1) 100%);
-  border:1px solid var(--border);border-radius:var(--radius-lg);transition:.32s;
-}
-.iv-stat:hover{border-color:rgba(209,225,232,.3);transform:translateY(-3px)}
-/* 左上角一枚小小的实时指示灯，暗示数据是活的 */
-.iv-stat::after{content:'';position:absolute;top:14px;right:14px;width:5px;height:5px;border-radius:50%;
-  background:#32B9D8;box-shadow:0 0 7px rgba(50,185,216,.85);animation:ivPulse 2.4s ease-in-out infinite}
-@keyframes ivPulse{0%,100%{opacity:.35}50%{opacity:1}}
-.iv-stat-num{font-family:var(--font-display);font-size:clamp(30px,4.2vw,44px);font-weight:700;line-height:1;color:var(--accent);
-  font-variant-numeric:tabular-nums}
-.iv-stat-num.iv-pending{color:var(--fg-muted);font-size:clamp(20px,3vw,26px);letter-spacing:.06em}
-.iv-stat-label{font-size:12.5px;color:var(--fg-muted);margin-top:9px;letter-spacing:.06em}
-
-/* 留言板：左侧表单 + 右侧留言流，窄屏自动堆叠 */
-.iv-board{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:26px;margin-top:26px;align-items:start}
-.iv-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:30px 28px}
-.iv-panel-title{font-size:15px;font-weight:600;letter-spacing:.04em;margin-bottom:6px}
-.iv-panel-note{font-size:12.5px;color:var(--fg-muted);line-height:1.7;margin-bottom:22px}
-
-.iv-field{margin-bottom:16px}
-.iv-field label{display:block;font-size:12.5px;color:#b9b9b9;margin-bottom:8px;letter-spacing:.03em}
-.iv-field label em{font-style:normal;color:#e0726d}
-.iv-input,.iv-textarea{
-  width:100%;background:rgba(255,255,255,.035);border:1px solid var(--border);border-radius:10px;
-  color:var(--fg);font-family:var(--font-body);font-size:14px;padding:12px 14px;transition:.28s;outline:none;
-}
-.iv-input::placeholder,.iv-textarea::placeholder{color:rgba(136,136,136,.65)}
-.iv-input:focus,.iv-textarea:focus{border-color:rgba(209,225,232,.42);background:rgba(255,255,255,.06)}
-.iv-textarea{resize:vertical;min-height:104px;line-height:1.65}
-.iv-counter{text-align:right;font-size:11.5px;color:var(--fg-muted);margin-top:6px;font-variant-numeric:tabular-nums}
-.iv-counter.iv-over{color:#e0726d}
-
-.iv-submit{
-  width:100%;padding:13px 20px;border:none;border-radius:var(--radius-full);cursor:pointer;
-  background:var(--accent);color:var(--bg);font-family:var(--font-body);font-size:14.5px;font-weight:600;
-  transition:.3s;letter-spacing:.02em;
-}
-.iv-submit:hover:not(:disabled){background:#fff;transform:translateY(-1px)}
-.iv-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
-
-/* 提交结果提示条 */
-.iv-msg{margin-top:14px;font-size:12.5px;line-height:1.6;padding:10px 13px;border-radius:9px;display:none}
-.iv-msg.show{display:block}
-.iv-msg.ok{background:rgba(50,185,216,.1);border:1px solid rgba(50,185,216,.35);color:#9fdfef}
-.iv-msg.err{background:rgba(224,114,109,.1);border:1px solid rgba(224,114,109,.36);color:#f0a9a5}
-
-/* 留言流 */
-.iv-list{max-height:520px;overflow-y:auto;margin:-6px -6px 0;padding:6px}
-.iv-list::-webkit-scrollbar{width:6px}
-.iv-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.13);border-radius:3px}
-.iv-list::-webkit-scrollbar-track{background:transparent}
-.iv-item{
-  border:1px solid var(--border);border-left:2px solid rgba(209,225,232,.32);
-  border-radius:11px;padding:15px 17px;margin-bottom:11px;background:rgba(255,255,255,.022);transition:.28s;
-}
-.iv-item:hover{border-color:var(--border-hover);border-left-color:var(--accent)}
-.iv-item-top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:7px}
-.iv-item-name{font-size:13.5px;font-weight:600;color:var(--accent)}
-.iv-item-time{font-size:11.5px;color:rgba(136,136,136,.8);white-space:nowrap}
-.iv-item-text{font-size:13.5px;color:#cdcdcd;line-height:1.72;word-break:break-word;white-space:pre-wrap}
-.iv-item-contact{font-size:11.5px;color:var(--fg-muted);margin-top:8px}
-.iv-empty,.iv-loading{text-align:center;color:var(--fg-muted);font-size:13px;padding:44px 20px;line-height:1.8}
-.iv-loading::before{content:'';display:inline-block;width:13px;height:13px;margin-right:9px;vertical-align:-2px;
-  border:1.6px solid rgba(209,225,232,.28);border-top-color:var(--accent);border-radius:50%;animation:ivSpin .8s linear infinite}
-@keyframes ivSpin{to{transform:rotate(360deg)}}
-
-@media(max-width:900px){
-  .iv-board{grid-template-columns:1fr;gap:20px}
-  .iv-list{max-height:none;overflow:visible}
-}
-@media(max-width:768px){
-  .iv-panel{padding:24px 20px}
-  .iv-stats{grid-template-columns:repeat(2,1fr);gap:12px}
-  .iv-stat{padding:20px 14px}
-}
 
 /* ========== FOOTER ========== */
 .footer{border-top:1px solid var(--border);padding:48px 0;text-align:center}
@@ -886,7 +809,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <li><a href="#portfolio">作品</a></li>
 <li><a href="#works">作品分类</a></li>
 <li><a href="#resume">简历</a></li>
-<li><a href="#interact">留言</a></li>
 <li><a href="#contact">联系</a></li>
 <li><a href="#contact" class="nav-cta">联系我</a></li>
 </ul>
@@ -903,7 +825,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <a href="#portfolio" onclick="toggleMenu()">作品</a>
 <a href="#works" onclick="toggleMenu()">作品分类</a>
 <a href="#resume" onclick="toggleMenu()">简历</a>
-<a href="#interact" onclick="toggleMenu()">留言</a>
 <a href="#contact" onclick="toggleMenu()">联系</a>
 </div>
 
@@ -1348,74 +1269,23 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 
 <div class="contact-grid">
 <div class="contact-card fade-in">
-<div class="contact-icon">&#x2709;&#xFE0F;</div>
+<div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7.5 12 13.5l8.5-6"/></svg></div>
 <h3>邮件联系</h3>
-<p>发送邮件讨论项目详情与合作可能</p>
-<a href="mailto:chenyuke@example.com" class="btn btn-primary">发送邮件</a>
+<p class="contact-line">1174956003@qq.com</p>
+<p>投递邀约、项目交流或进一步了解作品详情</p>
+<a href="mailto:1174956003@qq.com" class="btn btn-primary">发送邮件</a>
 </div>
 <div class="contact-card fade-in">
-<div class="contact-icon">&#x260E;&#xFE0F;</div>
+<div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
 <h3>微信 / 电话</h3>
+<p class="contact-line">136-0309-4492（微信同号）</p>
 <p>工作时间 9:00 - 21:00 快速响应</p>
-<a href="tel:+8613800138000" class="btn btn-outline">联系我</a>
+<a href="tel:+8613603094492" class="btn btn-outline">联系我</a>
 </div>
 </div>
 </div>
 </section>
 
-<!-- ========== INTERACT SECTION 互动区：访问统计 + 留言板 ==========
-     数据来源：CloudBase 云数据库
-     · 访问统计 —— 读取云端聚合结果（总访问 / 今日 / 近七日 / 留言数）
-     · 留言板   —— 访客匿名提交，留言实时写入云端并公开展示 -->
-<section class="section" id="interact" style="background:transparent">
-<div class="container">
-<div class="section-label">网站互动</div>
-<h2 class="section-title">留下你的足迹</h2>
-<p class="section-desc">这里记录着每一位到访者。写下想说的话，或只是留个名字，都会成为这个作品集的一部分。</p>
-
-<!-- 访问统计：数字由云端返回 -->
-<div class="iv-stats">
-<div class="iv-stat"><div class="iv-stat-num iv-pending" id="ivStatTotal">—</div><div class="iv-stat-label">累计访问</div></div>
-<div class="iv-stat"><div class="iv-stat-num iv-pending" id="ivStatToday">—</div><div class="iv-stat-label">今日访问</div></div>
-<div class="iv-stat"><div class="iv-stat-num iv-pending" id="ivStatWeek">—</div><div class="iv-stat-label">近七日访问</div></div>
-<div class="iv-stat"><div class="iv-stat-num iv-pending" id="ivStatMsg">—</div><div class="iv-stat-label">留言条数</div></div>
-</div>
-
-<!-- 留言板：左表单 + 右留言流 -->
-<div class="iv-board">
-
-<div class="iv-panel">
-<div class="iv-panel-title">写一条留言</div>
-<p class="iv-panel-note">欢迎写下合作意向、作品建议，或只是打个招呼。留言会公开展示，请勿填写敏感信息。</p>
-
-<form id="ivForm" autocomplete="off" novalidate>
-<div class="iv-field">
-<label for="ivName">你的称呼 <em>*</em></label>
-<input class="iv-input" type="text" id="ivName" name="name" maxlength="40" placeholder="例如：张女士 / 某品牌负责人" required>
-</div>
-<div class="iv-field">
-<label for="ivMessage">留言内容 <em>*</em></label>
-<textarea class="iv-textarea" id="ivMessage" name="message" maxlength="800" placeholder="想说的话写在这里……" required></textarea>
-<div class="iv-counter" id="ivCounter">0 / 800</div>
-</div>
-<div class="iv-field">
-<label for="ivContact">联系方式（选填，不公开展示）</label>
-<input class="iv-input" type="text" id="ivContact" name="contact" maxlength="80" placeholder="邮箱 / 微信，方便我回复你">
-</div>
-<button class="iv-submit" type="submit" id="ivSubmit">提交留言</button>
-<div class="iv-msg" id="ivFormMsg" role="status" aria-live="polite"></div>
-</form>
-</div>
-
-<div class="iv-panel">
-<div class="iv-panel-title">大家的留言</div>
-<p class="iv-panel-note">按时间倒序展示，最新的在最上方。</p>
-<div class="iv-list" id="ivList"><div class="iv-loading">正在读取云端留言…</div></div>
-</div>
-
-</div>
-</div>
-</section>
 
 <!-- FOOTER -->
 <footer class="footer">
@@ -2265,258 +2135,8 @@ function openLightbox(title,desc,images){
 }
 
 // ===== Smooth scroll for anchor links =====
-document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();const target=document.querySelector(this.getAttribute('href'));if(target){target.scrollIntoView({behavior:'smooth',block:'start'})}})});
+document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var h=this.getAttribute('href');e.preventDefault();if(h.length<2)return;const target=document.querySelector(h);if(target){target.scrollIntoView({behavior:'smooth',block:'start'})}})});
 </script>
 
-<!-- ========== 互动区数据逻辑：访问统计 + 留言板（CloudBase） ==========
-     SDK 已提前打包为本地文件，可直接双击打开使用，无需任何构建工具。
-     读取对所有人开放；写入由访客以匿名身份完成，云端权限策略保证
-     只能新增、不能修改或删除他人内容。 -->
-<script src="./cloudbase-sdk.js"></script>
-<script>
-(function(){
-  'use strict';
-
-  var ENV_ID = 'shenzhen-d9g9yepss24fd7e4a';
-  var MSG_TABLE = 'guestbook_messages';
-  var VISIT_TABLE = 'site_visits';
-  var VISITOR_KEY = 'yuke_portfolio_visitor';
-
-  var $ = function(id){ return document.getElementById(id); };
-  var form = $('ivForm');
-  // 页面上不存在互动区时直接跳过（保持可裁剪性）
-  if(!form) return;
-
-  var listBox   = $('ivList');
-  var formMsg   = $('ivFormMsg');
-  var submitBtn = $('ivSubmit');
-  var nameInput = $('ivName');
-  var msgInput  = $('ivMessage');
-  var contactIn = $('ivContact');
-  var counter   = $('ivCounter');
-
-  var MAX_LEN = 800;
-  var app = null, db = null;
-  var cloudReady = false;
-
-  /* ---------- 小工具 ---------- */
-  function setStat(el, val){
-    if(!el) return;
-    el.textContent = (val === null || val === undefined) ? '—' : String(val);
-    el.classList.remove('iv-pending');
-  }
-  function escapeHtml(s){
-    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
-      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-    });
-  }
-  // 相对时间：刚刚 / 12 分钟前 / 3 小时前 / 2 天前 / 具体日期
-  function relativeTime(iso){
-    var t = new Date(iso).getTime();
-    if(isNaN(t)) return '';
-    var diff = Date.now() - t;
-    if(diff < 0) diff = 0;
-    var min = Math.floor(diff / 60000);
-    if(min < 1) return '刚刚';
-    if(min < 60) return min + ' 分钟前';
-    var hour = Math.floor(min / 60);
-    if(hour < 24) return hour + ' 小时前';
-    var day = Math.floor(hour / 24);
-    if(day < 30) return day + ' 天前';
-    var d = new Date(t);
-    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-  }
-  function showFormMsg(text, type){
-    if(!formMsg) return;
-    formMsg.textContent = text;
-    formMsg.className = 'iv-msg show ' + (type === 'ok' ? 'ok' : 'err');
-  }
-  function hideFormMsg(){
-    if(formMsg) formMsg.className = 'iv-msg';
-  }
-
-  /* ---------- 访客标识：仅用于统计独立访客数，不含任何个人身份信息 ---------- */
-  function getVisitorKey(){
-    try{
-      var k = localStorage.getItem(VISITOR_KEY);
-      if(k) return k;
-      k = 'v-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
-      localStorage.setItem(VISITOR_KEY, k);
-      return k;
-    }catch(e){
-      return 'v-anon';
-    }
-  }
-
-  /* ---------- 初始化云连接 ---------- */
-  function initCloud(){
-    return new Promise(function(resolve){
-      if(!window.cloudbase){
-        resolve(false);
-        return;
-      }
-      try{
-        app = window.cloudbase.init({ env: ENV_ID });
-        db  = app.rdb();
-        // 先尝试匿名登录，保证后续读写有身份上下文
-        var auth = app.auth;
-        var done = function(){ cloudReady = true; resolve(true); };
-        try{
-          var p = auth && auth.signInAnonymously && auth.signInAnonymously();
-          if(p && typeof p.then === 'function'){
-            p.then(done, function(){ done(); });   // 即使登录失败也继续，交由读取结果判断
-          }else{
-            done();
-          }
-        }catch(e){
-          done();
-        }
-      }catch(e){
-        resolve(false);
-      }
-    });
-  }
-
-  /* ---------- 访问统计 ---------- */
-  function renderStats(data){
-    setStat($('ivStatTotal'), data && data.total);
-    setStat($('ivStatToday'), data && data.today);
-    setStat($('ivStatWeek'),  data && data.week);
-    setStat($('ivStatMsg'),   data && data.msgCount);
-  }
-
-  function loadStats(){
-    // 通过云端聚合函数取汇总数字，原始访问记录不对外暴露
-    return db.rpc('get_visit_stats', {}).then(function(res){
-      var row = res && res.data;
-      if(Array.isArray(row)) row = row[0];
-      // 部分环境下 rpc 返回 { data: { get_visit_stats: {...} } }
-      if(row && row.get_visit_stats) row = row.get_visit_stats;
-      renderStats(row || {});
-    });
-  }
-
-  /* ---------- 记录本次访问 ---------- */
-  function recordVisit(){
-    var payload = {
-      page: 'home',
-      referrer: (document.referrer || '').slice(0, 300) || null,
-      visitor_key: getVisitorKey(),
-      user_agent: (navigator.userAgent || '').slice(0, 300),
-      screen_w: window.screen ? window.screen.width : null
-    };
-    // 同一访客同一会话只记录一次，避免刷新导致的重复计数
-    var once = VISITOR_KEY + '_session_logged';
-    try{
-      if(sessionStorage.getItem(once)) return Promise.resolve();
-      sessionStorage.setItem(once, '1');
-    }catch(e){}
-
-    return db.from(VISIT_TABLE).insert(payload).then(function(){
-      return loadStats();
-    }).catch(function(){
-      try{ sessionStorage.removeItem(once); }catch(e){}
-    });
-  }
-
-  /* ---------- 留言列表 ---------- */
-  function renderMessages(rows){
-    if(!listBox) return;
-    if(!rows || !rows.length){
-      listBox.innerHTML = '<div class="iv-empty">还没有留言<br>欢迎成为第一个留下足迹的人</div>';
-      return;
-    }
-    listBox.innerHTML = rows.map(function(m){
-      var contact = m.contact ? '<div class="iv-item-contact">联系方式：' + escapeHtml(m.contact) + '</div>' : '';
-      return '<div class="iv-item">' +
-        '<div class="iv-item-top">' +
-          '<span class="iv-item-name">' + escapeHtml(m.name || '匿名') + '</span>' +
-          '<span class="iv-item-time">' + relativeTime(m.created_at) + '</span>' +
-        '</div>' +
-        '<div class="iv-item-text">' + escapeHtml(m.message) + '</div>' +
-        contact +
-      '</div>';
-    }).join('');
-  }
-
-  function loadMessages(){
-    return db.from(MSG_TABLE)
-      .select('id,name,message,contact,created_at')
-      .order('created_at', { ascending: false })
-      .limit(50)
-      .then(function(res){
-        renderMessages(res && res.data);
-      });
-  }
-
-  /* ---------- 提交留言 ---------- */
-  function validate(){
-    var name = (nameInput.value || '').trim();
-    var msg  = (msgInput.value  || '').trim();
-    if(!name){ showFormMsg('请填写你的称呼。', 'err'); nameInput.focus(); return null; }
-    if(name.length > 40){ showFormMsg('称呼请控制在 40 字以内。', 'err'); nameInput.focus(); return null; }
-    if(!msg){ showFormMsg('请填写留言内容。', 'err'); msgInput.focus(); return null; }
-    if(msg.length > MAX_LEN){ showFormMsg('留言请控制在 ' + MAX_LEN + ' 字以内。', 'err'); msgInput.focus(); return null; }
-    return {
-      name: name,
-      message: msg,
-      contact: (contactIn.value || '').trim().slice(0, 80) || null
-    };
-  }
-
-  function submitMessage(payload){
-    submitBtn.disabled = true;
-    submitBtn.textContent = '正在提交…';
-    hideFormMsg();
-
-    db.from(MSG_TABLE).insert(payload).then(function(){
-      form.reset();
-      counter.textContent = '0 / ' + MAX_LEN;
-      counter.classList.remove('iv-over');
-      showFormMsg('留言已发布，谢谢你的分享。', 'ok');
-      return Promise.all([loadMessages(), loadStats()]);
-    }).catch(function(err){
-      var detail = (err && (err.message || err.msg)) || '';
-      showFormMsg('提交没有成功，请稍后再试' + (detail ? '（' + detail + '）' : '。'), 'err');
-    }).then(function(){
-      submitBtn.disabled = false;
-      submitBtn.textContent = '提交留言';
-    });
-  }
-
-  if(form){
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      if(!cloudReady){ showFormMsg('云端连接尚未就绪，请稍后重试。', 'err'); return; }
-      var payload = validate();
-      if(!payload) return;
-      submitMessage(payload);
-    });
-  }
-
-  if(msgInput){
-    msgInput.addEventListener('input', function(){
-      var n = msgInput.value.length;
-      counter.textContent = n + ' / ' + MAX_LEN;
-      counter.classList.toggle('iv-over', n > MAX_LEN);
-    });
-  }
-
-  /* ---------- 启动 ---------- */
-  initCloud().then(function(ok){
-    if(!ok){
-      if(listBox) listBox.innerHTML = '<div class="iv-empty">云端连接未就绪，请刷新页面重试</div>';
-      showFormMsg('云端连接未就绪，请刷新页面重试。', 'err');
-      return;
-    }
-    recordVisit().then(function(){
-      return loadMessages();
-    }).catch(function(){
-      if(listBox) listBox.innerHTML = '<div class="iv-empty">留言读取失败，请刷新页面重试</div>';
-    });
-  });
-
-})();
-</script>
 </body>
 </html>
