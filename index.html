@@ -3,18 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>陈雨可 | 产品 · 策划运营 · 个人作品集</title>
-<meta name="description" content="陈雨可的个人作品集——求职方向：产品经理 / 产品运营 / 策划运营。涵盖产品分析、数据看板、活动策划、内容运营与视觉设计全链路实践。深圳大学城乡规划学硕士，2026 秋招。">
-<meta name="theme-color" content="#111111">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111111'/%3E%3Ctext x='32' y='43' font-size='32' text-anchor='middle' fill='%23d1e1e8' font-family='sans-serif' font-weight='700'%3EC%3C/text%3E%3C/svg%3E">
-<!-- 字体异步加载：避免 Google Fonts 在部分网络环境下阻塞渲染造成长时间白屏；
-     加载不出来时直接使用下方回退字体栈（苹方 / 微软雅黑），页面立即呈现 -->
-<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"></noscript>
+<title>陈雨可 | 设计师作品集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#111111;--bg-secondary:#0a0a0a;--card:#1a1a1a;--border:#222222;--border-hover:#333333;--fg:#ffffff;--fg-muted:#888888;--accent:#d1e1e8;--accent-dim:rgba(209,225,232,.1);--glass:rgba(255,255,255,.05);--font-display:'Space Grotesk','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;--font-body:'Inter','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;--radius:12px;--radius-lg:16px;--radius-full:9999px}
+:root{--bg:#111111;--bg-secondary:#0a0a0a;--card:#1a1a1a;--border:#222222;--border-hover:#333333;--fg:#ffffff;--fg-muted:#888888;--accent:#d1e1e8;--accent-dim:rgba(209,225,232,.1);--glass:rgba(255,255,255,.05);--font-display:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif;--radius:12px;--radius-lg:16px;--radius-full:9999px}
 html{scroll-behavior:smooth}
 body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-height:1.6;overflow-x:hidden}
 
@@ -59,7 +53,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .container{max-width:1200px;margin:0 auto;padding:0 24px}
 
 /* ========== NAVIGATION ========== */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;background:rgba(17,17,17,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid transparent;transition:.3s;transform:translateZ(0);backface-visibility:hidden}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;background:rgba(17,17,17,.85);backdrop-filter:blur(20px);border-bottom:1px solid transparent;transition:.3s}
 .nav.scrolled{border-bottom-color:var(--border)}
 .nav .container{display:flex;justify-content:space-between;align-items:center}
 .logo{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--accent);text-decoration:none}
@@ -77,27 +71,38 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
    视觉构成：人物光晕 → 蓝图网格 → 轨道虚线圆 → 散布光点 → 准星坐标 → 暗角
    右侧书脊描边字 PORTFOLIO + 4 张毛玻璃数据卡悬浮 */
 :root{
-  --hero-bg:#0A0C0E;        /* 近黑底色 */
+  --hero-bg:#0A0C0E;        /* 近黑底色，与视频暗部、暗角统一为同一色值 */
+  --hero-video-scale:1.02;  /* 视频基准放大倍率（视差脚本读取，保证位移不露边） */
   --teal:#32B9D8;           /* 蓝青色单色系点缀 */
   --teal-soft:rgba(50,185,216,.45);
   --teal-faint:rgba(50,185,216,.14);
 }
-.hero{min-height:100vh;position:relative;overflow:hidden;display:block;background:var(--hero-bg);contain:layout style}
-.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero{min-height:100vh;position:relative;overflow:hidden;display:block;background:var(--hero-bg)}
+.hero-bg{position:absolute;inset:0;z:0;overflow:hidden}
 
-/* 人物主体：置于画面右侧约 2/3 处，左侧留白给文字，视觉重心左右平衡 */
-.hero-bg video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;
+/* 人物主体：改用「加宽补位 + 左缘羽化」替代位移，消除矩形硬边
+   1) 宽度 128% 从 left:0 起铺，人物自然落在画面约 64% 处，任何视口下都完整覆盖首屏，
+      右侧溢出裁掉，左侧不会出现纯色空洞（原先 translateX(14%) 会露出底色并形成直边）
+   2) 左缘用遮罩从透明渐变到不透明，让视频自然溶进背景，禁止硬边矩形
+   3) 视差只做 ±4.5px 的小幅位移，始终落在 28% 的加宽余量内 */
+.hero-bg video{position:absolute;top:0;left:0;width:128%;height:100%;object-fit:cover;
   object-position:50% 40%;
-  transform:translateX(14%) scale(1.05);
-  /* 闪烁修复：删除 transition:transform .5s —— 它与 JS 视差每帧写 transform 相互打架，
-     会让视频不断重启动画造成抖动；平滑改由 JS 插值完成 */
-  will-change:transform;
+  transform:scale(var(--hero-video-scale,1.02));
+  transform-origin:64% 46%;
+  transition:transform .5s ease-out;
   filter:saturate(.96) contrast(1.05) brightness(.9);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.06) 6%,rgba(0,0,0,.34) 14%,#000 27%,#000 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.06) 6%,rgba(0,0,0,.34) 14%,#000 27%,#000 100%);
 }
 
+/* 统一色调层：从左到右的极淡冷色渐变，把视频暗部与页面底色融为同一空间 */
+/* 图层顺序与项目既有写法一致：紧随 .hero-bg 之后，位于光晕/网格之下，不遮挡青蓝光晕 */
+.hero-blend{position:absolute;inset:0;z:1;pointer-events:none;
+  background:linear-gradient(90deg,rgba(10,12,14,.52) 0%,rgba(10,12,14,.32) 30%,
+    rgba(10,12,14,.13) 58%,rgba(10,12,14,.04) 80%,rgba(10,12,14,.20) 100%)}
+
 /* ===== 1. 人物光晕：青蓝色径向柔光，把人物从暗背景中托出 ===== */
-.hero-glow{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen;
-  transform:translateZ(0);backface-visibility:hidden;-webkit-backface-visibility:hidden;
+.hero-glow{position:absolute;inset:0;z:1;pointer-events:none;mix-blend-mode:screen;
   background:
     radial-gradient(ellipse 26% 40% at 63% 44%,rgba(50,185,216,.30) 0%,rgba(50,185,216,.13) 34%,transparent 70%),
     radial-gradient(ellipse 42% 54% at 62% 46%,rgba(50,185,216,.10) 0%,transparent 66%);
@@ -107,7 +112,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 @keyframes glowBreathe{0%,100%{opacity:.9}50%{opacity:1}}
 
 /* ===== 2. 背景网格：规划图纸质感，64px 细线 3% 透明度 ===== */
-.hero-grid{position:absolute;inset:0;z-index:1;pointer-events:none;
+.hero-grid{position:absolute;inset:0;z:1;pointer-events:none;
   background-image:
     linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
     linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
@@ -117,7 +122,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 }
 
 /* ===== 3. 轨道虚线圆：两道同心椭圆 + 轨道光点 ===== */
-.hero-orbit{position:absolute;inset:0;z-index:2;pointer-events:none;display:flex;align-items:center;justify-content:center}
+.hero-orbit{position:absolute;inset:0;z:2;pointer-events:none;display:flex;align-items:center;justify-content:center}
 .hero-orbit svg{width:min(1180px,104vw);height:auto;opacity:.85}
 .hero-orbit .ring{fill:none;stroke:var(--teal);stroke-width:1}
 .hero-orbit .ring-outer{stroke-dasharray:7 11;opacity:.34;animation:orbitSpin 140s linear infinite;transform-origin:center}
@@ -127,13 +132,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 @keyframes orbitSpin{to{transform:rotate(360deg)}}
 
 /* ===== 4. 散布光点：环境尘埃粒子（数量由脚本生成） ===== */
-.hero-particles{position:absolute;inset:0;z-index:2;pointer-events:none}
+.hero-particles{position:absolute;inset:0;z:2;pointer-events:none}
 .hero-particles i{position:absolute;border-radius:50%;background:var(--teal);
   box-shadow:0 0 6px rgba(50,185,216,.85);animation:twinkle 5s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.12}50%{opacity:.7}}
 
 /* ===== 5. 准星 + 坐标：测绘 / 规划气质 ===== */
-.hero-crosshair{position:absolute;inset:0;z-index:3;pointer-events:none}
+.hero-crosshair{position:absolute;inset:0;z:3;pointer-events:none}
 .hero-crosshair .ch{position:absolute;width:22px;height:22px;opacity:.34}
 .hero-crosshair .ch::before,.hero-crosshair .ch::after{content:'';position:absolute;background:rgba(255,255,255,.75)}
 .hero-crosshair .ch::before{left:50%;top:0;width:1px;height:100%;transform:translateX(-50%)}
@@ -150,7 +155,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 /* ===== 6.5 巨型描边水印「2026」 =====
    构成：描边空心数字 → 青蓝重影层
    位于左文右图之间，作为视觉过渡层，不遮挡人物与按钮 */
-.hero-emblem{position:absolute;top:12%;left:22%;z-index:3;width:min(46vw,560px);
+.hero-emblem{position:absolute;top:12%;left:22%;z:3;width:min(46vw,560px);
   pointer-events:none;user-select:none;animation:fadeInUp 1s ease both;animation-delay:.5s}
 
 /* 巨型描边水印数字 */
@@ -168,13 +173,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   pointer-events:none}
 
 /* ===== 6. 暗角：边缘压暗，聚焦中心 ===== */
-.hero-vignette{position:absolute;inset:0;z-index:4;pointer-events:none;
+.hero-vignette{position:absolute;inset:0;z:4;pointer-events:none;
   background:
     radial-gradient(ellipse 82% 82% at 54% 50%,transparent 40%,rgba(6,8,10,.62) 100%),
     linear-gradient(to bottom,rgba(10,12,14,.72) 0%,rgba(10,12,14,.12) 24%,rgba(10,12,14,.12) 70%,rgba(10,12,14,.86) 100%)}
 
 /* ===== 7. 右侧书脊描边字：PORTFOLIO ===== */
-.hero-spine{position:absolute;top:50%;right:26px;transform:translateY(-50%);z-index:6;
+.hero-spine{position:absolute;top:50%;right:26px;transform:translateY(-50%);z:6;
   writing-mode:vertical-rl;text-orientation:upright;
   font-family:var(--font-display);font-weight:700;
   font-size:clamp(40px,5.4vw,74px);letter-spacing:.16em;line-height:1;
@@ -187,7 +192,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .hero-spine::after{right:-16px}
 
 /* ===== 8. 悬浮玻璃数据卡（毛玻璃拟态） ===== */
-.hero-stats{position:absolute;inset:0;z-index:7;pointer-events:none}
+.hero-stats{position:absolute;inset:0;z:7;pointer-events:none}
 .glass-card{
   position:absolute;pointer-events:auto;
   padding:16px 20px;border-radius:8px;
@@ -198,11 +203,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   box-shadow:0 12px 34px rgba(0,0,0,.32);
   animation:cardFloat 7s ease-in-out infinite;
   transition:background .35s ease,border-color .35s ease,box-shadow .35s ease;
-  will-change:transform;
-  /* 独立合成层：避免 backdrop-filter 与动画叠加时在部分 GPU 上闪烁 */
-  transform:translateZ(0);
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden}
+  will-change:transform}
 .glass-card:hover{
   background:rgba(255,255,255,.22);
   border-color:rgba(50,185,216,.5);
@@ -219,20 +220,20 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 @keyframes cardFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
 
 /* ===== 9. 底部标识文字 ===== */
-.hero-footer{position:absolute;left:48px;bottom:20px;z-index:8;
+.hero-footer{position:absolute;left:48px;bottom:20px;z:8;
   font-family:var(--font-display);font-size:12px;font-weight:500;
   letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.7);
   pointer-events:none}
 
 /* 四角容器 */
-.hero-corners{position:absolute;inset:0;z-index:9;pointer-events:none}
+.hero-corners{position:absolute;inset:0;z:9;pointer-events:none}
 .hero-corner{position:absolute;pointer-events:auto;max-width:min(38vw,420px)}
 .hero-corner.tl{top:104px;left:48px;text-align:left;animation:fadeInUp .9s ease both;animation-delay:.3s}
 .hero-corner.bl{bottom:206px;left:48px;text-align:left;animation:fadeInUp .9s ease both;animation-delay:.6s}
 /* 中下方：按钮区，水平居中 */
 .hero-corner.bc{bottom:44px;left:50%;transform:translateX(-50%);text-align:center;display:flex;flex-direction:column;align-items:center;width:auto;max-width:90vw;animation:fadeInUp .9s ease both;animation-delay:.9s}
 /* 左侧文字区加一层极淡的暗色衬底，避免与人物主体粘连、提升可读性 */
-.hero-corner.tl::before,.hero-corner.bl::before{content:'';position:absolute;left:-40px;right:-90px;top:-40px;bottom:-40px;z-index:-1;
+.hero-corner.tl::before,.hero-corner.bl::before{content:'';position:absolute;left:-40px;right:-90px;top:-40px;bottom:-40px;z:-1;
   background:radial-gradient(ellipse 100% 100% at 0% 50%,rgba(10,12,16,.62) 0%,rgba(10,12,16,.28) 48%,transparent 78%);pointer-events:none}
 
 /* 左上：姓名 + 作品集 */
@@ -324,109 +325,88 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .detail-meta .v{color:var(--accent);text-align:right}
 
 /* ========== SECTION COMMON ========== */
-.section{padding:120px 0;position:relative;scroll-margin-top:70px}
+.section{padding:120px 0;position:relative}
 .section-label{font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:3px;font-weight:600;margin-bottom:16px}
 .section-title{font-family:var(--font-display);font-size:clamp(32px,5vw,56px);font-weight:700;line-height:1.1;margin-bottom:20px}
 .section-desc{font-size:16px;color:var(--fg-muted);max-width:560px;line-height:1.7}
 
 /* ========== PORTFOLIO ========== */
 .filter-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px;justify-content:center}
-/* ========== 作品集滚动卡片模块 ========== */
-/* 外层：裁掉溢出的卡片，并在左右留出渐隐空间 */
-.marquee-wrap{position:relative;padding:8px 0 28px;overflow:hidden;contain:layout style;
-  /* 拖拽时禁止选中文字 / 拖出图片幽灵图 */
-  user-select:none;-webkit-user-select:none}
-.marquee-track{
-  display:flex;
-  gap:38px;
-  width:max-content;
-  padding:26px 0;
-  /* 位移由 JS 统一驱动（自动滚动 + 鼠标拖拽共享同一个 offset，避免互相冲突） */
-  will-change:transform;
+/* ========== 作品区：分类筛选 + 瀑布流 ========== */
+/* 筛选条：胶囊按钮，选中态用 accent 描边高亮 */
+.pf-filter{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:38px 0 44px}
+.pf-pill{
+  padding:9px 22px;cursor:pointer;font-family:var(--font-body);font-size:13.5px;font-weight:500;
+  background:rgba(255,255,255,.045);border:1px solid var(--border);border-radius:var(--radius-full);
+  color:var(--fg-muted);transition:.3s;letter-spacing:.02em;
 }
-/* 拖拽中：禁用卡片过渡，保证跟手 */
-.marquee-wrap.is-dragging{cursor:grabbing}
-.marquee-wrap.is-dragging .p-card,
-.marquee-wrap.is-dragging .p-card img{transition:none}
-/* 只有真正拖起来（超过阈值）才屏蔽卡片指针事件，否则会吃掉普通点击 */
-.marquee-wrap.is-moving .p-card{pointer-events:none}
-.marquee-wrap.is-moving{cursor:grabbing}
-
-/* 单张卡片：圆角方形 */
-.p-card{
-  position:relative;
-  width:var(--card-size);height:var(--card-size);
-  flex:0 0 auto;
-  border-radius:26px;
-  overflow:hidden;
-  cursor:pointer;
-  background:var(--card);
-  border:1px solid var(--border);
-  /* 尺寸与透明度平滑过渡，避免生硬 */
-  transition:transform .55s cubic-bezier(.22,.68,.36,1),
-             opacity .45s ease,
-             box-shadow .55s ease,
-             border-color .45s ease,
-             filter .45s ease;
+.pf-pill:hover{border-color:rgba(209,225,232,.34);color:var(--fg)}
+.pf-pill.is-active{
+  background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:600;
 }
-/* 一屏约 3 张：中间略大，左右略小。
-   【闪烁核心修复】两侧卡片不再修改 width/height —— 布局属性一变，
-   整条 flex 轨道立刻重排、所有卡片位移跳变，就是肉眼看到的"大大小小"闪烁；
-   且原代码的 width/height 也不在 transition 列表里，变化是瞬间而非平滑的。
-   现改为纯 transform:scale（合成器属性，不参与布局），轨道宽度全程恒定，零重排。 */
-.p-card.is-side{transform:scale(.88);opacity:.42;filter:saturate(.72)}
-.p-card.is-center{opacity:1;transform:scale(1.07);z-index:2;box-shadow:0 24px 60px rgba(0,0,0,.45)}
 
-/* 悬停微交互：卡片轻微放大 + 滚动暂停（轨道暂停见上方规则） */
-.p-card:hover{
-  transform:scale(1.12) translateY(-6px);
+/* 瀑布流容器：CSS columns 实现不等高排列 */
+.pf-wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.pf-masonry{columns:3;column-gap:22px}
+@media(max-width:1024px){.pf-masonry{columns:2}}
+@media(max-width:768px){.pf-masonry{columns:1}.pf-wrap{padding:0 18px}.pf-filter{margin:28px 0 32px;gap:8px}.pf-pill{padding:8px 18px;font-size:13px}}
+
+/* 单个作品卡片 */
+.pf-card{
+  break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;
+  display:block;width:100%;margin:0 0 22px;padding:0;cursor:pointer;text-align:left;
+  position:relative;overflow:hidden;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  font-family:var(--font-body);
+  transition:border-color .32s,transform .32s,box-shadow .32s,opacity .34s;
+  /* 重排时的淡入淡出 */
   opacity:1;
-  filter:saturate(1);
-  border-color:var(--border-hover);
-  box-shadow:0 30px 70px rgba(0,0,0,.5);
-  z-index:3;
 }
-.p-card.is-center:hover{transform:scale(1.14) translateY(-6px)}
+.pf-card:hover{border-color:rgba(209,225,232,.34);transform:translateY(-4px);
+  box-shadow:0 18px 40px rgba(0,0,0,.42)}
+/* 筛选重排时的淡出态 */
+.pf-card.is-hiding{opacity:0;transform:translateY(8px)}
+/* 重点方向（产品）卡片给一层极淡的蓝青描边 */
+.pf-card.is-feature{border-color:rgba(50,185,216,.22)}
+.pf-card.is-feature:hover{border-color:rgba(50,185,216,.5)}
 
-.p-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.22,.68,.36,1)}
-.p-card:hover img{transform:scale(1.06)}
-/* 卡片遮罩：保证名称文字可读 */
-.p-card::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;
-  background:linear-gradient(to top,rgba(8,8,10,.92) 0%,rgba(8,8,10,.6) 26%,rgba(8,8,10,.12) 52%,transparent 72%);transition:opacity .4s}
-.p-card:hover::after{opacity:.75}
-/* 查看提示 */
-.p-card-hint{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s;pointer-events:none}
-.p-card:hover .p-card-hint{opacity:1}
-.p-card-hint span{background:rgba(209,225,232,.95);color:#111;padding:9px 20px;border-radius:var(--radius-full);
-  font-size:12px;font-weight:600;transform:translateY(6px);transition:transform .35s}
-.p-card:hover .p-card-hint span{transform:translateY(0)}
-/* 卡片下方作品名称 */
-.p-card-name{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:18px 20px;
-  font-size:14.5px;font-weight:700;color:#fff;letter-spacing:.02em;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  text-shadow:0 2px 12px rgba(0,0,0,.85);
-  transition:color .35s,transform .35s}
-.p-card:hover .p-card-name{color:var(--accent);transform:translateY(-3px)}
-/* 左上角分类角标：让 HR 扫一眼就知道项目类型 */
-.p-card-cat{position:absolute;top:14px;left:14px;z-index:3;padding:5px 12px;border-radius:var(--radius-full);
-  font-size:11px;font-weight:600;letter-spacing:.06em;
-  background:rgba(10,12,14,.55);border:1px solid rgba(255,255,255,.22);color:#fff;
-  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-  transition:border-color .35s,color .35s}
-.p-card:hover .p-card-cat{border-color:var(--accent);color:var(--accent)}
+.pf-cover{position:relative;width:100%;overflow:hidden;background:#0d0d0d}
+.pf-cover img{width:100%;height:auto;display:block;
+  transition:transform .6s cubic-bezier(.22,.68,.36,1)}
+.pf-card:hover .pf-cover img{transform:scale(1.05)}
+/* 渐变遮罩：底部压暗，保证名称可读（白底分析图也能清晰显示） */
+.pf-cover::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top,rgba(8,8,8,.96) 0%,rgba(8,8,8,.88) 18%,rgba(8,8,8,.6) 38%,rgba(8,8,8,.24) 56%,transparent 74%)}
 
-/* 左右渐隐遮罩：卡片滚到边界自然淡出 */
-.marquee-fade{position:absolute;top:0;bottom:0;width:16%;z-index:5;pointer-events:none}
-.marquee-fade.left{left:0;background:linear-gradient(to right,var(--bg) 0%,rgba(17,17,17,.86) 38%,transparent 100%)}
-.marquee-fade.right{right:0;background:linear-gradient(to left,var(--bg) 0%,rgba(17,17,17,.86) 38%,transparent 100%)}
+/* 封面上的名称与一句话简介 */
+.pf-cover-text{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:22px 20px 18px}
+.pf-name{font-family:var(--font-display);font-size:16.5px;font-weight:600;line-height:1.45;
+  color:#fff;transition:.3s;text-shadow:0 1px 8px rgba(0,0,0,.85),0 0 2px rgba(0,0,0,.6)}
+.pf-card:hover .pf-name{color:var(--accent)}
+.pf-brief{font-size:12.5px;color:rgba(222,222,222,.9);line-height:1.6;margin-top:7px;
+  text-shadow:0 1px 6px rgba(0,0,0,.8)}
 
-/* 滚动条两端留白提示 */
-.marquee-tip{text-align:center;font-size:12px;font-family:monospace;color:var(--fg-muted);opacity:.55;margin-top:10px}
-
-/* 尊重系统「减少动态效果」：停止自动滚动，改为可手动横向滚动 */
-@media(prefers-reduced-motion:reduce){
-  .marquee-wrap{overflow-x:auto}
+/* 分类角标：左上角 */
+.pf-tag{
+  position:absolute;top:14px;left:14px;z-index:3;
+  padding:5px 12px;border-radius:var(--radius-full);font-size:11.5px;font-weight:600;letter-spacing:.06em;
+  background:rgba(10,10,10,.72);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.14);color:#dfe9ec;
 }
+.pf-tag.is-product{background:rgba(50,185,216,.88);border-color:transparent;color:#0a1a1f}
+
+/* 卡片底部信息条 */
+.pf-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:13px 20px;border-top:1px solid var(--border)}
+.pf-role{font-size:11.5px;color:var(--fg-muted);line-height:1.5}
+.pf-year{font-size:11.5px;color:var(--fg-muted);flex-shrink:0;font-variant-numeric:tabular-nums}
+/* 长文分析入口标记 */
+.pf-deep{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#9fdfef;margin-top:3px}
+.pf-deep::before{content:'';width:4px;height:4px;border-radius:50%;background:#32B9D8}
+
+/* 空状态 */
+.pf-empty{display:none;text-align:center;padding:70px 20px;color:var(--fg-muted);font-size:13.5px}
+.pf-empty.show{display:block}
 
 /* 简历档案模块（RESUME） */
 /* 标题行：大标题与描述文字同行横向排版，基线对齐 */
@@ -462,61 +442,89 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .resume-contact:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
 .resume-contact b{color:var(--fg-muted);font-weight:500}
 
-/* 中部：左（能力亮点）右（经历时间线）双栏 */
-.resume-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:28px;margin-top:28px}
-.resume-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px 30px}
-.resume-block-title{
-  font-size:12px;font-family:monospace;color:var(--accent);letter-spacing:.16em;text-transform:uppercase;
-  margin-bottom:24px;display:flex;align-items:center;gap:10px;
+/* 简历主体：改为纵向折叠区块，默认收起，点击展开详情 */
+.rz-toolbar{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:28px 0 20px}
+.rz-tgl{
+  padding:8px 20px;border-radius:var(--radius-full);border:1px solid var(--border);
+  background:rgba(255,255,255,.045);color:var(--fg-muted);font-family:var(--font-body);
+  font-size:12.5px;letter-spacing:.02em;cursor:pointer;transition:.28s;
 }
-.resume-block-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.rz-tgl:hover{border-color:rgba(209,225,232,.32);color:var(--accent)}
+.rz-tgl:active{transform:translateY(1px)}
 
-/* 能力亮点：数字序号 + 标题 + 说明 */
-.cap-item{display:flex;gap:16px;padding:16px 0;border-bottom:1px dashed rgba(255,255,255,.07)}
-.cap-item:last-child{border-bottom:none;padding-bottom:0}
-.cap-item:first-child{padding-top:0}
-.cap-num{
-  flex:0 0 auto;width:28px;height:28px;border-radius:9px;background:var(--accent-dim);border:1px solid rgba(209,225,232,.22);
-  color:var(--accent);font-size:12px;font-weight:700;font-family:var(--font-display);
-  display:flex;align-items:center;justify-content:center;margin-top:2px;
+.rz-group{display:flex;flex-direction:column;gap:12px}
+
+/* 一级区块 */
+.rz-sec{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius-lg);overflow:hidden;transition:border-color .32s;
 }
-.cap-text h4{font-size:14.5px;font-weight:600;margin-bottom:6px;color:#f2f2f2}
-.cap-text p{font-size:13px;color:var(--fg-muted);line-height:1.7}
-
-/* 经历时间线 */
-.exp-item{position:relative;padding:0 0 26px 22px;border-left:1px solid var(--border)}
-.exp-item:last-child{padding-bottom:0}
-.exp-item::before{
-  content:'';position:absolute;left:-4.5px;top:6px;width:8px;height:8px;border-radius:50%;
-  background:var(--accent);box-shadow:0 0 0 4px rgba(209,225,232,.12);
+.rz-sec.is-open{border-color:rgba(209,225,232,.2)}
+.rz-sec-head{
+  display:flex;align-items:center;gap:12px;width:100%;padding:18px 22px;
+  background:none;border:0;cursor:pointer;text-align:left;color:var(--fg);
+  font-family:var(--font-body);transition:background .25s;
 }
-.exp-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;margin-bottom:8px}
-.exp-period{font-size:11.5px;font-family:monospace;color:var(--accent);letter-spacing:.06em}
-.exp-org{font-size:15px;font-weight:600;color:#f2f2f2}
-.exp-role{font-size:12px;color:var(--fg-muted);padding:3px 10px;border-radius:var(--radius-full);background:rgba(255,255,255,.05)}
-.exp-desc{font-size:13px;color:var(--fg-muted);line-height:1.78}
-.exp-desc strong{color:#c9c9c9;font-weight:600}
-.exp-sub{margin-top:10px;padding-left:14px;border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:9px}
-.exp-sub p{font-size:12.5px;color:rgba(136,136,136,.95);line-height:1.75}
-.exp-sub strong{color:var(--accent);font-weight:600}
+.rz-sec-head:hover{background:rgba(255,255,255,.03)}
+.rz-sec-idx{
+  flex:0 0 auto;font-family:var(--font-display);font-size:11.5px;font-weight:700;
+  color:var(--accent);letter-spacing:.1em;opacity:.8;
+}
+.rz-sec-name{
+  flex:0 0 auto;font-family:var(--font-display);font-size:15.5px;font-weight:600;letter-spacing:.01em;
+}
+.rz-sec-sum{
+  flex:1;min-width:0;font-size:12.5px;color:var(--fg-muted);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.rz-sec-count{
+  flex:0 0 auto;font-size:11.5px;color:var(--fg-muted);padding:3px 10px;
+  border:1px solid var(--border);border-radius:var(--radius-full);
+}
+.rz-chev{
+  flex:0 0 auto;width:7px;height:7px;margin-top:-3px;
+  border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+  transform:rotate(45deg);color:var(--fg-muted);transition:transform .34s,color .3s;
+}
+.rz-sec.is-open>.rz-sec-head .rz-chev{transform:rotate(225deg);margin-top:3px;color:var(--accent)}
+.rz-item.is-open>.rz-item-head .rz-chev{transform:rotate(225deg);color:var(--accent)}
 
-/* 底部：奖项 / 教育 / 技能 三栏 */
-.resume-foot{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:28px}
-.award-item{padding:14px 0;border-bottom:1px dashed rgba(255,255,255,.07)}
-.award-item:last-child{border-bottom:none;padding-bottom:0}
-.award-item:first-child{padding-top:0}
-.award-name{font-size:13.5px;font-weight:600;color:#eaeaea;line-height:1.6}
-.award-meta{font-size:12px;color:var(--fg-muted);margin-top:5px;display:flex;flex-wrap:wrap;gap:6px 12px}
-.award-meta em{font-style:normal;color:var(--accent)}
+/* 折叠容器：JS 控制 max-height 实现顺滑展开 */
+.rz-sec-body,.rz-item-body{max-height:0;overflow:hidden;transition:max-height .44s cubic-bezier(.4,0,.2,1)}
+.rz-sec-inner{padding:2px 22px 22px}
 
-.edu-item{margin-bottom:22px}
-.edu-item:last-child{margin-bottom:0}
-.edu-item .edu-org{font-size:14.5px;font-weight:600;color:#f2f2f2}
-.edu-item .edu-degree{font-size:12.5px;color:var(--fg-muted);margin-top:5px}
-.edu-item .edu-course{font-size:12.5px;color:rgba(136,136,136,.9);margin-top:8px;line-height:1.7}
+/* 二级条目：标题行常显，要点点击展开 */
+.rz-item{border-top:1px dashed rgba(255,255,255,.07)}
+.rz-item:first-child{border-top:0}
+.rz-item-head{
+  display:flex;align-items:flex-start;gap:12px;width:100%;padding:15px 0;
+  background:none;border:0;cursor:pointer;text-align:left;color:var(--fg);font-family:var(--font-body);
+}
+.rz-item-t{flex:1;min-width:0}
+.rz-item-name{display:block;font-size:14px;font-weight:600;color:#ececec;line-height:1.55}
+.rz-item-meta{display:flex;flex-wrap:wrap;gap:5px 12px;margin-top:6px;font-size:11.5px;color:var(--fg-muted)}
+.rz-item-meta i{font-style:normal;font-family:monospace;letter-spacing:.04em;color:var(--accent);opacity:.85}
+.rz-item-meta em{font-style:normal;color:#32B9D8}
+.rz-item-meta s{text-decoration:none;color:rgba(150,150,150,.9)}
+.rz-item-head .rz-chev{margin-top:5px}
+.rz-item-inner{padding:0 0 20px}
+.rz-item:last-child .rz-item-inner{padding-bottom:6px}
+
+/* 展开后的正文排版 */
+.rz-lead{font-size:12.5px;color:var(--fg-muted);line-height:1.8;margin-bottom:11px}
+.rz-list{list-style:none;display:flex;flex-direction:column;gap:9px}
+.rz-list li{position:relative;padding-left:15px;font-size:12.5px;color:rgba(150,150,150,.95);line-height:1.8}
+.rz-list li::before{
+  content:'';position:absolute;left:0;top:9px;width:4px;height:4px;border-radius:50%;
+  background:rgba(209,225,232,.45);
+}
+.rz-list li b{color:#e2e2e2;font-weight:600}
+.rz-list li strong{color:var(--accent);font-weight:600}
+.rz-note{font-size:12.5px;color:rgba(150,150,150,.95);line-height:1.8}
+.rz-note+.rz-note{margin-top:7px}
 
 /* 技能标签分组 */
-.skill-group{margin-bottom:20px}
+.skill-group{margin-bottom:18px}
 .skill-group:last-child{margin-bottom:0}
 .skill-group-name{font-size:12.5px;color:var(--fg-muted);margin-bottom:10px}
 .skill-chips{display:flex;flex-wrap:wrap;gap:7px}
@@ -544,15 +552,230 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:700px;margin:48px auto 0}
 .contact-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:44px 32px;text-align:center;transition:.3s}
 .contact-card:hover{border-color:var(--border-hover);transform:translateY(-4px)}
-.contact-icon{font-size:36px;margin-bottom:16px;color:var(--accent)}
-.contact-icon svg{width:38px;height:38px;display:block;margin:0 auto}
-.contact-line{font-size:15.5px;font-weight:600;color:var(--fg);margin-bottom:8px !important;letter-spacing:.02em}
+.contact-icon{font-size:36px;margin-bottom:16px}
 .contact-card h3{font-size:18px;margin-bottom:10px}
 .contact-card p{font-size:14px;color:var(--fg-muted);margin-bottom:24px}
+
+/* ========== INTERACT 互动区（访问统计 + 留言板） ==========
+   数据来自云端，页面打开时匿名读取；留言与访问记录由访客匿名写入 */
+.section#interact::before{content:'';position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent)}
+
+/* 顶部四格统计条 */
+.iv-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-top:44px}
+.iv-stat{
+  position:relative;overflow:hidden;text-align:center;padding:26px 18px;
+  background:linear-gradient(150deg,rgba(209,225,232,.06) 0%,rgba(26,26,26,1) 55%,rgba(17,17,17,1) 100%);
+  border:1px solid var(--border);border-radius:var(--radius-lg);transition:.32s;
+}
+.iv-stat:hover{border-color:rgba(209,225,232,.3);transform:translateY(-3px)}
+/* 左上角一枚小小的实时指示灯，暗示数据是活的 */
+.iv-stat::after{content:'';position:absolute;top:14px;right:14px;width:5px;height:5px;border-radius:50%;
+  background:#32B9D8;box-shadow:0 0 7px rgba(50,185,216,.85);animation:ivPulse 2.4s ease-in-out infinite}
+@keyframes ivPulse{0%,100%{opacity:.35}50%{opacity:1}}
+.iv-stat-num{font-family:var(--font-display);font-size:clamp(30px,4.2vw,44px);font-weight:700;line-height:1;color:var(--accent);
+  font-variant-numeric:tabular-nums}
+.iv-stat-num.iv-pending{color:var(--fg-muted);font-size:clamp(20px,3vw,26px);letter-spacing:.06em}
+.iv-stat-label{font-size:12.5px;color:var(--fg-muted);margin-top:9px;letter-spacing:.06em}
+
+/* 留言板：左侧表单 + 右侧留言流，窄屏自动堆叠 */
+.iv-board{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:26px;margin-top:26px;align-items:start}
+.iv-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:30px 28px}
+.iv-panel-title{font-size:15px;font-weight:600;letter-spacing:.04em;margin-bottom:6px}
+.iv-panel-note{font-size:12.5px;color:var(--fg-muted);line-height:1.7;margin-bottom:22px}
+
+.iv-field{margin-bottom:16px}
+.iv-field label{display:block;font-size:12.5px;color:#b9b9b9;margin-bottom:8px;letter-spacing:.03em}
+.iv-field label em{font-style:normal;color:#e0726d}
+.iv-input,.iv-textarea{
+  width:100%;background:rgba(255,255,255,.035);border:1px solid var(--border);border-radius:10px;
+  color:var(--fg);font-family:var(--font-body);font-size:14px;padding:12px 14px;transition:.28s;outline:none;
+}
+.iv-input::placeholder,.iv-textarea::placeholder{color:rgba(136,136,136,.65)}
+.iv-input:focus,.iv-textarea:focus{border-color:rgba(209,225,232,.42);background:rgba(255,255,255,.06)}
+.iv-textarea{resize:vertical;min-height:104px;line-height:1.65}
+.iv-counter{text-align:right;font-size:11.5px;color:var(--fg-muted);margin-top:6px;font-variant-numeric:tabular-nums}
+.iv-counter.iv-over{color:#e0726d}
+
+.iv-submit{
+  width:100%;padding:13px 20px;border:none;border-radius:var(--radius-full);cursor:pointer;
+  background:var(--accent);color:var(--bg);font-family:var(--font-body);font-size:14.5px;font-weight:600;
+  transition:.3s;letter-spacing:.02em;
+}
+.iv-submit:hover:not(:disabled){background:#fff;transform:translateY(-1px)}
+.iv-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* 提交结果提示条 */
+.iv-msg{margin-top:14px;font-size:12.5px;line-height:1.6;padding:10px 13px;border-radius:9px;display:none}
+.iv-msg.show{display:block}
+.iv-msg.ok{background:rgba(50,185,216,.1);border:1px solid rgba(50,185,216,.35);color:#9fdfef}
+.iv-msg.err{background:rgba(224,114,109,.1);border:1px solid rgba(224,114,109,.36);color:#f0a9a5}
+
+/* 留言流 */
+.iv-list{max-height:520px;overflow-y:auto;margin:-6px -6px 0;padding:6px}
+.iv-list::-webkit-scrollbar{width:6px}
+.iv-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.13);border-radius:3px}
+.iv-list::-webkit-scrollbar-track{background:transparent}
+.iv-item{
+  border:1px solid var(--border);border-left:2px solid rgba(209,225,232,.32);
+  border-radius:11px;padding:15px 17px;margin-bottom:11px;background:rgba(255,255,255,.022);transition:.28s;
+}
+.iv-item:hover{border-color:var(--border-hover);border-left-color:var(--accent)}
+.iv-item-top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:7px}
+.iv-item-name{font-size:13.5px;font-weight:600;color:var(--accent)}
+.iv-item-time{font-size:11.5px;color:rgba(136,136,136,.8);white-space:nowrap}
+.iv-item-text{font-size:13.5px;color:#cdcdcd;line-height:1.72;word-break:break-word;white-space:pre-wrap}
+.iv-item-contact{font-size:11.5px;color:var(--fg-muted);margin-top:8px}
+.iv-empty,.iv-loading{text-align:center;color:var(--fg-muted);font-size:13px;padding:44px 20px;line-height:1.8}
+.iv-loading::before{content:'';display:inline-block;width:13px;height:13px;margin-right:9px;vertical-align:-2px;
+  border:1.6px solid rgba(209,225,232,.28);border-top-color:var(--accent);border-radius:50%;animation:ivSpin .8s linear infinite}
+@keyframes ivSpin{to{transform:rotate(360deg)}}
+
+@media(max-width:900px){
+  .iv-board{grid-template-columns:1fr;gap:20px}
+  .iv-list{max-height:none;overflow:visible}
+}
+@media(max-width:768px){
+  .iv-panel{padding:24px 20px}
+  .iv-stats{grid-template-columns:repeat(2,1fr);gap:12px}
+  .iv-stat{padding:20px 14px}
+}
 
 /* ========== FOOTER ========== */
 .footer{border-top:1px solid var(--border);padding:48px 0;text-align:center}
 .footer p{font-size:14px;color:var(--fg-muted)}
+
+/* ========== WORKS 作品总览页（全屏覆盖层，按大类分组，产品方向置顶） ==========
+   通过导航「作品分类」进入，hash 路由 #works 可直接访问；Esc 或点击关闭返回 */
+.works-page{
+  position:fixed;inset:0;z-index:200;background:var(--bg);
+  overflow-y:auto;overscroll-behavior:contain;
+  opacity:0;visibility:hidden;transform:translateY(14px);
+  transition:opacity .42s ease,transform .42s ease,visibility .42s;
+}
+.works-page.open{opacity:1;visibility:visible;transform:none}
+.works-page::-webkit-scrollbar{width:8px}
+.works-page::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:4px}
+.works-page::-webkit-scrollbar-track{background:transparent}
+/* 覆盖层内的暗纹背景，与全站保持同一种质感 */
+.works-page::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.026) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.026) 1px,transparent 1px),
+    linear-gradient(rgba(255,255,255,.013) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.013) 1px,transparent 1px),
+    radial-gradient(ellipse 78% 58% at 52% 22%,rgba(50,185,216,.05) 0%,transparent 68%);
+  background-size:128px 128px,128px 128px,32px 32px,32px 32px,100% 100%;
+  mask-image:radial-gradient(ellipse 120% 100% at 50% 26%,#000 40%,transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 120% 100% at 50% 26%,#000 40%,transparent 100%)}
+
+.works-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 24px 100px}
+
+/* 顶部栏：返回按钮 + 标题 */
+.works-top{
+  position:sticky;top:0;z-index:6;
+  background:rgba(17,17,17,.9);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  margin:0 -24px 0;padding:18px 24px;
+}
+.works-top-row{display:flex;align-items:center;justify-content:space-between;gap:20px;max-width:1200px;margin:0 auto}
+.works-back{
+  display:inline-flex;align-items:center;gap:8px;padding:9px 18px;cursor:pointer;
+  background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:var(--radius-full);
+  color:var(--fg);font-family:var(--font-body);font-size:13.5px;transition:.28s;
+}
+.works-back:hover{border-color:var(--accent);color:var(--accent);transform:translateX(-2px)}
+.works-brand{font-family:var(--font-display);font-size:14px;font-weight:600;color:var(--accent);letter-spacing:.04em}
+
+/* 页面标题区 */
+.works-hero{padding:56px 0 12px}
+.works-hero h1{font-family:var(--font-display);font-size:clamp(30px,4.4vw,46px);font-weight:700;line-height:1.15;letter-spacing:.01em}
+.works-hero p{font-size:15px;color:var(--fg-muted);margin-top:16px;max-width:680px;line-height:1.8}
+
+/* 快速跳转分类条 */
+.works-jump{display:flex;flex-wrap:wrap;gap:9px;margin-top:28px}
+.works-jump button{
+  padding:8px 16px;cursor:pointer;font-family:var(--font-body);font-size:13px;
+  background:rgba(255,255,255,.045);border:1px solid var(--border);border-radius:var(--radius-full);
+  color:#cfcfcf;transition:.28s;
+}
+.works-jump button:hover{border-color:var(--accent);color:var(--accent)}
+.works-jump button.is-hot{border-color:rgba(50,185,216,.5);color:#9fdfef;background:rgba(50,185,216,.08)}
+
+/* 分类区块 */
+.works-group{margin-top:64px;scroll-margin-top:96px}
+.works-group-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.works-group-title{font-family:var(--font-display);font-size:clamp(21px,2.6vw,27px);font-weight:700;
+  display:inline-flex;align-items:center;gap:12px}
+/* 分类标题前的竖条，产品组用蓝青高亮 */
+.works-group-title::before{content:'';width:3px;height:20px;border-radius:2px;background:var(--border-hover)}
+.works-group.is-featured .works-group-title::before{background:#32B9D8;box-shadow:0 0 10px rgba(50,185,216,.6)}
+.works-group-count{font-size:12.5px;color:var(--fg-muted);letter-spacing:.06em}
+.works-group-desc{font-size:13.5px;color:var(--fg-muted);line-height:1.75;max-width:720px;margin-bottom:26px}
+
+/* 重点分类的强调徽标 */
+.works-badge{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:var(--radius-full);
+  font-size:11.5px;font-weight:600;letter-spacing:.06em;
+  background:rgba(50,185,216,.12);border:1px solid rgba(50,185,216,.4);color:#9fdfef;
+}
+.works-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:#32B9D8;
+  box-shadow:0 0 7px rgba(50,185,216,.9);animation:ivPulse 2.4s ease-in-out infinite}
+
+/* 作品卡片网格：自动适配列数，窄屏单列 */
+.works-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:20px}
+.works-card{
+  position:relative;overflow:hidden;cursor:pointer;text-align:left;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  transition:.34s;display:flex;flex-direction:column;font-family:var(--font-body);
+  padding:0;
+}
+.works-card:hover{border-color:rgba(209,225,232,.34);transform:translateY(-5px);
+  box-shadow:0 20px 44px rgba(0,0,0,.42)}
+/* 重点分类的卡片加一层微光边 */
+.works-group.is-featured .works-card{border-color:rgba(50,185,216,.22)}
+.works-group.is-featured .works-card:hover{border-color:rgba(50,185,216,.55)}
+.works-card-cover{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#0d0d0d}
+.works-card-cover img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .6s cubic-bezier(.22,.68,.36,1)}
+.works-card:hover .works-card-cover img{transform:scale(1.06)}
+.works-card-cover::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top,rgba(10,10,10,.78) 0%,transparent 58%)}
+/* 产品分析类无实拍图时，用数据感底色替代 */
+.works-card-cover.is-plan{display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(140deg,rgba(50,185,216,.16) 0%,rgba(26,26,26,1) 52%,rgba(10,10,10,1) 100%)}
+.works-card-cover.is-plan span{font-family:var(--font-display);font-size:44px;font-weight:700;
+  color:rgba(209,225,232,.2);letter-spacing:.02em}
+.works-card-body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
+.works-card-cat{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#32B9D8;
+  font-weight:600;margin-bottom:9px}
+.works-card-title{font-family:var(--font-display);font-size:17px;font-weight:600;line-height:1.45;
+  margin-bottom:10px;transition:.28s}
+.works-card:hover .works-card-title{color:var(--accent)}
+.works-card-desc{font-size:13px;color:var(--fg-muted);line-height:1.72;flex:1;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.works-card-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
+.works-card-role{font-size:11.5px;color:rgba(136,136,136,.85);line-height:1.5}
+.works-card-year{font-size:11.5px;color:var(--fg-muted);flex-shrink:0;font-variant-numeric:tabular-nums}
+/* 长文分析的入口标记 */
+.works-card-deep{display:inline-flex;align-items:center;gap:5px;font-size:11px;
+  color:#9fdfef;letter-spacing:.04em}
+.works-card-deep::before{content:'';width:4px;height:4px;border-radius:50%;background:#32B9D8}
+
+.works-foot-note{margin-top:72px;padding-top:28px;border-top:1px solid var(--border);
+  text-align:center;font-size:13px;color:var(--fg-muted);line-height:1.8}
+
+@media(max-width:768px){
+  .works-inner{padding:0 18px 80px}
+  .works-hero{padding:38px 0 8px}
+  .works-group{margin-top:48px}
+  .works-grid{grid-template-columns:1fr;gap:16px}
+  .works-card-cover{aspect-ratio:16/9}
+  .works-top{margin:0 -18px;padding:14px 18px}
+  .works-top-row{gap:12px}
+  .works-back{padding:8px 14px;font-size:13px}
+}
 
 /* ========== ANIMATIONS ========== */
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -577,13 +800,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .contact-grid{grid-template-columns:1fr}
 /* Hero 在移动端改为纵向堆叠，中间仍留出视频空间 */
 .hero{min-height:100vh;padding:100px 0 56px;display:flex;flex-direction:column}
-/* 移动端排版修复：hero 内容改为文档流后，桌面端的 left:48px 定位失效，
-   必须给容器补左右安全边距，否则标题/标签/按钮全部贴屏幕左缘、被裁切 */
 .hero-corners{position:relative;inset:auto;height:auto;display:flex;flex-direction:column;
-  justify-content:flex-start;min-height:0;gap:22px;flex:1;order:1;padding:0 20px 8px}
+  justify-content:flex-start;min-height:0;gap:22px;flex:1;order:1}
 .hero-corner{position:static;max-width:100%;text-align:left !important;align-items:flex-start !important;transform:none !important}
 .hero-corner.bc{display:flex;flex-direction:column;align-items:flex-start;left:auto}
-.hero h1{font-size:clamp(32px,10.5vw,40px)}
+.hero h1{font-size:40px}
 .hero-ctas{justify-content:flex-start}
 /* Hero 新增装饰层在移动端收敛：书脊字隐藏、轨道收缩、玻璃卡转为两列网格 */
 .hero-spine{display:none}
@@ -598,7 +819,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .hero-orbit svg{width:180vw}
 .hero-grid{background-size:44px 44px}
 /* 玻璃卡：脱离绝对定位，改为两列网格排在文字之后 */
-.hero-stats{position:relative;inset:auto;z-index:9;display:grid;
+.hero-stats{position:relative;inset:auto;z:9;display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
   padding:0 20px 16px;order:3}.glass-card{position:static !important;top:auto !important;right:auto !important;
   bottom:auto !important;left:auto !important;padding:12px 14px;animation:none}
@@ -609,22 +830,22 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .hero-vignette{background:linear-gradient(to bottom,rgba(10,12,14,.86) 0%,rgba(10,12,14,.34) 34%,rgba(10,12,14,.72) 70%,rgba(10,12,14,.92) 100%)}
 .hero-corner.bl{bottom:auto;position:static}
 .hero-corners{gap:22px}
-.hero-bg video{transform:translateX(0) scale(1.1);object-position:62% 34%}
+/* 移动端同样保持加宽补位 + 左缘羽化，收窄羽化带以保留更多人物画面 */
+.hero-bg video{width:124%;object-position:54% 36%;transform-origin:56% 42%;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.05) 7%,rgba(0,0,0,.32) 17%,#000 34%,#000 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.05) 7%,rgba(0,0,0,.32) 17%,#000 34%,#000 100%)}
 
-/* 滚动卡片：移动端卡片更小、间距更紧，一屏约 2.5 张 */
-.marquee-track{gap:20px}
-.marquee-fade{width:12%}
-
-/* 简历档案：移动端改为单栏堆叠 */
-.resume-headline{flex-direction:column;align-items:flex-start;gap:10px}
+/* 简历档案：移动端改为单栏堆叠 */.resume-headline{flex-direction:column;align-items:flex-start;gap:10px}
 .resume-headline .section-desc{min-width:0}
 .resume-hero{padding:30px 22px 26px;border-radius:18px}
 .resume-head{align-items:flex-start;gap:12px}
-.resume-block{padding:24px 20px}
-.resume-body{grid-template-columns:1fr;gap:20px}
-.resume-foot{grid-template-columns:1fr;gap:20px}
-.exp-top{gap:6px 10px}
-.cap-item{gap:13px}
+.rz-sec-head{padding:15px 16px;gap:9px}
+.rz-sec-name{font-size:14.5px}
+.rz-sec-sum{display:none}
+.rz-sec-inner{padding:2px 16px 18px}
+.rz-toolbar{margin:20px 0 16px}
+.rz-tgl{padding:8px 18px;font-size:12px}
+.rz-item-name{font-size:13.5px}
 
 /* 详情弹窗：移动端改为上下堆叠 */
 .detail-modal{padding:14px;align-items:flex-start;overflow-y:auto}
@@ -652,64 +873,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .mobile-menu.open{display:flex}
 .mobile-menu a{color:var(--fg);font-size:24px;text-decoration:none;font-family:var(--font-display)}
 .mobile-close{position:absolute;top:20px;right:24px;background:none;border:none;color:var(--fg);font-size:32px;cursor:pointer}
-
-/* ===== DESKTOP PROPORTIONAL SCALE — based on the original 1440px layout =====
-/* Keep the original composition; scale the fixed-size foreground elements with viewport width. */
-@media (min-width:769px){
-  .hero-corner{max-width:29.1667vw}
-  .hero-corner.tl{top:7.2222vw;left:3.3333vw}
-  .hero-corner.bl{bottom:14.3056vw;left:3.3333vw}
-  .hero-corner.bc{bottom:3.0556vw}
-
-  .hero h1{font-size:4.3056vw}
-  .hero-role{margin-top:1.25vw;font-size:.9028vw}
-  .hero-tags{gap:.6944vw}
-  .hero-tag{font-size:.9028vw;padding:.4861vw 1.25vw}
-  .hero-desc{margin-top:1.3889vw;font-size:.9722vw}
-  .hero-ctas{gap:.9722vw}
-  .hero-ctas .btn{padding:.8333vw 1.8056vw;font-size:.9722vw}
-  .btn svg{width:1.1111vw;height:1.1111vw}
-
-  .glass-card{padding:1.1111vw 1.3889vw;border-radius:.5556vw}
-  .gc-num{font-size:1.9444vw}
-  .gc-label{font-size:.9375vw;margin-top:.2083vw}
-  .gc-sub{font-size:.7986vw;margin-top:.2083vw}
-  .glass-card.c4{bottom:3.8889vw;left:3.3333vw}
-
-  .hero-footer{left:3.3333vw;bottom:1.3889vw;font-size:.8333vw}
-  .hero-spine{right:1.8056vw;font-size:5.1389vw}
-  .hero-crosshair .coords{top:6.1111vw;right:6.6667vw;font-size:.8681vw}
-  .hero-crosshair .coordring{top:11.8056vw;width:5.1389vw;height:5.1389vw}
-
-  .hero-emblem{width:38.8889vw}
-  .emblem-year{font-size:10.6vw}
-}
-
-/* At very large desktop sizes, cap the scale so the cover stays readable rather than oversized. */
-@media (min-width:1920px){
-  .hero-corner.tl{top:138.67px;left:64px}
-  .hero-corner.bl{bottom:274.67px;left:64px}
-  .hero-corner.bc{bottom:58.67px}
-  .hero h1{font-size:82.67px}
-  .hero-role{margin-top:24px;font-size:17.33px}
-  .hero-tags{gap:13.33px}
-  .hero-tag{font-size:17.33px;padding:9.33px 24px}
-  .hero-desc{margin-top:26.67px;font-size:18.67px}
-  .hero-ctas{gap:18.67px}
-  .hero-ctas .btn{padding:16px 34.67px;font-size:18.67px}
-  .glass-card{padding:21.33px 26.67px;border-radius:10.67px}
-  .gc-num{font-size:37.33px}
-  .gc-label{font-size:18px}
-  .gc-sub{font-size:15.33px}
-  .glass-card.c4{bottom:74.67px;left:64px}
-  .hero-footer{left:64px;bottom:26.67px;font-size:16px}
-  .hero-spine{right:34.67px;font-size:98.67px}
-  .hero-crosshair .coords{top:117.33px;right:128px;font-size:16.67px}
-  .hero-crosshair .coordring{top:226.67px;width:98.67px;height:98.67px}
-  .hero-emblem{width:560px}
-  .emblem-year{font-size:168px}
-}
-
 </style>
 </head>
 <body>
@@ -721,7 +884,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <ul class="nav-links">
 <li><a href="#home">首页</a></li>
 <li><a href="#portfolio">作品</a></li>
+<li><a href="#works">作品分类</a></li>
 <li><a href="#resume">简历</a></li>
+<li><a href="#interact">留言</a></li>
 <li><a href="#contact">联系</a></li>
 <li><a href="#contact" class="nav-cta">联系我</a></li>
 </ul>
@@ -736,7 +901,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <button class="mobile-close" onclick="toggleMenu()">&times;</button>
 <a href="#home" onclick="toggleMenu()">首页</a>
 <a href="#portfolio" onclick="toggleMenu()">作品</a>
+<a href="#works" onclick="toggleMenu()">作品分类</a>
 <a href="#resume" onclick="toggleMenu()">简历</a>
+<a href="#interact" onclick="toggleMenu()">留言</a>
 <a href="#contact" onclick="toggleMenu()">联系</a>
 </div>
 
@@ -747,6 +914,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <source src="videos/hero-bg.mp4" type="video/mp4">
 </video>
 </div>
+
+<!-- 统一色调层：让视频暗部与页面底色衔接为同一空间 -->
+<div class="hero-blend"></div>
 
 <!-- 1. 人物光晕（青蓝径向柔光） -->
 <div class="hero-glow"></div>
@@ -817,11 +987,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <!-- 左下：标签 + 简介 -->
 <div class="hero-corner bl">
 <div class="hero-tags">
-<span class="hero-tag">产品分析</span>
+<span class="hero-tag">复合型运营策划</span>
 <span class="hero-tag">内容运营</span>
 <span class="hero-tag">数据复盘</span>
 </div>
-<p class="hero-desc">具备"用户洞察+方案落地+数据逻辑"的跨界统筹力<br>深圳大学城乡规划硕士 | 产品·策划·设计 全链路能力</p>
+<p class="hero-desc">具备"用户洞察+内容爆款+数据逻辑"的跨界统筹力<br>深圳大学城乡规划硕士 | 策划·设计·数据 全链路能力</p>
 </div>
 
 <!-- 中下方：按钮 -->
@@ -842,16 +1012,23 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <div class="container">
 <div class="section-label">精选项目</div>
 <h2 class="section-title">我的作品</h2>
-<p class="section-desc">从产品分析、数据运营到视觉设计，每个项目都是一次完整的"洞察—方案—落地"实践。</p>
+<p class="section-desc">从产品分析到视觉设计，从空间规划到数据运营，每个项目都是一次完整的探索与实践。</p>
+
+<!-- 分类筛选条：点击切换大类，卡片淡入淡出重排 -->
+<div class="pf-filter" id="pfFilter" role="tablist" aria-label="作品分类筛选">
+<button class="pf-pill is-active" data-filter="all" role="tab" aria-selected="true">全部</button>
+<button class="pf-pill" data-filter="product" role="tab" aria-selected="false">产品</button>
+<button class="pf-pill" data-filter="operation" role="tab" aria-selected="false">运营</button>
+<button class="pf-pill" data-filter="design" role="tab" aria-selected="false">设计</button>
+<button class="pf-pill" data-filter="photo" role="tab" aria-selected="false">摄影</button>
+</div>
 </div>
 
-<!-- 作品集滚动卡片模块：自动向左滚动，中间卡片略大，两侧渐隐 -->
-<div class="marquee-wrap" id="marqueeWrap">
-<div class="marquee-track" id="marqueeTrack"><!-- 卡片由脚本注入（内容复制一份实现无缝循环） --></div>
-<div class="marquee-fade left"></div>
-<div class="marquee-fade right"></div>
+<!-- 瀑布流作品墙：CSS columns 布局，由脚本注入卡片 -->
+<div class="pf-wrap">
+<div class="pf-masonry" id="pfMasonry"><!-- 卡片由脚本注入 --></div>
+<div class="pf-empty" id="pfEmpty">该分类下暂无作品</div>
 </div>
-<div class="marquee-tip">可拖拽左右浏览 · 悬停暂停 · 点击查看详情</div>
 
 </section>
 
@@ -860,7 +1037,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <!-- 标题与描述同行横向排版 -->
 <div class="resume-headline">
 <h2 class="section-title">简历</h2>
-<p class="section-desc">深圳大学城乡规划学硕士 · 策划 / 设计 / 数据 全链路复合能力。</p>
+<p class="section-desc">深圳大学城乡规划学硕士 · 用户洞察 / 竞品分析 / 需求落地 / AIGC 应用。</p>
 </div>
 
 <!-- 档案卡头部：姓名 + 身份 + 联系方式 -->
@@ -869,150 +1046,256 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <span class="resume-name">陈雨可</span>
 <span class="resume-titles">
 <span class="resume-title">产品</span>
+<span class="resume-title">用户研究</span>
 <span class="resume-title">策划</span>
-<span class="resume-title">运营</span>
 <span class="resume-title">设计</span>
 </span>
 </div>
-<p class="resume-tagline">以产品思维为核心：从真实用户访谈出发做需求分析与方案设计，具备产品运营实习与数据看板搭建经验，叠加千人级活动策划与 AIGC 创意落地的执行力，形成"洞察—方案—落地—复盘"的完整闭环。</p>
+<p class="resume-tagline">城乡规划学科训练出用户画像与场景拆解能力，跨界产品运营与品牌策划。具备 C 端 APP + 小程序双端产品分析经验，独立完成影像硬件 HMI 竞品分析，擅长挖掘真实场景痛点并输出软件迭代与产品机会方案。求职意向：软件产品经理（HMI / 消费智能硬件，深圳）。</p>
 
 <div class="resume-contacts">
 <a class="resume-contact" href="tel:13603094492"><b>电话</b> 136-0309-4492</a>
 <a class="resume-contact" href="mailto:1174956003@qq.com"><b>邮箱</b> 1174956003@qq.com</a>
 <span class="resume-contact"><b>学历</b> 硕士研究生</span>
 <span class="resume-contact"><b>年龄</b> 24 岁</span>
-<span class="resume-contact"><b>专业</b> 城乡规划学</span>
+<span class="resume-contact"><b>意向</b> 软件产品经理</span>
 </div>
 </div>
 
-<!-- 档案主体：左＝能力亮点，右＝经历时间线 -->
-<div class="resume-body">
-
-<!-- 核心能力 -->
-<div class="resume-block fade-in">
-<div class="resume-block-title">核心能力</div>
-<div class="cap-item">
-<span class="cap-num">01</span>
-<div class="cap-text">
-<h4>AIGC 营销创意落地</h4>
-<p>熟练 Midjourney、ChatGPT，实现 AI 创意到实体品牌物料的完整落地。</p>
-</div>
-</div>
-<div class="cap-item">
-<span class="cap-num">02</span>
-<div class="cap-text">
-<h4>项目与需求落地</h4>
-<p>具备千人级企业年会、品牌培训全流程实操，覆盖策划、物料生产、现场执行。</p>
-</div>
-</div>
-<div class="cap-item">
-<span class="cap-num">03</span>
-<div class="cap-text">
-<h4>内容与用户洞察</h4>
-<p>小红书、抖音自媒体实操，擅长产品卖点提炼，结合视觉物料做内容传播。</p>
-</div>
-</div>
-<div class="cap-item">
-<span class="cap-num">04</span>
-<div class="cap-text">
-<h4>数字化工具</h4>
-<p>熟练飞书多维表格，可完成项目的数据统计、流程管理，提升项目运转效率。</p>
-</div>
-</div>
+<!-- 简历主体：折叠区块，点击标题展开详情，默认仅展开「个人优势」 -->
+<div class="rz-toolbar">
+<button class="rz-tgl" type="button" id="rzAll">展开全部</button>
+<button class="rz-tgl" type="button" id="rzNone">收起全部</button>
 </div>
 
-<!-- 实习经历 -->
-<div class="resume-block fade-in">
-<div class="resume-block-title">实习经历</div>
+<div class="rz-group" id="rzGroup">
 
-<div class="exp-item">
-<div class="exp-top">
-<span class="exp-period">2026.03 - 2026.07</span>
-<span class="exp-org">锦江酒店（中国区）</span>
-<span class="exp-role">文化培训 / 活动策划</span>
-</div>
-<p class="exp-desc">负责集团大型品牌活动、企业文化项目策划落地，承担品牌创意物料输出、活动全流程统筹，利用数字化工具辅助项目管理。</p>
-<div class="exp-sub">
-<p><strong>千人集团年会</strong>｜品牌活动与文创物料落地：参与数千人规模集团品牌年会，负责主 KV 延展、宣传推文、文创周边策划；运用 AIGC 生成创意素材，完成奖品包装盒、品牌帆布袋设计与样机验证；对接供应商完成打样及落地交付。</p>
-<p><strong>高管文化培训项目执行</strong>：作为核心成员参与多场高管培训项目，统筹场地、物资与现场执行，产出影像宣传素材，沉淀企业文化内容资产。</p>
-</div>
-</div>
-
-<div class="exp-item">
-<div class="exp-top">
-<span class="exp-period">2025.03 - 2025.06</span>
-<span class="exp-org">深圳市嗨走科技有限公司</span>
-<span class="exp-role">产品运营 / 产品助理</span>
-</div>
-<p class="exp-desc">负责乡村文旅 APP「嗨走乡村」民宿板块运营，对接 B 端商家、协助商品上线与营销活动落地。</p>
-<div class="exp-sub">
-<p>参与促销活动策划，提炼产品卖点，输出视觉需求；收集商家业务反馈，整理产品优化建议协助迭代。</p>
-</div>
-</div>
+<!-- 01 个人优势 -->
+<div class="rz-sec" data-open>
+<button class="rz-sec-head" type="button" aria-expanded="true">
+<span class="rz-sec-idx">01</span>
+<span class="rz-sec-name">个人优势</span>
+<span class="rz-sec-sum">产品分析 · 需求落地 · AIGC 应用 · 用户洞察</span>
+<span class="rz-sec-count">4 项</span>
+<span class="rz-chev"></span>
+</button>
+<div class="rz-sec-body"><div class="rz-sec-inner">
+<ul class="rz-list">
+<li><b>产品分析与软硬协同思维</b>：具备 C 端 APP + 小程序双端产品分析经验；独立完成影像硬件 HMI 竞品分析，擅长挖掘用户真实场景痛点，掌握「竞品对标 → 痛点拆解 → 方案推导」完整链路。</li>
+<li><b>需求落地与跨端协同</b>：拥有 B 端商家对接、需求收集、流程梳理实战，擅长协同多角色推进项目落地；熟练零代码搭建数据看板，<strong>万人级业务统计效率提升 80%</strong>，具备用数据支撑决策的意识。</li>
+<li><b>AIGC 产品应用能力</b>：掌握提示词工程，可利用 AI 辅助产品分析、原型素材输出。</li>
+<li><b>用户洞察与综合素养</b>：城乡规划学科训练，擅长用户画像、场景拆解；具备视觉、三维表达能力，可输出原型、可视化分析材料，审美良好。</li>
+</ul>
+</div></div>
 </div>
 
+<!-- 02 实习经历 -->
+<div class="rz-sec">
+<button class="rz-sec-head" type="button" aria-expanded="false">
+<span class="rz-sec-idx">02</span>
+<span class="rz-sec-name">实习经历</span>
+<span class="rz-sec-sum">嗨走乡村 · 锦江酒店（中国区）</span>
+<span class="rz-sec-count">2 段</span>
+<span class="rz-chev"></span>
+</button>
+<div class="rz-sec-body"><div class="rz-sec-inner">
+
+<div class="rz-item">
+<button class="rz-item-head" type="button" aria-expanded="false">
+<span class="rz-item-t">
+<span class="rz-item-name">深圳市嗨走科技有限公司</span>
+<span class="rz-item-meta"><i>2025.03 - 2025.06</i><s>产品运营 / 产品助理</s></span>
+</span>
+<span class="rz-chev"></span>
+</button>
+<div class="rz-item-body"><div class="rz-item-inner">
+<p class="rz-lead">负责「嗨走乡村」APP &amp; 小程序民宿模块全链路运营，包含 B 端商家对接、房源产品上线、定价策略、营销活动，在业务实操中观察产品痛点，输出产品迭代优化建议。</p>
+<ul class="rz-list">
+<li><b>民宿商家拓展与产品上线</b>：电话对接民宿 B 端商家，收集房源参数、服务、定价等合作信息，完成产品信息校验、详情页内容制作与双端上线维护；<strong>月均推动 30+ 家民宿完成 APP、小程序双端上架</strong>，参与房源价格体系、平台优惠策略研讨制定。</li>
+<li><b>营销活动与内容物料输出</b>：参与平台旅行优惠卡推广、平台促销活动策划；提炼民宿业务核心卖点，输出视觉物料需求，通过内容运营提升民宿房源平台曝光；持续收集商家业务反馈，归纳 B 端入驻、房源发布链路的产品痛点，输出多条优化建议协助产品版本迭代。</li>
+<li><b>产品复盘分析</b>：基于民宿业务实操，独立复盘 APP + 小程序双端体验缺陷，针对平台乡村档案信息残缺、双端数据体验割裂问题，输出完整信息质量提升与产品迭代方案。</li>
+</ul>
+</div></div>
 </div>
 
-<!-- 档案底部：竞赛奖项 / 教育背景 / 技能标签 -->
-<div class="resume-foot">
-
-<div class="resume-block fade-in">
-<div class="resume-block-title">竞赛与项目奖项</div>
-<div class="award-item">
-<div class="award-name">大学生创新创业大赛｜IP 盲盒项目负责人</div>
-<div class="award-meta"><span>2021.09 - 2022.03</span></div>
-<p class="exp-desc" style="margin-top:8px">打造濒危海洋生物科普潮玩 IP 盲盒，完成目标受众分析、IP 人设创作、插画建模，输出营销传播方案。</p>
-</div>
-<div class="award-item">
-<div class="award-name">全国高等院校大学生乡村规划方案竞赛｜方案负责人</div>
-<div class="award-meta"><span>2024.09 - 2025.06</span><em>二等奖</em></div>
-<p class="exp-desc" style="margin-top:8px">全国 200+ 队伍参赛，拆解人群受众、文旅场景策划、全套可视化成果输出，思考文旅运营与品牌叙事。</p>
-</div>
-<div class="award-item">
-<div class="award-name">肇庆高新区汽车公园全国大学生竞赛｜方案负责人</div>
-<div class="award-meta"><span>2023.06 - 2023.10</span><em>优秀奖</em></div>
-<p class="exp-desc" style="margin-top:8px">现状分析，完成用户痛点挖掘、业态策划、动线体验设计；规划后期运营与商业变现方案，输出可视化成果。</p>
-</div>
+<div class="rz-item">
+<button class="rz-item-head" type="button" aria-expanded="false">
+<span class="rz-item-t">
+<span class="rz-item-name">锦江酒店（中国区）</span>
+<span class="rz-item-meta"><i>2026.03 - 2026.07</i><s>文化培训 / 活动策划</s></span>
+</span>
+<span class="rz-chev"></span>
+</button>
+<div class="rz-item-body"><div class="rz-item-inner">
+<p class="rz-lead">参与企业大型品牌活动、高管内训项目全流程落地，兼顾视觉创意输出与内部业务数字化流程优化，承担需求梳理、跨部门 &amp; 供应商协同、数字化工具落地工作。</p>
+<ul class="rz-list">
+<li><b>数千人年度年会项目（200 万级）</b>：加入主 KV 设计小组，参与年会主视觉、推文、文创周边创意设计；独立完成充电线礼盒、帆布袋包装方案，使用 Illustrator 完成版式设计，结合 AIGC 生图 + PS 样机输出完整视觉方案，支撑实物打样落地，沉淀品牌标准化视觉资产。</li>
+<li><b>高管专项培训项目（星耀计划三 / TTT 内训师）</b>：作为核心执行成员，服务 60-70 名企业高管学员，统筹活动方案策划、场地物资、采购管控与现场落地；独立完成现场纪实拍摄、短视频剪辑输出，保障多场高管培训项目顺利交付。</li>
+<li><b>线上培训数字化流程优化</b>：针对万人级线上培训人工统计低效痛点，梳理业务统计规则，基于飞书多维表格搭建数据库、自动化工作流与可视化看板；实现参会率统计、异常学员识别、名单自动分类导出，<strong>将人工统计效率提升 80%</strong>，输出分析报表支撑管理层业务决策。</li>
+</ul>
+</div></div>
 </div>
 
-<div class="resume-block fade-in">
-<div class="resume-block-title">教育背景</div>
-<div class="edu-item">
-<div class="edu-org">深圳大学 ｜ 硕士</div>
-<div class="edu-degree">城乡规划学 · 2024.09 - 2027.06</div>
-<div class="edu-course">重点课程：城市设计方法与实例研究、数理统计与数据分析、城市经济学分析等</div>
-<div class="edu-course">任职经历｜研究生院助理：负责会议统筹、材料协调，具备多任务处理、跨部门沟通协调能力。</div>
-</div>
-<div class="edu-item">
-<div class="edu-org">广东海洋大学 ｜ 本科</div>
-<div class="edu-degree">园林 · 2020.09 - 2024.06</div>
-<div class="edu-course">重点课程：CAD 工程制图、建模与渲染、Photoshop、图文设计排版、测量学、景观设计等</div>
-<div class="edu-course">任职经历｜学生会文娱部：统筹校园大型活动策划，负责宣传海报、活动周边物料设计落地。</div>
-</div>
+</div></div>
 </div>
 
-<div class="resume-block fade-in">
-<div class="resume-block-title">技能与工具</div>
+<!-- 03 项目 / 竞赛经历 -->
+<div class="rz-sec">
+<button class="rz-sec-head" type="button" aria-expanded="false">
+<span class="rz-sec-idx">03</span>
+<span class="rz-sec-name">项目 / 竞赛经历</span>
+<span class="rz-sec-sum">大疆 HMI 竞品分析 · 嗨走信息质量专项 · 3 项竞赛</span>
+<span class="rz-sec-count">5 项</span>
+<span class="rz-chev"></span>
+</button>
+<div class="rz-sec-body"><div class="rz-sec-inner">
+
+<div class="rz-item">
+<button class="rz-item-head" type="button" aria-expanded="false">
+<span class="rz-item-t">
+<span class="rz-item-name">个人项目｜大疆 Osmo Pocket 3 HMI &amp; 软硬协同竞品分析</span>
+<span class="rz-item-meta"><i>2026.08 - 2026.09</i><em>产品分析</em></span>
+</span>
+<span class="rz-chev"></span>
+</button>
+<div class="rz-item-body"><div class="rz-item-inner">
+<p class="rz-lead">独立完成口袋影像硬件竞品深度研究，对标 GoPro、影石、索尼三款竞品。</p>
+<ul class="rz-list">
+<li>完成产品档案、功能参数、多端 HMI 交互对比，拆解机身、APP、外设软硬协同痛点；基于公开用户口碑提炼高频吐槽与未被满足的用户诉求。</li>
+<li>输出分层产品优化方案，配套可视化信息图与设备交互优化原型构想。</li>
+<li>沉淀消费影像硬件分析框架，能够从硬件表现反推软件交互的改进机会。</li>
+</ul>
+</div></div>
+</div>
+
+<div class="rz-item">
+<button class="rz-item-head" type="button" aria-expanded="false">
+<span class="rz-item-t">
+<span class="rz-item-name">个人项目｜嗨走乡村 APP &amp; 小程序信息质量专项分析优化</span>
+<span class="rz-item-meta"><i>2025.03 - 2025.06</i><em>产品分析</em></span>
+</span>
+<span class="rz-chev"></span>
+</button>
+<div class="rz-item-body"><div class="rz-item-inner">
+<p class="rz-lead">基于实习业务做深度复盘，针对平台海量乡村档案信息残缺、双端体验不一致问题。</p>
+<ul class="rz-list">
+<li>完成 C 端、B 端全链路痛点拆解，对标 OTA、文旅类竞品，识别平台差异化护城河与短板。</li>
+<li>设计完整信息质量提升方案：建立字段管控、多源信息补齐、用户纠错闭环、信息质量分联动流量，划分 3-4 个月短期落地与中长期运营体系建设路径。</li>
+</ul>
+</div></div>
+</div>
+
+<div class="rz-item">
+<button class="rz-item-head" type="button" aria-expanded="false">
+<span class="rz-item-t">
+<span class="rz-item-name">全国高等院校大学生乡村规划方案竞赛</span>
+<span class="rz-item-meta"><i>2024.09 - 2025.06</i><s>方案负责人</s><em>二等奖</em></span>
+</span>
+<span class="rz-chev"></span>
+</button>
+<div class="rz-item-body"><div class="rz-item-inner">
+<p class="rz-note">全国 200+ 队伍参赛，拆解人群场景，完成方案策略、可视化输出与汇报，实现需求到落地方案的完整推导。</p>
+</div></div>
+</div>
+
+<div class="rz-item">
+<button class="rz-item-head" type="button" aria-expanded="false">
+<span class="rz-item-t">
+<span class="rz-item-name">大学生创新创业大赛｜IP 盲盒项目负责人</span>
+<span class="rz-item-meta"><i>2021.09 - 2022.03</i><em>项目负责人</em></span>
+</span>
+<span class="rz-chev"></span>
+</button>
+<div class="rz-item-body"><div class="rz-item-inner">
+<p class="rz-note">原创濒危海洋生物潮玩 IP，AI 辅助角色创意与插画产出，完成用户定位、IP 设定与商业化方案。</p>
+</div></div>
+</div>
+
+<div class="rz-item">
+<button class="rz-item-head" type="button" aria-expanded="false">
+<span class="rz-item-t">
+<span class="rz-item-name">肇庆高新区汽车公园全国大学生竞赛</span>
+<span class="rz-item-meta"><i>2023.06 - 2023.10</i><s>方案负责人</s><em>优秀奖</em></span>
+</span>
+<span class="rz-chev"></span>
+</button>
+<div class="rz-item-body"><div class="rz-item-inner">
+<p class="rz-note">开展现状分析，完成用户痛点挖掘、业态策划、动线体验设计；规划后期运营与商业变现方案，输出可视化成果。</p>
+</div></div>
+</div>
+
+</div></div>
+</div>
+
+<!-- 04 教育背景 -->
+<div class="rz-sec">
+<button class="rz-sec-head" type="button" aria-expanded="false">
+<span class="rz-sec-idx">04</span>
+<span class="rz-sec-name">教育背景</span>
+<span class="rz-sec-sum">深圳大学硕士 · 广东海洋大学本科</span>
+<span class="rz-sec-count">2 段</span>
+<span class="rz-chev"></span>
+</button>
+<div class="rz-sec-body"><div class="rz-sec-inner">
+
+<div class="rz-item">
+<button class="rz-item-head" type="button" aria-expanded="false">
+<span class="rz-item-t">
+<span class="rz-item-name">深圳大学 ｜ 硕士</span>
+<span class="rz-item-meta"><i>2024.09 - 2027.06</i><s>城乡规划学</s></span>
+</span>
+<span class="rz-chev"></span>
+</button>
+<div class="rz-item-body"><div class="rz-item-inner">
+<ul class="rz-list">
+<li><b>重点课程</b>：城市设计方法与实例研究、数理统计与数据分析、城市经济学分析等。</li>
+<li><b>研究生院助理</b>：负责研究生材料收集、报销报账、答辩及会议统筹、线上通知等事务，具备多事项并行处理与跨部门协调能力。</li>
+</ul>
+</div></div>
+</div>
+
+<div class="rz-item">
+<button class="rz-item-head" type="button" aria-expanded="false">
+<span class="rz-item-t">
+<span class="rz-item-name">广东海洋大学 ｜ 本科</span>
+<span class="rz-item-meta"><i>2020.09 - 2024.06</i><s>园林</s></span>
+</span>
+<span class="rz-chev"></span>
+</button>
+<div class="rz-item-body"><div class="rz-item-inner">
+<ul class="rz-list">
+<li><b>重点课程</b>：CAD 工程制图、建模与渲染、Photoshop、图文设计排版、测量学、景观设计等。</li>
+<li><b>学生会文娱部</b>：负责学院大型活动项目的策划与举办，以及活动周边物料及宣传。</li>
+</ul>
+</div></div>
+</div>
+
+</div></div>
+</div>
+
+<!-- 05 个人技能 -->
+<div class="rz-sec">
+<button class="rz-sec-head" type="button" aria-expanded="false">
+<span class="rz-sec-idx">05</span>
+<span class="rz-sec-name">个人技能</span>
+<span class="rz-sec-sum">产品分析 · AIGC · 视觉设计</span>
+<span class="rz-sec-count">3 组</span>
+<span class="rz-chev"></span>
+</button>
+<div class="rz-sec-body"><div class="rz-sec-inner">
 <div class="skill-group">
-<div class="skill-group-name">办公数字化</div>
-<div class="skill-chips"><span>飞书多维表格</span><span>Codex</span><span>Xmind</span><span>SPSS</span></div>
+<div class="skill-group-name">产品分析与数字化</div>
+<div class="skill-chips"><span>竞品分析</span><span>用户痛点拆解</span><span>需求梳理</span><span>需求方案输出</span><span>飞书多维表格</span><span>数据看板</span></div>
 </div>
 <div class="skill-group">
 <div class="skill-group-name">AIGC</div>
-<div class="skill-chips"><span>Midjourney</span><span>ChatGPT</span><span>即梦</span></div>
+<div class="skill-chips"><span>Midjourney</span><span>ChatGPT</span><span>即梦</span><span>Codex</span><span>提示词工程</span><span>AI 辅助产品分析</span><span>创意素材生成</span></div>
 </div>
 <div class="skill-group">
 <div class="skill-group-name">视觉设计</div>
-<div class="skill-chips"><span>PS</span><span>Illustrator</span><span>InDesign</span><span>剪映</span><span>秀米</span></div>
+<div class="skill-chips"><span>PS</span><span>Illustrator</span><span>InDesign</span><span>剪映</span><span>秀米</span><span>SketchUp</span><span>Lumion</span><span>Enscape</span><span>C4D</span></div>
 </div>
-<div class="skill-group">
-<div class="skill-group-name">三维</div>
-<div class="skill-chips"><span>SketchUp</span><span>Lumion</span><span>Enscape</span><span>C4D</span></div>
-</div>
-<div class="skill-group">
-<div class="skill-group-name">自媒体</div>
-<div class="skill-chips"><span>小红书最高 3.2w 浏览</span><span>抖音最高 2.7w 浏览</span></div>
-</div>
+</div></div>
 </div>
 
 </div>
@@ -1033,9 +1316,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <div class="stat-desc">通过流程优化与工具赋能</div>
 </div>
 <div class="stat-item fade-in">
-<div class="stat-number" data-target="10" data-suffix="万+">0</div>
-<div class="stat-label">内容触达</div>
-<div class="stat-desc">小红书 / 抖音多平台累计曝光量</div>
+<div class="stat-number" data-target="10">0</div>
+<div class="stat-label">万级内容触达</div>
+<div class="stat-desc">多平台累计曝光量</div>
 </div>
 <div class="stat-item fade-in">
 <div class="stat-number" data-target="20">0</div>
@@ -1049,35 +1332,87 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 </div>
 </div>
 <div class="stats-cta">
-<p>我正在寻找 2026 秋招产品 / 策划运营方向的全职机会，欢迎交流。</p>
-<a href="#contact" class="btn btn-primary">联系我</a>
+<p>有项目想法？让我们一起把它变成现实。</p>
+<a href="#contact" class="btn btn-primary">一起合作吧？</a>
 </div>
 </div>
 </div>
 </section>
 
 <!-- CONTACT SECTION -->
-<section class="section" id="contact">
+<section class="section" id="contact" style="background:transparent">
 <div class="container" style="text-align:center">
 <div class="section-label">联系方式</div>
-<h2 class="section-title">期待与你联系</h2>
-<p class="section-desc" style="margin:0 auto">我正在寻找产品 / 策划运营方向的全职机会。无论是面试邀约还是交流探讨，都欢迎随时联系。</p>
+<h2 class="section-title">一起创造精彩作品</h2>
+<p class="section-desc" style="margin:0 auto">无论是项目合作、全职机会还是单纯交流，都欢迎与我联系。</p>
 
 <div class="contact-grid">
 <div class="contact-card fade-in">
-<div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7.5 12 13.5l8.5-6"/></svg></div>
+<div class="contact-icon">&#x2709;&#xFE0F;</div>
 <h3>邮件联系</h3>
-<p class="contact-line">1174956003@qq.com</p>
-<p>投递邀约、项目交流或进一步了解作品详情</p>
-<a href="mailto:1174956003@qq.com" class="btn btn-primary">发送邮件</a>
+<p>发送邮件讨论项目详情与合作可能</p>
+<a href="mailto:chenyuke@example.com" class="btn btn-primary">发送邮件</a>
 </div>
 <div class="contact-card fade-in">
-<div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+<div class="contact-icon">&#x260E;&#xFE0F;</div>
 <h3>微信 / 电话</h3>
-<p class="contact-line">136-0309-4492（微信同号）</p>
 <p>工作时间 9:00 - 21:00 快速响应</p>
-<a href="tel:+8613603094492" class="btn btn-outline">联系我</a>
+<a href="tel:+8613800138000" class="btn btn-outline">联系我</a>
 </div>
+</div>
+</div>
+</section>
+
+<!-- ========== INTERACT SECTION 互动区：访问统计 + 留言板 ==========
+     数据来源：CloudBase 云数据库
+     · 访问统计 —— 读取云端聚合结果（总访问 / 今日 / 近七日 / 留言数）
+     · 留言板   —— 访客匿名提交，留言实时写入云端并公开展示 -->
+<section class="section" id="interact" style="background:transparent">
+<div class="container">
+<div class="section-label">网站互动</div>
+<h2 class="section-title">留下你的足迹</h2>
+<p class="section-desc">这里记录着每一位到访者。写下想说的话，或只是留个名字，都会成为这个作品集的一部分。</p>
+
+<!-- 访问统计：数字由云端返回 -->
+<div class="iv-stats">
+<div class="iv-stat"><div class="iv-stat-num iv-pending" id="ivStatTotal">—</div><div class="iv-stat-label">累计访问</div></div>
+<div class="iv-stat"><div class="iv-stat-num iv-pending" id="ivStatToday">—</div><div class="iv-stat-label">今日访问</div></div>
+<div class="iv-stat"><div class="iv-stat-num iv-pending" id="ivStatWeek">—</div><div class="iv-stat-label">近七日访问</div></div>
+<div class="iv-stat"><div class="iv-stat-num iv-pending" id="ivStatMsg">—</div><div class="iv-stat-label">留言条数</div></div>
+</div>
+
+<!-- 留言板：左表单 + 右留言流 -->
+<div class="iv-board">
+
+<div class="iv-panel">
+<div class="iv-panel-title">写一条留言</div>
+<p class="iv-panel-note">欢迎写下合作意向、作品建议，或只是打个招呼。留言会公开展示，请勿填写敏感信息。</p>
+
+<form id="ivForm" autocomplete="off" novalidate>
+<div class="iv-field">
+<label for="ivName">你的称呼 <em>*</em></label>
+<input class="iv-input" type="text" id="ivName" name="name" maxlength="40" placeholder="例如：张女士 / 某品牌负责人" required>
+</div>
+<div class="iv-field">
+<label for="ivMessage">留言内容 <em>*</em></label>
+<textarea class="iv-textarea" id="ivMessage" name="message" maxlength="800" placeholder="想说的话写在这里……" required></textarea>
+<div class="iv-counter" id="ivCounter">0 / 800</div>
+</div>
+<div class="iv-field">
+<label for="ivContact">联系方式（选填，不公开展示）</label>
+<input class="iv-input" type="text" id="ivContact" name="contact" maxlength="80" placeholder="邮箱 / 微信，方便我回复你">
+</div>
+<button class="iv-submit" type="submit" id="ivSubmit">提交留言</button>
+<div class="iv-msg" id="ivFormMsg" role="status" aria-live="polite"></div>
+</form>
+</div>
+
+<div class="iv-panel">
+<div class="iv-panel-title">大家的留言</div>
+<p class="iv-panel-note">按时间倒序展示，最新的在最上方。</p>
+<div class="iv-list" id="ivList"><div class="iv-loading">正在读取云端留言…</div></div>
+</div>
+
 </div>
 </div>
 </section>
@@ -1089,13 +1424,39 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 </div>
 </footer>
 
+<!-- ========== 作品总览页（按大类分组 · 产品方向置顶） ==========
+     全屏覆盖层，内容由脚本按 PROJECTS 的 group 字段动态分组渲染 -->
+<div class="works-page" id="worksPage" role="dialog" aria-modal="true" aria-labelledby="worksTitle">
+<div class="works-top">
+<div class="works-top-row">
+<button class="works-back" onclick="closeWorks()">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+返回主页
+</button>
+<span class="works-brand">陈雨可 | 作品分类</span>
+</div>
+</div>
+
+<div class="works-inner">
+<div class="works-hero">
+<h1 id="worksTitle">全部作品与项目</h1>
+<p>按方向归组整理，方便按岗位快速浏览。产品相关作品集中在前，包含消费硬件 HMI 竞品分析、双端产品深度分析等完整分析报告。</p>
+<div class="works-jump" id="worksJump"><!-- 分类跳转按钮由脚本注入 --></div>
+</div>
+<div id="worksGroups"><!-- 分类区块由脚本注入 --></div>
+<div class="works-foot-note">
+共 <span id="worksTotal">0</span> 个作品 · 点击卡片查看完整内容
+</div>
+</div>
+</div>
+
 <!-- 作品详情弹窗模块 -->
 <div class="detail-modal" id="detailModal" onclick="if(event.target===this)closeLightbox()" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
 <div class="detail-panel">
 
 <!-- 弹窗左侧：作品图片浏览 -->
 <div class="detail-media">
-<img class="lb-img" id="detailImg" alt="" onclick="changeSlide(1)">
+<img class="lb-img" id="detailImg" src="" alt="" onclick="changeSlide(1)">
 <button class="lb-nav lb-prev" id="detailPrev" onclick="changeSlide(-1)" aria-label="上一张">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
 </button>
@@ -1147,317 +1508,621 @@ window.addEventListener('scroll',function(){document.getElementById('nav').class
   wrap.innerHTML=html;
 })();
 
-// ===== Hero 模块：视频鼠标视差（保留人物 2/3 右移基准） =====
-/* 闪烁修复：原实现每次 mousemove 直接写 transform 且无节流，与页面其它动画叠加易抖动。
-   现改为 rAF 节流 + 指数插值平滑（lerp）；仅在支持鼠标的设备启用，触屏设备跳过。 */
+// ===== Hero 模块：视频鼠标视差 =====
+// 人物的 2/3 右移基准已由 CSS 的「加宽补位」承担，这里只做小幅跟随位移，
+// 幅度远小于 28% 的加宽余量，任何视口下都不会把视频边缘拽进画面
 const heroVideo=document.getElementById('heroVideo');
-if(heroVideo&&window.matchMedia('(pointer:fine)').matches){
-  var pvTargetX=0,pvTargetY=0,pvX=0,pvY=0,pvRaf=false;
-  document.addEventListener('mousemove',function(e){
-    pvTargetX=(e.clientX/window.innerWidth-.5)*15;
-    pvTargetY=(e.clientY/window.innerHeight-.5)*15;
-    if(pvRaf)return;
-    pvRaf=true;
-    requestAnimationFrame(function(){
-      pvRaf=false;
-      pvX+=(pvTargetX-pvX)*.08;
-      pvY+=(pvTargetY-pvY)*.08;
-      heroVideo.style.transform='translateX(calc(13% + '+pvX.toFixed(2)+'px)) translateY('+pvY.toFixed(2)+'px) scale(1.04)';
-    });
-  });
-}
+document.addEventListener('mousemove',function(e){
+  const x=(e.clientX/window.innerWidth-.5)*9;
+  const y=(e.clientY/window.innerHeight-.5)*9;
+  if(heroVideo)heroVideo.style.transform=
+    'translate3d('+x.toFixed(2)+'px,'+y.toFixed(2)+'px,0) scale(var(--hero-video-scale,1.02))';
+});
 
 // ===== 作品集滚动卡片模块（自动左滚 + 中间放大 + 悬停暂停） =====
 // 作品数据（名称 / 分类 / 详细介绍 / 图片）
-var PROJECTS=[// ===== 产品岗面试必备分析：卫生巾产品痛点挖掘与下一代产品设计 =====
- {name:'舒适安全型卫生巾产品设计',cat:'产品分析',tags:['产品分析','用户研究','需求分析','方案选型','商业化预估'],
-  role:'产品定位 / 用户研究 / 方案设计',year:'2026',
-  desc:'基于真实用户访谈的卫生巾产品痛点挖掘与下一代舒适安全型产品设计。',
+var PROJECTS=[
+ {name:'濒危海洋生物盲盒',cat:'产品设计',group:'产品',tags:['产品设计','包装','IP设计'],
+  desc:'以濒危海洋生物为原型的盲盒产品设计。\n从IP形象设定、包装结构到周边物料完整落地，把可持续发展理念转译成年轻化、可收藏的视觉语言，让公益议题通过消费场景自然触达大众。产品线包含角色设定、盒型结构、系列包装与配套周边。',
+  images:['images/portfolio/slide3_图片 2.png'],role:'IP形象 / 包装设计',year:'2024'},
+
+ {name:'锦江酒店2026年会',cat:'活动视觉',group:'视觉',tags:['活动视觉','品牌','主KV'],
+  desc:'千人级企业年会全流程视觉统筹。\n独立完成主视觉KV设计、全套物料延展（邀请函、签到墙、舞台背景、伴手礼、桌卡等），并跟进现场执行与布置落地。在统一的视觉体系下平衡商务质感与节日氛围，保证大屏、印刷、物料多场景的一致性呈现。',
+  images:['images/portfolio/slide4_图片 3.jpg','images/portfolio/slide4_图片 7.jpg','images/portfolio/slide4_图片 8.jpg','images/portfolio/slide4_图片 16.jpg','images/portfolio/slide4_图片 18.jpg','images/portfolio/slide4_图片 20.png','images/portfolio/slide4_图片 24.jpg'],role:'主视觉 / 物料延展 / 现场执行',year:'2026'},
+
+ {name:'培训数据看板搭建',cat:'数据运营',group:'运营数据',tags:['数据运营','BI','可视化'],
+  desc:'独立搭建培训业务数据看板，把分散在多张表格中的培训数据整合为可视化仪表盘。\n覆盖参训率、完成率、考核成绩、满意度等多维指标，支持按部门、时间、课程类型交叉查看，帮助业务方快速定位问题并优化培训安排，显著减少人工统计时间。',
+  images:['images/portfolio/slide5_图片 16.png','images/portfolio/slide5_图片 18.png'],role:'数据可视化 / 业务优化',year:'2025'},
+
+ {name:'乡村规划 / 汽车公园竞赛',cat:'城乡规划',group:'空间规划',tags:['城乡规划','竞赛','概念规划'],
+  desc:'城乡规划专业竞赛作品。\n围绕乡村产业转型与汽车文化主题，完成从场地调研、概念生成、功能分区到空间形态推敲的完整设计推演，输出总平面、分析图与场景效果图，兼顾规划逻辑的严谨性与方案表达的视觉冲击力。',
+  images:['images/portfolio/slide7_图片 6.jpg'],role:'规划设计 / 竞赛方案',year:'2023'},
+
+ {name:'自媒体内容运营',cat:'内容运营',group:'运营数据',tags:['内容运营','新媒体','小红书'],
+  desc:'小红书、抖音平台自媒体内容运营实践。\n负责选题策划、图文与短视频视觉产出、发布节奏管理与数据复盘，通过封面点击率、互动率等指标持续迭代内容方向，多篇内容实现万级曝光，沉淀出可复用的内容方法论。',
+  images:['images/portfolio/slide11_Case image 1.png','images/portfolio/slide11_Case image 2.png','images/portfolio/slide11_图片 2.jpg','images/portfolio/slide11_图片 3.jpg','images/portfolio/slide11_图片 4.jpg','images/portfolio/slide11_图片 6.jpg','images/portfolio/slide11_图片 7.jpg'],role:'内容策划 / 视觉产出 / 数据复盘',year:'2025'},
+
+ {name:'校园活动视觉设计',cat:'平面设计',group:'视觉',tags:['平面设计','海报','活动'],
+  desc:'校园活动系列视觉设计。\n围绕活动主题建立视觉基调，输出主视觉海报、系列延展海报与线上宣传图，通过统一的色彩与版式语言强化活动辨识度，覆盖宣传预热到现场呈现的完整链路。',
+  images:['images/portfolio/slide9_图片 2.jpg','images/portfolio/slide9_图片 4.jpg','images/portfolio/slide9_图片 5.jpg'],role:'海报设计 / 活动视觉',year:'2024'},
+
+ {name:'平面设计合集',cat:'平面设计',group:'视觉',tags:['平面设计','VI','品牌'],
+  desc:'品牌视觉与平面设计作品合集。\n涵盖品牌VI系统、标识设计、版式探索与多风格视觉实验，在不同行业属性与调性要求下输出匹配的设计方案，展示对色彩、字体、构图与信息层级的综合把控能力。',
+  images:['images/portfolio/slide10_图片 3.jpg','images/portfolio/slide10_图片 6.jpg','images/portfolio/slide10_图片 18.png','images/portfolio/slide10_图片 20.jpg'],role:'品牌视觉 / 平面设计',year:'2024'},
+
+ {name:'专业能力展示',cat:'专业技能',group:'综合',tags:['专业技能','AIGC','方法'],
+  desc:'复合型能力图谱与工作方法展示。\n梳理视觉设计、AIGC创意落地、项目全链路执行、数字化运营与内容营销五大能力模块，并展示AI辅助创意、生图改图、样机合成的实际工作流，体现从创意构思到实物落地的完整闭环能力。',
+  images:['images/portfolio/slide8_图片 1.png','images/portfolio/slide8_图片 2.png','images/portfolio/slide8_图片 3.png','images/portfolio/slide8_图片 5.png'],role:'能力梳理 / 工作流展示',year:'2025'},
+
+// ===== 产品岗核心作品：消费影像硬件 HMI 竞品分析（大疆 Osmo Pocket 3） =====
+ {name:'大疆 Osmo Pocket 3 HMI 竞品分析',cat:'产品分析',group:'产品',tags:['竞品分析','HMI 交互','软硬协同','用户洞察'],
+  role:'产品体验分析 / 竞品对标 / 优化提案',year:'2026',
+  desc:'口袋影像硬件赛道竞品深度研究，覆盖产品档案、功能参数、多端 HMI 交互，输出短期迭代与中长期产品方向。',
   sections:[
-    {h:'P1 项目背景 & 用户痛点',
-     p:'传统卫生巾产品长期停留在"够用"层面，真实使用中的不适感与安全隐患被习惯性忽略。本项目从自身与身边使用者的真实体验出发，通过访谈还原使用场景，定位可被产品化解决的痛点。',
+    {h:'项目背景 & 分析框架',
+     p:'针对口袋云台影像设备赛道，独立完成一次完整的硬件产品体验分析。以「用户真实使用场景」为起点，建立 6 模块分析框架，把硬件表现反推为软件交互的改进机会，输出可落地的产品建议。',
      list:[
-       '<b>研究方式</b>：基于真实用户访谈（本人 + 身边使用者），围绕经期不同阶段的使用场景、更换频率、体感反馈展开半结构化访谈。',
-       '<b>痛点一｜侧漏焦虑</b>：夜间与久坐场景下侧漏风险高，用户被迫增加更换频率，影响睡眠与工作专注度。',
-       '<b>痛点二｜材质刺激</b>：表层材质粗糙、含荧光剂担忧，敏感肌用户出现瘙痒、闷热等不适。',
-       '<b>痛点三｜贴合度差</b>：巾身与内裤贴合不足，运动、走动时产生位移与褶皱，异物感明显。',
-       '<b>痛点四｜信息不透明</b>：成分、材质、吸收量等关键信息标注模糊，用户难以做出知情选择。'
+       '<b>分析对象</b>：大疆 Osmo Pocket 3，一英寸口袋云台相机，定位「随手拍即得电影感」的大众创作者与进阶 Vlogger。',
+       '<b>分析框架</b>：产品基础档案 → 竞品选取 → 核心功能对比 → 交互 & HMI 体验 → 用户口碑洞察 → 产品优化机会，共 6 个模块。',
+       '<b>硬件关键项</b>：1″ CMOS · 20mm f/2.0 定焦 · 4K/120fps · 10-bit D-Log M · 三轴机械云台 + 智能跟随 6.0 · 2″ 旋转 OLED（≈700nit）· DJI Mic 2 直连 · 179g · 1300mAh（4K60 实测 116min）。',
+       '<b>核心场景</b>：街拍旅拍、室内探店口播、演唱会夜市弱光、单人自拍 Vlog、步行骑行移动跟拍、Wi-Fi 直播 / 网络摄像头。'
      ]},
 
-    {h:'P2 需求分析 & 用户任务流程',
-     p:'把访谈中零散的抱怨结构化为可执行的产品需求，并梳理用户完成一次"经期护理"任务的完整路径，识别体验断点。',
+    {h:'竞品选取逻辑',
+     p:'刻意挑选三种不同技术路线的直接竞品，把 Pocket 3 的「云台 + 一英寸 + 翻转屏」护城河切出对照面，避免只挑软柿子比。',
      list:[
-       '<b>用户任务流程</b>：经期将至（储备采购）→ 经期开始（选择规格）→ 佩戴（贴合与舒适）→ 日常活动（防漏与位移）→ 更换（便携与私密）→ 经期结束（清洁与收纳）。',
-       '<b>需求分层</b>：<b>基础需求</b>——不侧漏、不掉屑；<b>进阶需求</b>——亲肤无刺激、久戴不闷；<b>情感需求</b>——隐私感、被尊重感、对身体的正向认知。',
-       '<b>关键断点</b>：更换场景缺少私密便捷方案；夜间防漏依赖加长而非结构优化；敏感肌缺乏明确的安全认证标识。',
-       '<b>需求优先级</b>：以防漏结构 ＞ 材质安全 ＞ 贴合体感 ＞ 信息透明 ＞ 便携私密 排序，作为后续方案选型的判断依据。'
+       '<b>GoPro HERO 13 Black</b>（约 ¥2300）：旗舰运动相机，HyperSmooth 电子防抖标杆，价格更低、10m 防水，是全球 Vlog 用户的第一提及。',
+       '<b>影石 Insta360 Ace Pro 2</b>（¥3236-3399）：徕卡联名旗舰运动机，2.5″ 翻转屏 + 8K + AI 双芯低光，正面冲击 Pocket 3 的创作者定位。',
+       '<b>索尼 ZV-1 II</b>（¥3999-4299）：一英寸专业 Vlog 卡片机，同为 1″ 底、光学变焦 + 顶级眼控对焦，是 Pocket 3 最接近的画质替代品。',
+       '<b>三类路线</b>：电子防抖运动机 / 翻转屏 AI 运动机 / 一英寸光学 Vlog 机，正好覆盖 Pocket 3 需要防守的三个方向。'
      ]},
 
-    {h:'P3 解决方案 & 方案选型',
-     p:'针对每一层需求给出候选方案，并按可行性、成本、体验收益三个维度做选型对比，形成最终产品方案。',
+    {h:'核心功能对比',
+     p:'从传感器、镜头、视频规格、防抖、屏幕、收音、防护、续航、重量、价格十个维度做横向对比，识别各自的强项与短板。',
      list:[
-       '<b>防漏结构</b>：候选为"单纯加长"与"立体护围 + 导流槽"，后者在不增加厚重感的前提下用结构拦截侧流，选型确定为立体护围复合导流设计。',
-       '<b>表层材质</b>：候选为普通无纺布与医用级亲肤棉柔层，后者透气性与低致敏性更优，作为敏感肌版本的核心配置。',
-       '<b>贴合体感</b>：采用人体工学弧形剪裁 + 弹性侧翼，减少运动位移与褶皱，提升久坐与行走时的稳定度。',
-       '<b>芯体吸收</b>：多层复合芯体（瞬吸层 + 锁水层 + 防返渗层），在提升吸收量的同时控制厚度，兼顾轻薄与安全感。',
-       '<b>信息透明</b>：包装正面标注材质成分、吸收量等级与安全认证，把选择权交还用户。'
+       '<b>画质与焦段</b>：Pocket 3 用 1″ CMOS + 20mm 定焦，画质领先但有焦段局限；索尼 18-50mm 光学变焦灵活但 4K 仅 30fps（8-bit）。',
+       '<b>防抖能力</b>：Pocket 3 三轴机械云台为硬件级防抖，优于 GoPro HyperSmooth 6.0 与索尼 Active 电子防抖（需裁切）。',
+       '<b>视频规格</b>：影石 Ace Pro 2 以 8K/30 领先；Pocket 3 以 4K/120 + 10-bit D-Log M 在调色空间上胜出。',
+       '<b>续航表现</b>：影石约 180min 最强，Pocket 3 达 116min（4K60），索尼仅约 45min 为明显短板。',
+       '<b>防护短板</b>：GoPro 10m 防水、影石 12m 防水，Pocket 3 与索尼均无防护，这是 Pocket 3 最大硬伤。',
+       '<b>价格带</b>：GoPro 约 ¥2300 最低，Pocket 3 ¥3499-4799 处于中高位，需要靠云台与画质支撑溢价。'
      ]},
 
-    {h:'P4 评测方案',
-     p:'设计方案验证路径，用可量化的指标替代主观感受，确保产品改善可被证明。',
+    {h:'交互 & HMI 多端体验',
+     p:'这是本次分析的重点：不只比参数，而是拆解用户从「想拍」到「拍完发出去」全链路上，机身、App、外设、直播四端的协同体验。',
      list:[
-       '<b>定量测试</b>：吸收速度（秒）、回渗量（g）、侧漏发生率（%）三项作为核心指标横向对比。',
-       '<b>体感量表</b>：采用 5 分制主观量表评估舒适度、贴合度、闷热感，招募不同肤质与经量用户参与。',
-       '<b>场景实测</b>：设置夜间睡眠 8 小时、久坐办公 4 小时、轻度运动 1 小时三类典型场景做实地跟踪。',
-       '<b>对照组设计</b>：以市面主流产品为对照组，保证结论具有可比性与说服力。'
+       '<b>机身屏</b>：2″ 旋转 OLED，自拍朝向自动翻转，横竖秒切——一条素材可同时喂抖音竖屏与 B 站横屏，是核心体验差异点。',
+       '<b>手机 App</b>：DJI Mimo 负责调参与遥控，畅片负责 AI 剪辑，功能强但两个 App 割裂，创作流程被切成两段。',
+       '<b>外设生态</b>：DJI Mic 2 直连实现一拖二原声级收音，另有续航手柄、磁吸镜组，生态完整但配件封闭且价格偏高。',
+       '<b>直播 / 会议</b>：支持 Wi-Fi 直播、网络摄像头模式与时间码多机位，把设备从「拍完再传」扩展为实时输出。',
+       '<b>对照痛点</b>：GoPro 无云台需靠手持技巧；Ace Pro 2 超广定焦畸变且无光学变焦；索尼续航极短且无云台需裁切。'
      ]},
 
-    {h:'P5 复盘',
-     p:'对整个分析过程做方法与结论层面的复盘，沉淀可复用的产品思维。',
+    {h:'真实用户口碑洞察',
+     p:'不依赖官方宣传，从电商与社媒的真实评论中提炼高频好评与高频吐槽，还原用户在实际场景中的真实体感。',
      list:[
-       '<b>做对了什么</b>：从真实访谈切入而非先入为主定义需求，让痛点有事实支撑；用优先级排序避免方案面面俱到却都不极致。',
-       '<b>样本局限</b>：访谈样本量有限、集中于同年龄段女性，结论在泛人群上的外推需要更大样本验证。',
-       '<b>可优化点</b>：后续应引入量化问卷扩大样本，并在评测阶段加入成本核算，让方案在商业上同样成立。',
-       '<b>能力沉淀</b>：形成了"访谈 → 痛点结构化 → 需求分层 → 方案选型 → 评测验证 → 复盘"的完整产品分析链路，可迁移到其他消费品类。'
+       '<b>关键数据</b>：京东好评率 98%，抖音用户满意度 96.3%，91% 用户愿推荐给其他创作者。',
+       '<b>高频好评</b>：「掏出来就拍得到」——旋转开机 + 云台即稳，登山遛娃如滑轨；肤色自然不假面，直发朋友圈够用；夜市演唱会弱光优于旗舰手机，高光压制与暗部保留强。',
+       '<b>高频吐槽 TOP3</b>：① 2″ 屏户外反光看不清，贴膜后触控失灵；② 不防水不防尘，海边雪场沙尘不敢用；③ 智能跟随不靠谱，逆光与孩子奔跑时易脱锁。',
+       '<b>其他抱怨</b>：夏日 4K 录 10 分钟烫手降亮，续航焦虑明显；4K/120 画质打折、暗光噪点突出；配件封闭且贵，单独买比机身还烧钱。'
      ]},
 
-    {h:'竞品分析',
-     p:'选取市面主流产品按核心卖点分档，定位当前市场空白。',
+    {h:'短期迭代建议（固件 / App / 配件）',
+     p:'面向现有 Pocket 3 用户，聚焦可在一个固件周期内交付的改进项，成本低、见效快，直接对应高频吐槽。',
      list:[
-       '<b>第一档｜大众基础款</b>：以价格与铺货取胜，防漏依赖加长加厚，材质与贴合度改善有限。',
-       '<b>第二档｜舒适升级款</b>：主打棉柔表层与轻薄芯体，但防漏结构创新不足，敏感肌适配仍是短板。',
-       '<b>第三档｜高端功能性</b>：强调材质安全与认证，体验优秀但价格偏高，覆盖人群有限。',
-       '<b>市场空白</b>：缺少一款"立体防漏结构 + 医用级亲肤材质 + 信息透明 + 价格可接受"的综合型产品，这正是本项目的切入位。',
-       '<b>差异化结论</b>：不与高端款比价格，也不与基础款比便宜，而是用结构创新在中间价位建立体验优势。'
+       '<b>旋转屏触控专项优化</b>：针对贴膜场景重新校准触控灵敏度，解决最影响日常使用的交互问题。',
+       '<b>智能跟随 6.0 脱锁修复</b>：优化逆光与快速移动场景下的目标锁定算法，减少关键时刻跟丢。',
+       '<b>散热策略调整</b>：长录时优先降分辨率保帧率，而非直接降亮或关机，避免拍摄中断。',
+       '<b>Mimo + 畅片流程合并</b>：统一为一个创作入口，取消 App 之间的跳转，缩短创作的路径长度。',
+       '<b>原生收音升级</b>：机内加入风噪 AI 消除与人声增强，降低对 DJI Mic 2 的依赖。',
+       '<b>配件「防坑包」</b>：把 ND 镜、黑柔镜、防水壳捆绑为高性价比套装，降低用户的配件决策成本。'
      ]},
 
-    {h:'产品定位与商业化预估',
-     p:'明确产品定位、目标人群与商业化路径，让方案具备落地可能。',
+    {h:'中长期产品方向（下一代定义）',
+     p:'从硬件定义层面给出下一代产品的机会点，回答「Pocket 4 应该解决什么问题」，这是硬件产品岗最看重的能力。',
      list:[
-       '<b>产品定位</b>：面向 18-30 岁敏感肌与高频使用人群的"舒适安全型卫生巾"，核心主张是"结构防漏 + 材质安心"。',
-       '<b>产品矩阵</b>：按经量与场景分为日用轻薄、夜用加长、敏感肌专用三条线，覆盖完整经期周期。',
-       '<b>定价策略</b>：定位中间价位带，敏感肌专用线可适度上探，用过体验溢价而非品牌溢价支撑价格。',
-       '<b>商业化路径</b>：先以敏感肌细分人群切入建立口碑，再通过内容种草与真实用户评测扩散至泛人群。',
-       '<b>成本与风险</b>：医用级材质与立体结构会推高单件成本，需通过规模采购与规格组合平衡毛利；主要风险在于用户教育成本与教育周期。'
+       '<b>补齐防护短板</b>：加入 IPX4+ 生活防泼溅与防尘能力，解锁海边、雪场等高频使用场景。',
+       '<b>屏幕升级</b>：2″ → 2.5″、亮度 ≥1000nit，并加抗反光镀膜，正面解决户外看不清的痛点。',
+       '<b>焦段扩展</b>：在 20mm 基础上增加中焦段，覆盖人像与产品展示等创作需求，突破定焦局限。',
+       '<b>散热结构重设计</b>：以均热板支撑 4K/120 连续录制，从物理层解决发热降频问题。',
+       '<b>AI 创作内嵌</b>：机内高光识别 + 智能剪辑草稿，把后期能力前置到拍摄现场，强化「随手拍即得」。'
+     ]},
+
+    {h:'方法论沉淀',
+     p:'这次分析最大的价值不在结论，而在形成了一套可复用的消费硬件分析方法。',
+     list:[
+       '<b>从硬件反推软件</b>：硬件短板（无防护、屏幕反光）往往对应软件可补偿的空间（散热策略、触控校准），这是软硬协同的切入点。',
+       '<b>用真实口碑校准判断</b>：官方参数无法反映真实体感，用户吐槽才是需求优先级最可靠的排序依据。',
+       '<b>分层输出建议</b>：短期可迭代项建立可执行性，中长期方向体现产品视野，两者结合才是完整的产品提案。',
+       '<b>可迁移性</b>：该框架可直接复用到其他消费智能硬件品类（穿戴、音频、智能家居）的竞品分析。'
      ]}
   ],
-  images:['images/portfolio/work-01.jpg','images/portfolio/work-02.jpg','images/portfolio/work-03.jpg','images/portfolio/work-04.jpg']},
+  images:['images/portfolio/dj-analysis-logic.jpg','images/portfolio/dj-hmi-prototype.jpg']},
 
- {name:'培训数据看板搭建',cat:'数据运营',tags:['数据运营','BI','可视化'],
-  desc:'独立搭建培训业务数据看板，把分散在多张表格中的培训数据整合为可视化仪表盘。\n覆盖参训率、完成率、考核成绩、满意度等多维指标，支持按部门、时间、课程类型交叉查看，帮助业务方快速定位问题并优化培训安排，显著减少人工统计时间。',
-  images:['images/portfolio/work-26.png','images/portfolio/work-27.png'],role:'数据可视化 / 业务优化',year:'2025'},
+// ===== 产品岗核心作品：嗨走乡村 APP & 小程序双端产品分析 =====
+ {name:'嗨走乡村双端产品深度分析',cat:'产品分析',group:'产品',tags:['产品分析','双端体验','竞品分析','策略规划'],
+  role:'产品分析 / 痛点拆解 / 迭代规划',year:'2026',
+  desc:'垂直数字乡村平台的产品分析，覆盖 C 端与 B 端全链路痛点、竞品格局、机会洞察，输出短期迭代与中长期战略。',
+  sections:[
+    {h:'产品概况：定位 · 业务 · 用户 · 双端',
+     p:'以嗨走乡村为对象，做一次从定位到战略的完整产品复盘。该产品是面向城市游客与在外游子的垂直数字乡村综合平台，同时拥有 APP 原生端与微信小程序双端。',
+     list:[
+       '<b>产品定位</b>：垂直数字乡村综合平台——用结构化的乡村档案连接城市与乡村。',
+       '<b>五大业务模块</b>：千村万宿旅行卡、农特产电商、乡村数字档案、村聊社区、共享老家旅居。',
+       '<b>C 端用户</b>：城市游客（寻求乡村度假、民宿、农特产与周边游）与在外游子（用「我的家乡 / 回老家」维系乡愁、关注老家动态）。',
+       '<b>B 端用户</b>：乡村民宿、农户、村集体经济组织等供给方。',
+       '<b>双端分工</b>：APP 承载深度内容、社区、完整乡村档案与共享老家旅居；小程序轻量化，聚焦查乡村、订民宿、买卡、下农货等即用即走场景。'
+     ]},
 
- {name:'濒危海洋生物盲盒',cat:'产品设计',tags:['产品设计','包装','IP设计'],
-  desc:'以濒危海洋生物为原型的盲盒产品设计。\n从IP形象设定、包装结构到周边物料完整落地，把可持续发展理念转译成年轻化、可收藏的视觉语言，让公益议题通过消费场景自然触达大众。产品线包含角色设定、盒型结构、系列包装与配套周边。',
-  images:['images/portfolio/work-18.png'],role:'IP形象 / 包装设计',year:'2024'},
+    {h:'C 端用户六大痛点',
+     p:'从真实使用链路出发拆解 C 端问题，覆盖信息、核心业务、双端体验、产品定位、检索能力、社区活跃六个维度。',
+     list:[
+       '<b>① 信息质量参差</b>：村庄多只有基础档案，缺路线、停车、餐饮、季节玩法，也缺真实 UGC 游记与评价，用户难以判断「值不值得去」。',
+       '<b>② 旅行卡体验隐患</b>：千村万宿旅行卡仅限非法定节假日，热门民宿预约难；房源设施、退改、押金展示不全，买卡后落差大。',
+       '<b>③ 双端体验割裂</b>：APP 功能全但包体大、下载门槛高；小程序轻量但功能阉割；同一账号两端数据偶尔不同步。',
+       '<b>④ 功能堆砌定位模糊</b>：文旅、电商、内容、社交、旅居齐上，核心价值不清晰，模块之间互相干扰。',
+       '<b>⑤ 搜索推荐能力弱</b>：仅支持地名搜索，无法按亲子、康养、徒步、非遗等标签筛选目的地。',
+       '<b>⑥ 社区活跃度低</b>：村聊以官方内容为主，普通用户发帖互动意愿弱，缺乏真实游客分享。'
+     ]},
 
- {name:'锦江酒店2026年会',cat:'活动视觉',tags:['活动视觉','品牌','主KV'],
-  desc:'千人级企业年会全流程视觉统筹。\n独立完成主视觉KV设计、全套物料延展（邀请函、签到墙、舞台背景、伴手礼、桌卡等），并跟进现场执行与布置落地。在统一的视觉体系下平衡商务质感与节日氛围，保证大屏、印刷、物料多场景的一致性呈现。',
-  images:['images/portfolio/work-23.jpg','images/portfolio/work-24.jpg','images/portfolio/work-25.jpg','images/portfolio/work-19.jpg','images/portfolio/work-20.jpg','images/portfolio/work-21.png','images/portfolio/work-22.jpg'],role:'主视觉 / 物料延展 / 现场执行',year:'2026'},
+    {h:'B 端 · 技术架构 · 商业化痛点',
+     p:'C 端之外，补齐商家侧、技术底座与商业模式三个维度的诊断，避免只做用户视角的片面分析。',
+     list:[
+       '<b>B 端商家</b>：后台操作复杂，房源与商品上传步骤繁琐；流量分配不均，小众村落与小农户几乎没有曝光。',
+       '<b>履约链路弱</b>：农特产发货与民宿售后纠纷处理机制不完善，客服响应慢，影响复购信任。',
+       '<b>技术架构</b>：大而全但每模块深度不足——文旅不如 OTA、电商不如拼多多、内容不如小红书，样样做样样不精。',
+       '<b>弱网适配不足</b>：目标场景恰恰是网络较差的乡村，部分页面加载慢、图片量大易卡顿。',
+       '<b>适老化欠缺</b>：核心用户含中老年旅居群体，但字体偏小、操作层级深，缺语音搜索与一键客服。',
+       '<b>商业化风险</b>：收入过度依赖千村万宿旅行卡会员销售，风险集中；电商与民宿交易流水占比低，交易闭环未跑通。'
+     ]},
 
- {name:'乡村规划 / 汽车公园竞赛',cat:'城乡规划',tags:['城乡规划','竞赛','概念规划'],
-  desc:'城乡规划专业竞赛作品。\n围绕乡村产业转型与汽车文化主题，完成从场地调研、概念生成、功能分区到空间形态推敲的完整设计推演，输出总平面、分析图与场景效果图，兼顾规划逻辑的严谨性与方案表达的视觉冲击力。',
-  images:['images/portfolio/work-28.jpg'],role:'规划设计 / 竞赛方案',year:'2023'},
+    {h:'竞品格局与护城河',
+     p:'对标 OTA、垂类民宿、内容平台四类竞品，找出平台真正不可替代的能力，以及必须补齐的短板。',
+     list:[
+       '<b>携程 / 去哪儿</b>：海量民宿供应链、预订成熟、售后与攻略 UGC 充足；但乡村垂类标签弱，小众村落覆盖少。',
+       '<b>木鸟民宿</b>：特色乡村民宿筛选、真实评价、预订成熟；但不做乡村档案、不做农产品电商。',
+       '<b>抖音生活服务</b>：短视频种草、强流量、农户可自主发视频；但无完整全国乡村档案库，信息碎片化。',
+       '<b>小红书</b>：海量 UGC 乡村游记攻略，种草极强；但无结构化乡村档案，预订履约弱。',
+       '<b>唯一护城河</b>：全国几十万村庄的结构化数字档案数据库——这是市面其他平台均未完整具备的底层数据资产。',
+       '<b>核心短板</b>：交易闭环、UGC 内容生态与产品体验三块，策略应是「把护城河做深、把短板补齐」，而非继续堆功能。'
+     ]},
 
- {name:'自媒体内容运营',cat:'内容运营',tags:['内容运营','新媒体','小红书'],
-  desc:'小红书、抖音平台自媒体内容运营实践。\n负责选题策划、图文与短视频视觉产出、发布节奏管理与数据复盘，通过封面点击率、互动率等指标持续迭代内容方向，多篇内容实现万级曝光，沉淀出可复用的内容方法论。',
-  images:['images/portfolio/work-09.png','images/portfolio/work-10.png','images/portfolio/work-11.jpg','images/portfolio/work-12.jpg','images/portfolio/work-13.jpg','images/portfolio/work-14.jpg','images/portfolio/work-15.jpg'],role:'内容策划 / 视觉产出 / 数据复盘',year:'2025'},
+    {h:'机会洞察：独有优势 × 市场机会',
+     p:'把平台独有资产与外部市场趋势对齐，识别三个可放大的机会窗口。',
+     list:[
+       '<b>冷门乡村旅游需求增长</b>：城市周边短途度假、亲子康养、非遗体验升温，长尾村落有待被结构化发现。',
+       '<b>数字乡村政策红利</b>：政府文旅局与村集体有乡村数字化与智慧文旅诉求，可输出档案 SaaS 服务。',
+       '<b>银发旅居市场扩大</b>：中老年返乡与旅居人群扩大，适老化与弱网体验是差异化入口。',
+       '<b>战略结论</b>：护城河 + 政策 + 人群三重红利，决定了嗨走应聚焦「档案引擎」，而非泛功能扩张。'
+     ]},
 
- {name:'校园活动视觉设计',cat:'平面设计',tags:['平面设计','海报','活动'],
-  desc:'校园活动系列视觉设计。\n围绕活动主题建立视觉基调，输出主视觉海报、系列延展海报与线上宣传图，通过统一的色彩与版式语言强化活动辨识度，覆盖宣传预热到现场呈现的完整链路。',
-  images:['images/portfolio/work-33.jpg','images/portfolio/work-34.jpg','images/portfolio/work-35.jpg'],role:'海报设计 / 活动视觉',year:'2024'},
+    {h:'短期迭代方案（3-6 个月）',
+     p:'不重构底层的前提下，聚焦软件与产品层的快速修复，按优先级排布五项动作。',
+     list:[
+       '<b>★ 最高优先级｜旅行卡体验修复</b>：预约页前置风险提示（不可用日期、库存动态、失败处理），房源详情强制补齐设施、停车、周边、退改、押金与真实评价，信息不全限制上架，并建立预约排队与候补机制。',
+       '<b>双端定位调整</b>：小程序做轻量决策与交易，砍掉重度社区；APP 保留深度内容与社区；确保两端账号、订单、收藏完全同步。',
+       '<b>首页场景化重构</b>：以四大场景入口替代功能罗列——乡村度假找民宿 / 农特土货买好物 / 我的家乡回老家 / 小众村落探索。',
+       '<b>筛选与适老化</b>：增加亲子、康养、徒步、非遗、季节、自驾友好等标签；提供弱网图片压缩模式；加入大字体、语音搜索与一键客服简易模式。',
+       '<b>激活 UGC 内容</b>：村庄档案页增加游记与实拍评价；到访才可发帖并给予小额积分激励；村聊转型为各村本地留言板，降低运营负担。'
+     ]},
 
- {name:'平面设计合集',cat:'平面设计',tags:['平面设计','VI','品牌'],
-  desc:'品牌视觉与平面设计作品合集。\n涵盖品牌VI系统、标识设计、版式探索与多风格视觉实验，在不同行业属性与调性要求下输出匹配的设计方案，展示对色彩、字体、构图与信息层级的综合把控能力。',
-  images:['images/portfolio/work-07.jpg','images/portfolio/work-08.jpg','images/portfolio/work-05.png','images/portfolio/work-06.jpg'],role:'品牌视觉 / 平面设计',year:'2024'},
+    {h:'中长期战略（6-18 个月）',
+     p:'从业务与生态层给出四条战略路径，把数据护城河转化为可持续的营收结构。',
+     list:[
+       '<b>① AI 乡村路线引擎</b>：以村庄档案为核心，按位置与偏好生成「2 天 1 晚周边乡村自驾路线」等个性化方案，这是携程、小红书难以复制的能力。',
+       '<b>② B 端乡村档案 SaaS</b>：向地方政府、文旅局输出乡村数字化档案 SaaS 服务，把护城河变现为稳定的 ToB 收入。',
+       '<b>③ 商业模式多元化</b>：提升农特产电商与民宿交易佣金占比，让旅行卡回归营销引流工具，而非主要营收来源。',
+       '<b>④ 短视频 + AI 助手</b>：为每个乡村生成短视频素材入口，支持农户一键发布；打造 AI 助手，输入出行需求即可直配乡村、民宿与特产。'
+     ]},
 
- {name:'专业能力展示',cat:'专业技能',tags:['专业技能','AIGC','方法'],
-  desc:'复合型能力图谱与工作方法展示。\n梳理视觉设计、AIGC创意落地、项目全链路执行、数字化运营与内容营销五大能力模块，并展示AI辅助创意、生图改图、样机合成的实际工作流，体现从创意构思到实物落地的完整闭环能力。',
-  images:['images/portfolio/work-29.png','images/portfolio/work-30.png','images/portfolio/work-31.png','images/portfolio/work-32.png'],role:'能力梳理 / 工作流展示',year:'2025'},
+    {h:'项目复盘：垂类平台的产品启示',
+     p:'这次分析沉淀了四条可迁移的产品判断，也是我认为产品决策最容易被忽略的地方。',
+     list:[
+       '<b>护城河在数据与场景，不在功能数量</b>：差异优势来自结构化乡村档案与真实出行场景，大而全往往样样做样样不精。',
+       '<b>先跑通交易闭环再谈规模化</b>：在流水占比仍低时，应优先把履约、发货与售后做扎实，而非急于扩规模。',
+       '<b>双端要做差异分工</b>：小程序承担轻量决策与交易，APP 承载深度内容与社区，而不是把两端做成功能镜像。',
+       '<b>风险集中业务需体验兜底</b>：旅行卡是平台最大口碑风险点，必须前置提示、补齐信息、建立候补，守住用户预期。'
+     ]}
+  ],
+  images:['images/portfolio/hz-analysis-logic.jpg','images/portfolio/hz-info-quality.jpg']}
 
+// 人像摄影作品：来自《人像摄影作品》图集，共 12 张，按三辑编排
+,{name:'人像摄影 · Vol.1',cat:'人像摄影',group:'摄影',tags:['人像摄影','竖构图','环境人像'],
+  desc:'人像摄影作品集第一辑，收录 4 张作品。\n以人物状态与情绪表达为核心的拍摄记录，竖构图与环境人像为主，后期保留画面本身的光影层次与真实质感。',
+  images:['images/photography/photo-01.jpg','images/photography/photo-02.jpg',
+          'images/photography/photo-03.jpg','images/photography/photo-04.jpg'],
+  role:'摄影 / 后期',year:'2025'}
 
+,{name:'人像摄影 · Vol.2',cat:'人像摄影',group:'摄影',tags:['人像摄影','情绪','纪实'],
+  desc:'人像摄影作品集第二辑，收录 4 张作品。\n同一组拍摄的延续，涵盖竖幅特写与横幅场景，关注人物与所处环境之间的关系。',
+  images:['images/photography/photo-05.jpg','images/photography/photo-06.jpg',
+          'images/photography/photo-07.jpg','images/photography/photo-08.jpg'],
+  role:'摄影 / 后期',year:'2025'}
+
+,{name:'人像摄影 · Vol.3',cat:'人像摄影',group:'摄影',tags:['人像摄影','横构图','外景'],
+  desc:'人像摄影作品集第三辑，收录 4 张作品。\n以横幅外景与竖幅肖像穿插编排，呈现不同光线条件下的人物状态。',
+  images:['images/photography/photo-09.jpg','images/photography/photo-10.jpg',
+          'images/photography/photo-11.jpg','images/photography/photo-12.jpg'],
+  role:'摄影 / 后期',year:'2025'}
 ];
 
-var marqueeTrack=document.getElementById('marqueeTrack');
-var marqueeWrap=document.getElementById('marqueeWrap');
+/* ===== 作品区：分类筛选 + 瀑布流渲染 ===== */
 
-// 渲染单张卡片
-function buildCard(p,idx){
-  return '<div class="p-card" data-idx="'+idx+'" onclick="openDetail('+idx+')">'+
-    '<img src="'+p.images[0]+'" alt="'+p.name+'" loading="lazy">'+
-    '<div class="p-card-cat">'+p.cat+'</div>'+
-    '<div class="p-card-hint"><span>查看详情</span></div>'+
-    '<div class="p-card-name">'+p.name+'</div>'+
-  '</div>';
+// 大类映射：把每个项目的 category 归入「产品 / 运营 / 设计」三类
+// 产品：产品分析、用户研究、产品设计类项目
+// 运营：数据运营、内容运营、活动策划类项目
+// 设计：视觉设计、平面设计、空间规划类项目
+var CATEGORY_MAP={
+  '大疆 Osmo Pocket 3 HMI 竞品分析':'product',
+  '嗨走乡村双端产品深度分析':'product',
+  '濒危海洋生物盲盒':'product',
+  '培训数据看板搭建':'operation',
+  '自媒体内容运营':'operation',
+  '锦江酒店2026年会':'design',
+  '校园活动视觉设计':'design',
+  '平面设计合集':'design',
+  '乡村规划 / 汽车公园竞赛':'design',
+  '专业能力展示':'design',
+  '人像摄影 · Vol.1':'photo',
+  '人像摄影 · Vol.2':'photo',
+  '人像摄影 · Vol.3':'photo'
+};
+
+// 一句话简介（≤25 字），用于瀑布流卡片
+var BRIEF_MAP={
+  '大疆 Osmo Pocket 3 HMI 竞品分析':'口袋影像硬件 HMI 竞品深度对标',
+  '嗨走乡村双端产品深度分析':'乡村文旅平台双端痛点与策略',
+  '濒危海洋生物盲盒':'濒危物种科普潮玩 IP 盲盒',
+  '培训数据看板搭建':'万人级培训业务数据可视化',
+  '自媒体内容运营':'小红书抖音内容策划与复盘',
+  '锦江酒店2026年会':'千人年会主视觉与物料落地',
+  '校园活动视觉设计':'校园活动系列海报视觉',
+  '平面设计合集':'品牌 VI 与平面设计作品集',
+  '乡村规划 / 汽车公园竞赛':'乡村产业与汽车公园概念规划',
+  '专业能力展示':'复合能力图谱与工作流展示',
+  '人像摄影 · Vol.1':'人像摄影第一辑 · 4 张',
+  '人像摄影 · Vol.2':'人像摄影第二辑 · 4 张',
+  '人像摄影 · Vol.3':'人像摄影第三辑 · 4 张'
+};
+
+// 排序权重：数值越小越靠前
+// 产品相关优先，其次有大厂/知名品牌背书的项目，最后按年份倒序
+var PRIORITY={
+  '大疆 Osmo Pocket 3 HMI 竞品分析':1,   // 产品 + 大疆背书
+  '嗨走乡村双端产品深度分析':2,           // 产品 + 真实业务
+  '锦江酒店2026年会':3,                   // 大厂背书（锦江）
+  '濒危海洋生物盲盒':4,                   // 产品类
+  '培训数据看板搭建':5,                   // 运营 + 量化成果
+  '自媒体内容运营':6,                     // 运营
+  '乡村规划 / 汽车公园竞赛':7,            // 设计 + 国赛奖项
+  '校园活动视觉设计':8,                   // 设计
+  '平面设计合集':9,                       // 设计
+  '专业能力展示':10,                      // 综合
+  '人像摄影 · Vol.1':11,                  // 摄影
+  '人像摄影 · Vol.2':12,
+  '人像摄影 · Vol.3':13
+};
+
+// 当前筛选状态
+var pfCurrentFilter='all';
+
+// 转义，防止内容里的特殊字符破坏结构
+function pfEscape(s){
+  return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
 }
 
-// 注入卡片：内容复制两份，实现无缝循环滚动
-function renderMarquee(){
-  if(!marqueeTrack)return;
-  var one=PROJECTS.map(function(p,i){return buildCard(p,i)}).join('');
-  marqueeTrack.innerHTML=one+one;   // 复制一份用于首尾衔接
-  sizeMarqueeCards();
-  updateCardScale();
+// 生成单张瀑布流卡片
+function buildPortfolioCard(p,idx){
+  var cat=CATEGORY_MAP[p.name]||'design';
+  var isProduct=cat==='product';
+  var brief=BRIEF_MAP[p.name]||'';
+  var isDeep=p.sections&&p.sections.length;
+  var cover=p.images&&p.images[0]?p.images[0]:'';
+
+  return '<button class="pf-card'+(isProduct?' is-feature':'')+'" data-cat="'+cat+'"'+
+      ' data-idx="'+idx+'" onclick="openDetail('+idx+')" type="button">'+
+    '<div class="pf-cover">'+
+      '<span class="pf-tag'+(isProduct?' is-product':'')+'">'+pfEscape(p.cat)+'</span>'+
+      '<img src="'+pfEscape(cover)+'" alt="'+pfEscape(p.name)+'" loading="lazy">'+
+      '<div class="pf-cover-text">'+
+        '<div class="pf-name">'+pfEscape(p.name)+'</div>'+
+        (brief?'<div class="pf-brief">'+pfEscape(brief)+'</div>':'')+
+      '</div>'+
+    '</div>'+
+    '<div class="pf-meta">'+
+      '<span class="pf-role">'+pfEscape(p.role||'')+
+        (isDeep?'<br><span class="pf-deep">完整分析报告</span>':'')+
+      '</span>'+
+      '<span class="pf-year">'+pfEscape(p.year||'')+'</span>'+
+    '</div>'+
+  '</button>';
 }
 
-var cardSize=0, gapSize=38;   // 中心卡推算用：卡片边长与间距（与 --card-size 同步）
-// 按视口宽度计算卡片尺寸（一屏约 3 张）
-function sizeMarqueeCards(){
-  var w=window.innerWidth;
-  var size = w<600 ? Math.min(w*0.56,210)
-          : w<900 ? Math.min(w*0.34,270)
-          : w<1400 ? Math.min(w*0.245,340)
-          : Math.min(w*0.235,350);
-  cardSize=size;
-  gapSize=w<768?20:38;
-  marqueeWrap.style.setProperty('--card-size',size+'px');
+// 按优先级排序后的项目列表（保留原始索引用于打开详情）
+function getSortedProjects(){
+  var arr=PROJECTS.map(function(p,i){return {p:p,i:i}});
+  arr.sort(function(a,b){
+    var pa=PRIORITY[a.p.name]||99;
+    var pb=PRIORITY[b.p.name]||99;
+    if(pa!==pb)return pa-pb;
+    // 同权重时按年份倒序（新的在前）
+    return String(b.p.year||'').localeCompare(String(a.p.year||''));
+  });
+  return arr;
 }
 
-/* 标出「中间」与「左右侧」卡片 —— 闪烁核心修复：
-   1. 不再用 getBoundingClientRect 逐卡读取（每帧 × 20 张卡强制布局，开销大），
-      改为由 offset + 卡片宽度/间距直接推算中心索引，零 DOM 读取、零强制布局；
-   2. 始终保留一张中心卡（取最接近视口中心者），不再出现"空档期全部变小再弹回"；
-   3. 只有中心卡实际变化时才写 class，避免无意义的状态切换。 */
-var _centerIdx=-1;
-function updateCardScale(){
-  if(!halfWidth||cardSize<=0)return;
-  var step=cardSize+gapSize;
-  var mid=window.innerWidth/2;
-  var i=Math.round((mid-offset-cardSize/2)/step);
-  i=((i%PROJECTS.length)+PROJECTS.length)%PROJECTS.length;
-  if(i===_centerIdx)return;
-  _centerIdx=i;
-  var cards=marqueeTrack.querySelectorAll('.p-card');
-  for(var k=0;k<cards.length;k++){
-    var isCenter=(k%PROJECTS.length)===i;
-    cards[k].classList.toggle('is-center',isCenter);
-    cards[k].classList.toggle('is-side',!isCenter);
+// 渲染瀑布流
+function renderPortfolio(filter){
+  var box=document.getElementById('pfMasonry');
+  var empty=document.getElementById('pfEmpty');
+  if(!box)return;
+
+  var list=getSortedProjects();
+  if(filter&&filter!=='all'){
+    list=list.filter(function(it){return (CATEGORY_MAP[it.p.name]||'design')===filter});
   }
-}
 
-/* ===== 滚动驱动：自动滚动 + 鼠标拖拽共用同一个 offset =====
-   卡片内容渲染了两份，offset 越过一份宽度（-50%）时无缝回绕，
-   因此拖拽和自动滚动不会互相打断。 */
-var offset=0;          // 当前位移（px，向左为负）
-var baseSpeed=0.55;    // 自动滚动速度（px/帧）
-var paused=false;      // 悬停暂停
-var dragging=false;    // 是否正在拖拽
-var dragStartX=0, dragStartOffset=0;
-var dragVelocity=0, lastX=0, lastT=0, lastMoveT=0;
-var movedDistance=0;   // 本次拖拽累计位移，用于判断是否算「点击」
-var halfWidth=0;       // 一份内容的宽度
-
-// 计算一份内容的宽度（总宽的一半，因为内容复制了两份）
-function measureHalfWidth(){
-  halfWidth=marqueeTrack.scrollWidth/2;
-}
-
-// 位移回绕：始终保持 offset 落在 [-halfWidth, 0]
-function wrapOffset(){
-  if(halfWidth<=0)return;
-  while(offset<=-halfWidth)offset+=halfWidth;
-  while(offset>0)offset-=halfWidth;
-}
-
-// 主循环：自动滚动 / 惯性衰减 / 悬停暂停，统一在这里推进
-(function marqueeLoop(){
-  updateCardScale();
-
-  if(dragging){
-    // 拖拽中位移由 pointermove 直接写入，这里只记录速度
-  }else if(Math.abs(dragVelocity)>0.05){
-    // 松手后的惯性：位移按速度推进，速度逐步衰减
-    offset+=dragVelocity;
-    dragVelocity*=0.94;
-  }else{
-    dragVelocity=0;
-    if(!paused)offset-=baseSpeed;   // 常规自动向左滚动
+  if(!list.length){
+    box.innerHTML='';
+    if(empty)empty.classList.add('show');
+    return;
   }
-
-  wrapOffset();
-  marqueeTrack.style.transform='translate3d('+offset+'px,0,0)';
-  requestAnimationFrame(marqueeLoop);
-})();
-
-// 启动：等卡片渲染完成后再测量宽度
-function startMarquee(){
-  renderMarquee();
-  measureHalfWidth();
-  updateCardScale();   // 首屏渲染前立即确定中心卡，避免加载后状态跳变
+  if(empty)empty.classList.remove('show');
+  box.innerHTML=list.map(function(it){return buildPortfolioCard(it.p,it.i)}).join('');
 }
 
-window.addEventListener('resize',function(){sizeMarqueeCards();updateCardScale();measureHalfWidth()});
+// 切换筛选：先淡出，重排后再淡入
+function switchPortfolioFilter(filter){
+  if(filter===pfCurrentFilter)return;
+  pfCurrentFilter=filter;
 
-/* ===== 鼠标拖拽左右滚动（仅鼠标，移动端保持原生滑动） ===== */
-(function initDrag(){
-  if(!marqueeWrap)return;
-  var DRAG_THRESHOLD=6;   // 超过这个位移才算拖拽，避免误伤点击
-
-  marqueeWrap.addEventListener('pointerdown',function(e){
-    if(e.pointerType!=='mouse'||e.button!==0)return;   // 只接管鼠标左键
-    dragging=true;
-    movedDistance=0;
-    dragVelocity=0;
-    dragStartX=e.clientX;
-    dragStartOffset=offset;
-    lastX=e.clientX;
-    lastT=lastMoveT=performance.now();
-    marqueeWrap.classList.add('is-dragging');
+  // 更新按钮选中态
+  document.querySelectorAll('.pf-pill').forEach(function(btn){
+    var on=btn.getAttribute('data-filter')===filter;
+    btn.classList.toggle('is-active',on);
+    btn.setAttribute('aria-selected',on?'true':'false');
   });
 
-  window.addEventListener('pointermove',function(e){
-    if(!dragging)return;
-    var dx=e.clientX-dragStartX;
-    movedDistance=Math.max(movedDistance,Math.abs(dx));
-    // 超过阈值才进入「真正拖拽」态：屏蔽卡片指针事件，避免拖拽中触发 hover/点击
-    if(movedDistance>DRAG_THRESHOLD)marqueeWrap.classList.add('is-moving');
-    offset=dragStartOffset+dx;
-    wrapOffset();
+  var box=document.getElementById('pfMasonry');
+  if(!box){renderPortfolio(filter);return}
+  var cards=box.querySelectorAll('.pf-card');
 
-    // 依据最近一次移动计算速度，用于松手后的惯性
-    var now=performance.now();
-    var dt=now-lastT;
-    if(dt>0){
-      dragVelocity=(e.clientX-lastX)/dt*16;   // 归一化到每帧位移
-      dragVelocity=Math.max(-40,Math.min(40,dragVelocity));
-    }
-    lastX=e.clientX;
-    lastT=now;
-    lastMoveT=now;
-    e.preventDefault();
-  },{passive:false});
+  // 无卡片时直接渲染
+  if(!cards.length){renderPortfolio(filter);return}
 
-  function endDrag(){
-    if(!dragging)return;
-    dragging=false;
-    marqueeWrap.classList.remove('is-dragging');
-    // 如果最后一次移动已过去较久，视为无惯性（静置松手）
-    if(performance.now()-lastMoveT>90)dragVelocity=0;
-    // 拖拽后紧接着的这次 click 要吞掉，避免误开详情
-    if(movedDistance>DRAG_THRESHOLD){
-      var swallow=function(ev){ev.stopPropagation();ev.preventDefault()};
-      marqueeWrap.addEventListener('click',swallow,{capture:true,once:true});
-      setTimeout(function(){
-        marqueeWrap.removeEventListener('click',swallow,true);
-        marqueeWrap.classList.remove('is-moving');
-      },0);
-    }else{
-      marqueeWrap.classList.remove('is-moving');
+  // 淡出 → 重排 → 淡入
+  cards.forEach(function(c){c.classList.add('is-hiding')});
+  setTimeout(function(){
+    renderPortfolio(filter);
+    var fresh=box.querySelectorAll('.pf-card');
+    fresh.forEach(function(c){c.classList.add('is-hiding')});
+    // 触发过渡后移除隐藏态
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        fresh.forEach(function(c){c.classList.remove('is-hiding')});
+      });
+    });
+  },240);
+}
+
+// 绑定筛选条事件
+(function initPortfolio(){
+  var bar=document.getElementById('pfFilter');
+  if(!bar)return;
+  bar.addEventListener('click',function(e){
+    var btn=e.target.closest('.pf-pill');
+    if(!btn)return;
+    switchPortfolioFilter(btn.getAttribute('data-filter'));
+  });
+})();
+
+// 启动：首次渲染全部作品
+renderPortfolio('all');
+
+
+/* ===== 简历区：折叠区块交互 =====
+   一级区块 + 二级条目两级折叠；展开后解除高度锁定，父级随子级自适应，不会截断内容 */
+(function(){
+  var group=document.getElementById('rzGroup');
+  if(!group)return;
+
+  function headOf(wrap){return wrap.querySelector(':scope>.rz-sec-head,:scope>.rz-item-head');}
+  function bodyOf(wrap){return wrap.querySelector(':scope>.rz-sec-body,:scope>.rz-item-body');}
+
+  // 子级展开时，把已展开的上级解锁为自适应高度，避免父容器高度停留在旧值
+  function freeAncestors(body){
+    var p=body.parentElement;
+    while(p&&p!==group){
+      if(p.classList&&(p.classList.contains('rz-sec')||p.classList.contains('rz-item'))){
+        var b=bodyOf(p);
+        if(b&&b.classList.contains('is-open')) b.style.maxHeight='none';
+      }
+      p=p.parentElement;
     }
   }
 
-  window.addEventListener('pointerup',endDrag);
-  window.addEventListener('pointercancel',endDrag);
+  function setOpen(wrap,open){
+    var head=headOf(wrap),body=bodyOf(wrap);
+    if(!head||!body)return;
+    var cur=wrap.classList.contains('is-open');
+    wrap.classList.toggle('is-open',open);
+    head.setAttribute('aria-expanded',open?'true':'false');
+    if(open){
+      if(cur&&body.style.maxHeight==='none')return; // 已处于展开稳态，无需重复
+      body.classList.add('is-open');
+      body.style.maxHeight=body.scrollHeight+'px';  // 先给目标高度，触发展开动画
+      freeAncestors(body);
+    }else{
+      body.classList.remove('is-open');
+      if(body.style.maxHeight===''||body.style.maxHeight==='none'){
+        body.style.maxHeight=body.scrollHeight+'px';
+        void body.offsetHeight;
+      }
+      body.style.maxHeight='0px';
+    }
+  }
 
-  // 悬停暂停：鼠标在卡片区时停住自动滚动
-  marqueeWrap.addEventListener('mouseenter',function(){if(!dragging)paused=true});
-  marqueeWrap.addEventListener('mouseleave',function(){paused=false});
+  group.addEventListener('click',function(e){
+    var head=e.target.closest?e.target.closest('.rz-sec-head,.rz-item-head'):null;
+    if(!head||!group.contains(head))return;
+    var wrap=head.parentElement;
+    setOpen(wrap,!wrap.classList.contains('is-open'));
+  });
+
+  // 动画结束后解锁高度，窗口缩放或文字换行都不会截断内容
+  group.addEventListener('transitionend',function(e){
+    if(e.propertyName!=='max-height')return;
+    var b=e.target;
+    if(b.classList&&b.classList.contains('is-open')) b.style.maxHeight='none';
+  });
+
+  // 标注 data-open 的区块默认展开（不做入场动画）
+  var init=group.querySelectorAll('[data-open]');
+  for(var i=0;i<init.length;i++){
+    var w=init[i],h=headOf(w),b=bodyOf(w);
+    w.classList.add('is-open');
+    if(h)h.setAttribute('aria-expanded','true');
+    if(b){b.classList.add('is-open');b.style.maxHeight='none';}
+  }
+
+  function setAll(open){
+    var w=group.querySelectorAll('.rz-sec,.rz-item');
+    for(var i=0;i<w.length;i++) setOpen(w[i],open);
+  }
+  var ba=document.getElementById('rzAll'),bn=document.getElementById('rzNone');
+  if(ba)ba.addEventListener('click',function(){setAll(true);});
+  if(bn)bn.addEventListener('click',function(){setAll(false);});
 })();
 
-// 启动滚动（卡片注入 → 测量宽度）
-startMarquee();
-// 字体 / 图片加载完成后宽度可能变化，重新测量一次，保证循环无缝
-window.addEventListener('load',measureHalfWidth);
+/* ===== 作品总览页：按大类分组渲染 =====
+   分类顺序即展示顺序，产品方向置顶并标记为重点 */
+var WORK_GROUPS=[
+  {key:'产品',   title:'产品与用户研究', featured:true,
+   desc:'面向产品岗的核心作品。包含消费影像硬件 HMI 竞品分析、双端产品深度分析，以及从真实用户访谈出发的需求挖掘与方案设计，完整覆盖「用户洞察 → 痛点拆解 → 方案推导 → 商业化预估」链路。'},
+  {key:'视觉',   title:'视觉与品牌设计',
+   desc:'品牌视觉、活动主视觉与物料延展的完整落地，覆盖 KV 设计、系列海报、印刷物料与现场呈现。'},
+  {key:'空间规划',title:'空间与规划设计',
+   desc:'城乡规划与景观设计的方案推演，从场地调研、用户场景拆解到空间形态与业态策划，训练结构化分析与可视化表达能力。'},
+  {key:'运营数据',title:'运营与数据',
+   desc:'平台运营、内容传播与数字化工具实践，包含数据看板搭建与新媒体内容运营，强调用数据支撑决策。'},
+  {key:'综合',   title:'能力图谱与方法',
+   desc:'复合型能力梳理与工作方法展示，包含 AIGC 创意工作流与全链路执行方法。'},
+  {key:'摄影',   title:'人像摄影',
+   desc:'人像摄影作品集，共 12 张、分三辑编排。以人物状态与情绪表达为主线，涵盖竖幅肖像与横幅外景，是对审美判断与画面控制力的直接呈现。'}
+];
+
+function escapeHtmlWork(s){
+  return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+
+function renderWorksPage(){
+  var groupsBox=document.getElementById('worksGroups');
+  var jumpBox=document.getElementById('worksJump');
+  if(!groupsBox)return;
+
+  var html='';
+  var used=0;
+
+  WORK_GROUPS.forEach(function(g){
+    // 收集该分类下的作品，保留 PROJECTS 中的原始索引用于打开详情
+    var items=[];
+    PROJECTS.forEach(function(p,i){
+      if((p.group||'综合')===g.key)items.push({p:p,i:i});
+    });
+    if(!items.length)return;
+    used+=items.length;
+
+    var cards=items.map(function(it){
+      var p=it.p;
+      var isDeep=p.sections&&p.sections.length;
+      // 封面统一使用作品首图
+      var cover='<div class="works-card-cover"><img src="'+(p.images&&p.images[0]?p.images[0]:'')+'" alt="'+escapeHtmlWork(p.name)+'" loading="lazy"></div>';
+      var desc=(p.desc||'').split('\n')[0];
+      return '<button class="works-card" onclick="openWorksDetail('+it.i+')">'+
+        cover+
+        '<div class="works-card-body">'+
+          '<div class="works-card-cat">'+escapeHtmlWork(p.cat)+'</div>'+
+          '<div class="works-card-title">'+escapeHtmlWork(p.name)+'</div>'+
+          '<div class="works-card-desc">'+escapeHtmlWork(desc)+'</div>'+
+          '<div class="works-card-foot">'+
+            '<span class="works-card-role">'+escapeHtmlWork(p.role||'')+
+              (isDeep?'<br><span class="works-card-deep">完整分析报告</span>':'')+
+            '</span>'+
+            '<span class="works-card-year">'+escapeHtmlWork(p.year||'')+'</span>'+
+          '</div>'+
+        '</div>'+
+      '</button>';
+    }).join('');
+
+    html+='<section class="works-group'+(g.featured?' is-featured':'')+'" id="wg-'+
+      encodeURIComponent(g.key)+'">'+
+      '<div class="works-group-head">'+
+        '<h2 class="works-group-title">'+escapeHtmlWork(g.title)+
+          (g.featured?' <span class="works-badge">重点</span>':'')+
+        '</h2>'+
+        '<span class="works-group-count">'+items.length+' 个</span>'+
+      '</div>'+
+      '<p class="works-group-desc">'+escapeHtmlWork(g.desc)+'</p>'+
+      '<div class="works-grid">'+cards+'</div>'+
+    '</section>';
+  });
+
+  groupsBox.innerHTML=html;
+
+  // 分类快速跳转
+  if(jumpBox){
+    jumpBox.innerHTML=WORK_GROUPS.filter(function(g){
+      return PROJECTS.some(function(p){return (p.group||'综合')===g.key});
+    }).map(function(g){
+      return '<button class="'+(g.featured?'is-hot':'')+'" onclick="jumpWorkGroup(\''+
+        encodeURIComponent(g.key)+'\')">'+escapeHtmlWork(g.title)+'</button>';
+    }).join('');
+  }
+
+  var totalEl=document.getElementById('worksTotal');
+  if(totalEl)totalEl.textContent=used;
+}
+
+function jumpWorkGroup(key){
+  var el=document.getElementById('wg-'+key);
+  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// 从总览页打开详情：先关掉总览，再打开弹窗，避免两层覆盖
+function openWorksDetail(idx){
+  closeWorks();
+  setTimeout(function(){openDetail(idx)},260);
+}
+
+function openWorks(){
+  var page=document.getElementById('worksPage');
+  if(!page)return;
+  renderWorksPage();
+  page.classList.add('open');
+  page.scrollTop=0;
+  document.body.style.overflow='hidden';
+  // 便于分享与回退
+  if(history.replaceState)history.replaceState(null,'','#works');
+}
+
+function closeWorks(){
+  var page=document.getElementById('worksPage');
+  if(!page)return;
+  page.classList.remove('open');
+  document.body.style.overflow='';
+  if(history.replaceState)history.replaceState(null,'',location.pathname+location.search);
+}
+
+// 导航点击进入总览页
+document.querySelectorAll('a[href="#works"]').forEach(function(a){
+  a.addEventListener('click',function(e){e.preventDefault();openWorks()});
+});
+// 直接带 #works 访问时自动打开
+if(location.hash==='#works')setTimeout(openWorks,300);
 
 // ===== Scroll animations =====
 const observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('visible')}})},{threshold:0.1});
@@ -1572,6 +2237,12 @@ function renderThumbs(){
 
 // 键盘控制：← → 切换，Esc 关闭
 document.addEventListener('keydown',function(e){
+  // 作品总览页按 Esc 关闭（详情弹窗未打开时）
+  if(e.key==='Escape'&&document.getElementById('worksPage')
+     &&document.getElementById('worksPage').classList.contains('open')
+     &&!document.getElementById('detailModal').classList.contains('open')){
+    closeWorks();return;
+  }
   if(!document.getElementById('detailModal').classList.contains('open'))return;
   if(e.key==='Escape')closeLightbox();
   if(e.key==='ArrowLeft')changeSlide(-1);
@@ -1595,6 +2266,257 @@ function openLightbox(title,desc,images){
 
 // ===== Smooth scroll for anchor links =====
 document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();const target=document.querySelector(this.getAttribute('href'));if(target){target.scrollIntoView({behavior:'smooth',block:'start'})}})});
+</script>
+
+<!-- ========== 互动区数据逻辑：访问统计 + 留言板（CloudBase） ==========
+     SDK 已提前打包为本地文件，可直接双击打开使用，无需任何构建工具。
+     读取对所有人开放；写入由访客以匿名身份完成，云端权限策略保证
+     只能新增、不能修改或删除他人内容。 -->
+<script src="./cloudbase-sdk.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  var ENV_ID = 'shenzhen-d9g9yepss24fd7e4a';
+  var MSG_TABLE = 'guestbook_messages';
+  var VISIT_TABLE = 'site_visits';
+  var VISITOR_KEY = 'yuke_portfolio_visitor';
+
+  var $ = function(id){ return document.getElementById(id); };
+  var form = $('ivForm');
+  // 页面上不存在互动区时直接跳过（保持可裁剪性）
+  if(!form) return;
+
+  var listBox   = $('ivList');
+  var formMsg   = $('ivFormMsg');
+  var submitBtn = $('ivSubmit');
+  var nameInput = $('ivName');
+  var msgInput  = $('ivMessage');
+  var contactIn = $('ivContact');
+  var counter   = $('ivCounter');
+
+  var MAX_LEN = 800;
+  var app = null, db = null;
+  var cloudReady = false;
+
+  /* ---------- 小工具 ---------- */
+  function setStat(el, val){
+    if(!el) return;
+    el.textContent = (val === null || val === undefined) ? '—' : String(val);
+    el.classList.remove('iv-pending');
+  }
+  function escapeHtml(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+  // 相对时间：刚刚 / 12 分钟前 / 3 小时前 / 2 天前 / 具体日期
+  function relativeTime(iso){
+    var t = new Date(iso).getTime();
+    if(isNaN(t)) return '';
+    var diff = Date.now() - t;
+    if(diff < 0) diff = 0;
+    var min = Math.floor(diff / 60000);
+    if(min < 1) return '刚刚';
+    if(min < 60) return min + ' 分钟前';
+    var hour = Math.floor(min / 60);
+    if(hour < 24) return hour + ' 小时前';
+    var day = Math.floor(hour / 24);
+    if(day < 30) return day + ' 天前';
+    var d = new Date(t);
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  function showFormMsg(text, type){
+    if(!formMsg) return;
+    formMsg.textContent = text;
+    formMsg.className = 'iv-msg show ' + (type === 'ok' ? 'ok' : 'err');
+  }
+  function hideFormMsg(){
+    if(formMsg) formMsg.className = 'iv-msg';
+  }
+
+  /* ---------- 访客标识：仅用于统计独立访客数，不含任何个人身份信息 ---------- */
+  function getVisitorKey(){
+    try{
+      var k = localStorage.getItem(VISITOR_KEY);
+      if(k) return k;
+      k = 'v-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+      localStorage.setItem(VISITOR_KEY, k);
+      return k;
+    }catch(e){
+      return 'v-anon';
+    }
+  }
+
+  /* ---------- 初始化云连接 ---------- */
+  function initCloud(){
+    return new Promise(function(resolve){
+      if(!window.cloudbase){
+        resolve(false);
+        return;
+      }
+      try{
+        app = window.cloudbase.init({ env: ENV_ID });
+        db  = app.rdb();
+        // 先尝试匿名登录，保证后续读写有身份上下文
+        var auth = app.auth;
+        var done = function(){ cloudReady = true; resolve(true); };
+        try{
+          var p = auth && auth.signInAnonymously && auth.signInAnonymously();
+          if(p && typeof p.then === 'function'){
+            p.then(done, function(){ done(); });   // 即使登录失败也继续，交由读取结果判断
+          }else{
+            done();
+          }
+        }catch(e){
+          done();
+        }
+      }catch(e){
+        resolve(false);
+      }
+    });
+  }
+
+  /* ---------- 访问统计 ---------- */
+  function renderStats(data){
+    setStat($('ivStatTotal'), data && data.total);
+    setStat($('ivStatToday'), data && data.today);
+    setStat($('ivStatWeek'),  data && data.week);
+    setStat($('ivStatMsg'),   data && data.msgCount);
+  }
+
+  function loadStats(){
+    // 通过云端聚合函数取汇总数字，原始访问记录不对外暴露
+    return db.rpc('get_visit_stats', {}).then(function(res){
+      var row = res && res.data;
+      if(Array.isArray(row)) row = row[0];
+      // 部分环境下 rpc 返回 { data: { get_visit_stats: {...} } }
+      if(row && row.get_visit_stats) row = row.get_visit_stats;
+      renderStats(row || {});
+    });
+  }
+
+  /* ---------- 记录本次访问 ---------- */
+  function recordVisit(){
+    var payload = {
+      page: 'home',
+      referrer: (document.referrer || '').slice(0, 300) || null,
+      visitor_key: getVisitorKey(),
+      user_agent: (navigator.userAgent || '').slice(0, 300),
+      screen_w: window.screen ? window.screen.width : null
+    };
+    // 同一访客同一会话只记录一次，避免刷新导致的重复计数
+    var once = VISITOR_KEY + '_session_logged';
+    try{
+      if(sessionStorage.getItem(once)) return Promise.resolve();
+      sessionStorage.setItem(once, '1');
+    }catch(e){}
+
+    return db.from(VISIT_TABLE).insert(payload).then(function(){
+      return loadStats();
+    }).catch(function(){
+      try{ sessionStorage.removeItem(once); }catch(e){}
+    });
+  }
+
+  /* ---------- 留言列表 ---------- */
+  function renderMessages(rows){
+    if(!listBox) return;
+    if(!rows || !rows.length){
+      listBox.innerHTML = '<div class="iv-empty">还没有留言<br>欢迎成为第一个留下足迹的人</div>';
+      return;
+    }
+    listBox.innerHTML = rows.map(function(m){
+      var contact = m.contact ? '<div class="iv-item-contact">联系方式：' + escapeHtml(m.contact) + '</div>' : '';
+      return '<div class="iv-item">' +
+        '<div class="iv-item-top">' +
+          '<span class="iv-item-name">' + escapeHtml(m.name || '匿名') + '</span>' +
+          '<span class="iv-item-time">' + relativeTime(m.created_at) + '</span>' +
+        '</div>' +
+        '<div class="iv-item-text">' + escapeHtml(m.message) + '</div>' +
+        contact +
+      '</div>';
+    }).join('');
+  }
+
+  function loadMessages(){
+    return db.from(MSG_TABLE)
+      .select('id,name,message,contact,created_at')
+      .order('created_at', { ascending: false })
+      .limit(50)
+      .then(function(res){
+        renderMessages(res && res.data);
+      });
+  }
+
+  /* ---------- 提交留言 ---------- */
+  function validate(){
+    var name = (nameInput.value || '').trim();
+    var msg  = (msgInput.value  || '').trim();
+    if(!name){ showFormMsg('请填写你的称呼。', 'err'); nameInput.focus(); return null; }
+    if(name.length > 40){ showFormMsg('称呼请控制在 40 字以内。', 'err'); nameInput.focus(); return null; }
+    if(!msg){ showFormMsg('请填写留言内容。', 'err'); msgInput.focus(); return null; }
+    if(msg.length > MAX_LEN){ showFormMsg('留言请控制在 ' + MAX_LEN + ' 字以内。', 'err'); msgInput.focus(); return null; }
+    return {
+      name: name,
+      message: msg,
+      contact: (contactIn.value || '').trim().slice(0, 80) || null
+    };
+  }
+
+  function submitMessage(payload){
+    submitBtn.disabled = true;
+    submitBtn.textContent = '正在提交…';
+    hideFormMsg();
+
+    db.from(MSG_TABLE).insert(payload).then(function(){
+      form.reset();
+      counter.textContent = '0 / ' + MAX_LEN;
+      counter.classList.remove('iv-over');
+      showFormMsg('留言已发布，谢谢你的分享。', 'ok');
+      return Promise.all([loadMessages(), loadStats()]);
+    }).catch(function(err){
+      var detail = (err && (err.message || err.msg)) || '';
+      showFormMsg('提交没有成功，请稍后再试' + (detail ? '（' + detail + '）' : '。'), 'err');
+    }).then(function(){
+      submitBtn.disabled = false;
+      submitBtn.textContent = '提交留言';
+    });
+  }
+
+  if(form){
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(!cloudReady){ showFormMsg('云端连接尚未就绪，请稍后重试。', 'err'); return; }
+      var payload = validate();
+      if(!payload) return;
+      submitMessage(payload);
+    });
+  }
+
+  if(msgInput){
+    msgInput.addEventListener('input', function(){
+      var n = msgInput.value.length;
+      counter.textContent = n + ' / ' + MAX_LEN;
+      counter.classList.toggle('iv-over', n > MAX_LEN);
+    });
+  }
+
+  /* ---------- 启动 ---------- */
+  initCloud().then(function(ok){
+    if(!ok){
+      if(listBox) listBox.innerHTML = '<div class="iv-empty">云端连接未就绪，请刷新页面重试</div>';
+      showFormMsg('云端连接未就绪，请刷新页面重试。', 'err');
+      return;
+    }
+    recordVisit().then(function(){
+      return loadMessages();
+    }).catch(function(){
+      if(listBox) listBox.innerHTML = '<div class="iv-empty">留言读取失败，请刷新页面重试</div>';
+    });
+  });
+
+})();
 </script>
 </body>
 </html>
